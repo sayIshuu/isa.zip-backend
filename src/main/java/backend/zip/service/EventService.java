@@ -1,18 +1,21 @@
 package backend.zip.service;
 
-import backend.zip.Repository.EventRepository;
 import backend.zip.domain.schedule.Event;
+import backend.zip.repository.EventRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EventService {
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
+
     //전체 조회
-    public Optional<Event> getAllEvents() {
+    public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
 

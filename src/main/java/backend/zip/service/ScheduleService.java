@@ -1,17 +1,17 @@
 package backend.zip.service;
 
-import backend.zip.Repository.ScheduleRepository;
 import backend.zip.domain.schedule.Schedule;
-import org.springframework.beans.factory.annotation.Autowired;
+import backend.zip.repository.ScheduleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduleService {
-    @Autowired
-    private ScheduleRepository scheduleRepository;
+
+    private final ScheduleRepository scheduleRepository;
 
     //조회
     public Optional<Schedule> getScheduleByUserId(Long userId) {
@@ -31,6 +31,7 @@ public class ScheduleService {
             return scheduleRepository.save(existingSchedule);
         });
     }
+
     //삭제
     public void deleteSchedule(Long userId) {
         scheduleRepository.deleteByUserId(userId);
