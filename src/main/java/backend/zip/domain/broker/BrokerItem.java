@@ -28,6 +28,15 @@ public class BrokerItem extends BaseEntity {
     @Column(name = "address") //이 주소에는 추가로 ..동
     private String address;
 
+    @Column(name = "dong")
+    private String dong;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
     @Enumerated(EnumType.STRING) //매물 상태 그 때 뭐뭐 하기로 했죠....?
     private ItemStatus itemStatus;
 
