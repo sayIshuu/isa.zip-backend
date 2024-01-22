@@ -24,4 +24,13 @@ public class Event extends BaseEntity {
     @Column(name = "event_title")
     private String eventTitle;
 
+    public String getEventTitle()
+    {
+        return this.eventTitle;
+    }
+
+    public void setEventTitle(String eventTitle)
+    {
+        this.eventTitle = eventTitle;
+    }
 }
