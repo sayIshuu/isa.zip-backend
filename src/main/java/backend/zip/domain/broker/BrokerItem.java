@@ -25,7 +25,7 @@ public class BrokerItem extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "address")
+    @Column(name = "address") //이 주소에는 추가로 ..동
     private String address;
 
     @Enumerated(EnumType.STRING) //매물 상태 그 때 뭐뭐 하기로 했죠....?
