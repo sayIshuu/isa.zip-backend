@@ -21,6 +21,10 @@ public class UserItem extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "dong")
     private String dong;
+
 }
