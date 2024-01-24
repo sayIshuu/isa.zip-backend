@@ -1,7 +1,9 @@
 package backend.zip.service;
 
 import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.user.User;
 import backend.zip.repository.ScheduleRepository;
+import backend.zip.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,14 @@ import java.util.Optional;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     //조회
     public Optional<Schedule> getScheduleByUserId(Long userId) {
-        return scheduleRepository.findByUserId(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: "));
+
+        return scheduleRepository.findByUser(user);
     }
 
     //생성
@@ -34,7 +40,8 @@ public class ScheduleService {
 
     //삭제
     public void deleteSchedule(Long userId) {
-        scheduleRepository.deleteByUserId(userId);
+        User deleteUser = userRepository.findById(userId).get();
+        scheduleRepository.deleteByUser(deleteUser);
     }
 
 }
