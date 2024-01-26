@@ -18,7 +18,7 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
     List<UserItem> findByAddress(String address);
 
     // 특정 User에 속한 UserItem 목록 찾기
-    List<UserItem> findByUserId(Long userId);
+    List<UserItem> findAllByUserId(Long userId);
 
     // 특정 User에 속한 UserItem 중에서 특정 주소(address)를 가진 것 찾기
     Optional<UserItem> findByUserAndAddress(User user, String address);

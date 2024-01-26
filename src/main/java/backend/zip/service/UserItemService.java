@@ -19,7 +19,7 @@ public class UserItemService {
     }
 
     public List<UserItem> getUserItemByUserId(Long userId) {
-        return userItemRepository.findByUserId(userId);
+        return userItemRepository.findAllByUserId(userId);
     }
 
     public void saveUserItem(UserItem userItem) {
