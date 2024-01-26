@@ -1,12 +1,3 @@
----
-name: "\bPull Request 생성 템플릿"
-about: 해당 Pull Request 생성 템플릿을 통하여 Pull Request를 생성해주세요.
-title: 'ex) 깃모지 [feat] : Pull Request 제목'
-labels: ''
-assignees: ''
-
----
-
 ### ✅ PR 유형
 어떤 변경 사항이 있었나요?
 
