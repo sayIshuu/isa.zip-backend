@@ -38,3 +38,10 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar{
+	destinationDirectory = file("./target") //gradle build 시 jar 파일이 생성되는 파일명 및 위치를 설정한다.
+	archivesBaseName = 'isa-zip'   //프로젝트이름
+	archiveFileName = 'isa-zip.jar' //jar파일명
+	archiveVersion = "0.0.1"
+}
