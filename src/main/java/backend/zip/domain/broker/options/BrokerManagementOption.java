@@ -1,8 +1,10 @@
 package backend.zip.domain.broker.options;
 
+import backend.zip.domain.broker.BrokerOption;
 import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.ManagementOption;
 import backend.zip.domain.user.UserOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +22,14 @@ public class BrokerManagementOption extends BaseEntity {
     private Long brokerManagementOptionId;
 
     @Column(name = "broker_management_option")
+    @Enumerated(EnumType.STRING)
     private ManagementOption managementOption;
 
+    @Column(name = "management_price")
+    private Integer managementPrice;
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "broker_option_id")
-    private UserOption brokerOption;
+    private BrokerOption brokerOption;
 }

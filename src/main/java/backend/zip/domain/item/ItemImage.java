@@ -21,8 +21,12 @@ public class ItemImage extends BaseEntity {
     @Column(name = "item_image")
     private String itemImage;
 
-    @OneToOne
-    @JoinColumn(name = "broker_id")
+    @ManyToOne // 하나의 BrokerItem에 여러 이미지가 연결될 수 있도록 ManyToOne 사용
+    @JoinColumn(name = "broker_item_id")
     private BrokerItem brokerItem;
+
+    public void setBrokerItem(BrokerItem brokerItem) {
+        this.brokerItem = brokerItem;
+    }
 
 }

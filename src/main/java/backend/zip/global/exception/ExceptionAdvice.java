@@ -128,7 +128,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     /**
      * 사용자 정의 예외 GeneralException을 처리함
      *
-     * 작동 방식: GeneralException에서 ErrorReasonDTO를 추출하고,
+     * 작동 방식: GeneralException에서 ErrorReasonDto를 추출하고,
      * 이를 handleExceptionInternal 메소드로 전달함
      */
     @ExceptionHandler(value = GeneralException.class)
