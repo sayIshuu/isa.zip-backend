@@ -25,8 +25,8 @@ public class BrokerFloor extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Floor floor;
 
-    @Column(name = "broker_input_floor")
-    private String inputFloor;
+    @Column(name = "broker_custom_floor")
+    private String customFloor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

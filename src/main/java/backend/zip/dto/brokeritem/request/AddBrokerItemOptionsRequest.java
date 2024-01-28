@@ -24,8 +24,8 @@ public class AddBrokerItemOptionsRequest {
     private Set<DealType> dealTypes;
     private Map<DealType, DealInfo> dealInfoMap;
     private String roomSize;
-    private List<Floor> floors;
-    private String floor;
+    private List<Floor> selectedFloor;
+    private String customFloor;
     private List<ManagementOption> managementOptions;
     private Integer managementPrice;
     private List<InternalFacility> internalFacilities;

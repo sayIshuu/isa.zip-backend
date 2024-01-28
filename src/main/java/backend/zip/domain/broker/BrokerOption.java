@@ -32,6 +32,12 @@ public class BrokerOption extends BaseEntity {
     @Column(name = "broker_room_size")
     private String roomSize;
 
+    @Column(name = "broker_custom_floor")
+    private String customFloor;
+
+    @Column(name = "broker_floor")
+    private Floor floor;
+
 //    @Column(name = "management_price")
 //    private Integer managementPrice;
 

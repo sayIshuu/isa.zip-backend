@@ -54,12 +54,19 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
 
 
         // Floor 리스트 생성 로직
-        List<BrokerFloor> brokerFloors = optionsRequest.getFloors().stream()
-                .map(floor ->
-                        BrokerFloor.builder()
-                                .floor(floor)
-                                .inputFloor(floor.toString())
-                                .build()).collect(Collectors.toList());
+//        List<BrokerFloor> brokerFloors = new ArrayList<>();
+        if (optionsRequest.getSelectedFloor() != null) {
+            List<BrokerFloor> floors = optionsRequest.getSelectedFloor().stream()
+                    .map(floor -> BrokerFloor.builder()
+                            .floor(floor)
+                            .build())
+                    .collect(Collectors.toList());
+        }
+        if (optionsRequest.getCustomFloor() != null && !optionsRequest.getCustomFloor().isEmpty()) {
+            BrokerFloor floor = BrokerFloor.builder()
+                    .customFloor(optionsRequest.getCustomFloor())
+                    .build();
+        }
 
 
         // ManagementOption 리스트 생성 로직
@@ -129,15 +136,26 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
             brokerOption.getBrokerManagementOptions().add(management);
         });
 
+        System.out.println("optionsRequest = " + optionsRequest.getCustomFloor());
+        System.out.println("optionsRequest = " + optionsRequest.getSelectedFloor());
         // Floor 엔티티들에 BrokerOption 참조 설정
-        optionsRequest.getFloors().forEach(floor -> {
+        if (optionsRequest.getCustomFloor()==null) {
+            optionsRequest.getSelectedFloor().forEach(floor -> {
+                BrokerFloor brokerFloor = BrokerFloor.builder()
+                        .floor(floor)
+                        .brokerOption(brokerOption)
+                        .build();
+                brokerOption.getBrokerFloors().add(brokerFloor);
+            });
+        }
+        if (optionsRequest.getSelectedFloor()==null) {
+            String customFloor = optionsRequest.getCustomFloor();
             BrokerFloor brokerFloor = BrokerFloor.builder()
-                    .floor(floor)
-                    .inputFloor(floor.name())
-                    .brokerOption(brokerOption) // 참조 설정
+                    .customFloor(customFloor)
+                    .brokerOption(brokerOption)
                     .build();
             brokerOption.getBrokerFloors().add(brokerFloor);
-        });
+        }
 
         // InternalFacility 엔티티들에 BrokerOption 참조 설정
         optionsRequest.getInternalFacilities().forEach(internalFacility -> {
