@@ -51,6 +51,41 @@ public class BrokerItemController {
 
         return ApiResponse.onSuccess(brokerItemOptionResponse);
     }
+
+    /**
+     * 매물 올리기(공인중개사 입장에서 저장)
+     */
+    @PostMapping(value = "/{userId}/items",produces = "application/json;charset=UTF-8")
+    public ApiResponse<BrokerItemResponse> completeRegistration(@PathVariable Long userId,
+                                                                @RequestParam("address") String roadFullAddress,
+                                                                @RequestBody AddBrokerItemOptionsRequest optionsRequest) {
+
+        String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
+        BrokerItemAddressResponse addressInfo = addressService.returnAddressAndDongAndXY(kaKaoApiFromInputAddress);
+        brokerItemAddressService.saveBrokerItemAddress(userId,addressInfo.getAddress()
+                , addressInfo.getDong(), addressInfo.getX(), addressInfo.getY());
+
+
+        // 주소 저장과 옵션 저장 로직을 하나의 트랜잭션으로 실행
+        BrokerItem brokerItem = brokerItemSaveService.saveBrokerItem(
+                userId,
+                addressInfo.getAddress(),
+                addressInfo.getDong(),
+                addressInfo.getX(),
+                addressInfo.getY(),
+                optionsRequest
+        );
+
+        // BrokerOptionResponse 생성
+        BrokerOption brokerOption = brokerItem.getBrokerOption();
+        BrokerItemOptionResponse optionResponse = new BrokerItemOptionResponse(brokerOption);
+
+        // BrokerItemResponse 생성
+        BrokerItemResponse itemResponse = new BrokerItemResponse(addressInfo, optionResponse);
+
+        // 성공 응답 반환
+        return ApiResponse.onSuccess(itemResponse);
+    }
 }
 
 
