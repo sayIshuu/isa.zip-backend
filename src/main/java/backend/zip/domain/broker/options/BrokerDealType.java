@@ -1,7 +1,9 @@
-package backend.zip.domain.broker;
+package backend.zip.domain.broker.options;
 
+import backend.zip.domain.broker.BrokerOption;
 import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.DealType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,9 +18,7 @@ public class BrokerDealType extends BaseEntity {
     @Column(name = "broker_deal_id")
     private Long brokerDealId;
 
-    @Column(name = "broker_option_id")
-    private Long brokerOptionId;
-
+    @Enumerated(EnumType.STRING)
     @Column(name = "deal_type")
     private DealType dealType;
 
@@ -30,6 +30,11 @@ public class BrokerDealType extends BaseEntity {
 
     @Column(name = "month_price")
     private Integer monthPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "broker_option_id")
+    private BrokerOption brokerOption;
 
 }
 

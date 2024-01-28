@@ -1,18 +1,22 @@
 package backend.zip.domain.broker;
 
+import backend.zip.domain.broker.options.*;
 import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Setter
 //@DynamicInsert
 //@DynamicUpdate
 public class BrokerOption extends BaseEntity {
@@ -21,18 +25,41 @@ public class BrokerOption extends BaseEntity {
     @Column(name = "broker_option_id")
     private Long brokerOptionId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "broker_item_id")
-    private BrokerItem brokerItem;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "room_type")
+    private RoomType roomType;
 
     @Column(name = "broker_room_size")
     private String roomSize;
 
-//    @Temporal(TemporalType.DATE) //LocalDate 쓸거면 이거 안써도 됨
-    @Column(name = "broker_approved_date")
-    private LocalDate approveDate;
+//    @Column(name = "management_price")
+//    private Integer managementPrice;
 
-    @Column(name = "management_price")
-    private Integer managementPrice;
+    @Column(name = "broker_approved_date")
+    @Enumerated(EnumType.STRING)
+    private ApproveDate approvedDate;
+
+    @OneToOne(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private BrokerItem brokerItem;
+
+    @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    private List<BrokerFloor> brokerFloors;
+
+    @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    private List<BrokerDealType> brokerDealTypes;
+
+    @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    private List<BrokerManagementOption> brokerManagementOptions;
+
+    @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    private List<BrokerInternalFacility> brokerInternalFacilities;
+
+    @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    private List<BrokerExtraFilter> brokerExtraFilters;
+
+    public void setBrokerItem(BrokerItem brokerItem) {
+        this.brokerItem = brokerItem;
+    }
 
 }

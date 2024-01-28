@@ -1,8 +1,10 @@
 package backend.zip.domain.broker.options;
 
+import backend.zip.domain.broker.BrokerOption;
 import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.Floor;
 import backend.zip.domain.user.UserOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +22,14 @@ public class BrokerFloor extends BaseEntity {
     private Long brokerFloorId;
 
     @Column(name = "broker_floor")
+    @Enumerated(EnumType.STRING)
     private Floor floor;
 
+    @Column(name = "broker_input_floor")
+    private String inputFloor;
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "broker_option_id")
-    private UserOption brokerOption;
+    private BrokerOption brokerOption;
 }
