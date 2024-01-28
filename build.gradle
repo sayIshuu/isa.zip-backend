@@ -23,6 +23,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	compileOnly 'org.projectlombok:lombok'
@@ -30,11 +31,18 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 	// org.json 라이브러리 추가
 	implementation 'org.json:json:20210307'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootJar{
+	destinationDirectory = file("./target") //gradle build 시 jar 파일이 생성되는 파일명 및 위치를 설정한다.
+	archivesBaseName = 'isa-zip'   //프로젝트이름
+	archiveFileName = 'isa-zip.jar' //jar파일명
+	archiveVersion = "0.0.1"
 }
