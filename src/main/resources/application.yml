@@ -1,0 +1,75 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DATABASE_URL}:3306/isa-zip?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DATABASE_HOST}
+    password: ${DATABASE_PW}
+
+  #  datasource:
+#    url: jdbc:mysql://localhost:3306/zip
+#    username: root
+#    password: jjw03090!
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username:
+#    password:
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#            required: true
+#          connectiontimeout: 5000
+#          timeout: 5000
+#          writetimeout: 5000
+#    auth-code-expiration-millis: 1800000  # 30 * 60 * 1000 == 30분
+
+kakao:
+  api-key: ${KAKAO_API_KEY}
+springdoc:
+  swagger-ui:
+    groups-order : DESC
+    tags-sorter : alpha
+    operations-sorter : method
+    disable-swagger-default-url : true
+    display-request-duration : true
+    defaultModelsExpandDepth : 2
+    defaultModelExpandDepth : 2
+  api-docs:
+    path: /api-docs
+  show-actuator : true
+  default-consumes-media-type : application/json
+  defualt-produces-media-type : application/json
+  writer-with-default-pretty-printer : true
+  model-and-view-allowed : true
+  path-to-match:
+    - /api/v1/**
+
+cloud:
+  aws:
+    s3:
+      bucket: isa-zip
+      path:
+        item : item
+        user : user
+        broker : broker
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
+
+
