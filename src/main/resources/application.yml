@@ -6,9 +6,9 @@ spring:
     password: ${DATABASE_PW}
 
   #  datasource:
-#    url: jdbc:mysql://localhost:3306/zip
-#    username: root
-#    password: jjw03090!
+#    url: jdbc:mysql://localhost:3306/
+#    username: 
+#    password: 
 #    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
