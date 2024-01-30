@@ -34,6 +34,10 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 	// org.json 라이브러리 추가
 	implementation 'org.json:json:20210307'
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
