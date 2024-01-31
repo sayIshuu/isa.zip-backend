@@ -1,5 +1,9 @@
 package backend.zip.config;
 
+import backend.zip.security.JwtAuthenticationFilter;
+import backend.zip.security.JwtTokenProvider;
+import backend.zip.service.RefreshTokenRedisService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final RefreshTokenRedisService refreshTokenRedisService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectMapper objectMapper;
     private final String[] securityAllowArray = {
             "/**"
     };
@@ -35,7 +42,9 @@ public class SecurityConfig {
                         requests
                                 .requestMatchers(securityAllowArray).permitAll()
                                 .anyRequest().authenticated()
-                );
+                )
+                .addFilterBefore(new JwtAuthenticationFilter(refreshTokenRedisService, jwtTokenProvider, objectMapper),
+                        UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

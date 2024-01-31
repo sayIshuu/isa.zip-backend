@@ -1,7 +1,7 @@
 spring:
   data:
     redis:
-      host: localhost # ${REDIS_URL}
+      host: localhost #${REDIS_URL}
       port: ${REDIS_PORT}
 
   datasource:
@@ -19,9 +19,10 @@ spring:
   #git checkout feature/redis
   #    password:
   #    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
-      ddl-auto: create #update
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
@@ -43,6 +44,12 @@ spring:
           timeout: 5000
           writetimeout: 5000
       auth-code-expiration-millis: 1800000 # 30분
+
+jwt:
+  access-expired-in: ${JWT_ACCESS_EXPIRED_IN}
+  refresh-expired-in: ${JWT_REFRESH_EXPIRED_IN}
+  secret: ${JWT_SECRET}
+
 
 kakao:
   api-key: ${KAKAO_API_KEY}

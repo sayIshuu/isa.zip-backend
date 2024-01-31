@@ -1,6 +1,7 @@
 package backend.zip.service.Auth;
 
 import backend.zip.dto.auth.request.AuthRequest;
+import backend.zip.dto.auth.response.AuthResponse;
 
 
 public interface AuthService {
@@ -9,4 +10,6 @@ public interface AuthService {
     void sendCodeToEmail(String email);
 
     void verifyCode(String email, String code);
+
+    AuthResponse.LoginResponse login(AuthRequest.LoginRequest loginRequest);
 }
