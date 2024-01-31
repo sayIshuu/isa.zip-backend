@@ -1,6 +1,6 @@
 package backend.zip.global.aws.s3;
 
-import backend.zip.Repository.UuidRepository;
+import backend.zip.repository.UuidRepository;
 import backend.zip.config.AmazonConfig;
 import backend.zip.domain.s3.Uuid;
 import backend.zip.global.exception.image.ImageException;

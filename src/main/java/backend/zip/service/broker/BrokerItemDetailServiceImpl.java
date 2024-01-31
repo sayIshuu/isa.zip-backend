@@ -8,6 +8,7 @@ import backend.zip.domain.s3.Uuid;
 import backend.zip.dto.brokeritem.request.AddBrokerItemDetailsRequest;
 import backend.zip.dto.brokeritem.response.BrokerItemDetailResponse;
 import backend.zip.global.aws.s3.AmazonS3Manager;
+import backend.zip.repository.UuidRepository;
 import backend.zip.repository.broker.BrokerItemContentRepository;
 import backend.zip.repository.broker.BrokerItemImageRepository;
 import backend.zip.repository.broker.BrokerItemRepository;
@@ -27,7 +28,7 @@ public class BrokerItemDetailServiceImpl implements BrokerItemDetailService {
     private final BrokerItemRepository brokerItemRepository;
     private final BrokerItemContentRepository brokerItemContentRepository;
     private final BrokerItemImageRepository brokerItemImageRepository;
-    private final backend.zip.Repository.UuidRepository uuidRepository;
+    private final UuidRepository uuidRepository;
     private AmazonConfig amazonConfig;
 
     @Override
