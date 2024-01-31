@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Setter
+//@Setter
 //@DynamicInsert
 //@DynamicUpdate
 public class BrokerItem extends BaseEntity {
@@ -31,12 +32,6 @@ public class BrokerItem extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-//    @Column(name = "short_introduction")
-//    private String shortsIntroduction;
-//
-//    @Column(name = "detail_explanation")
-//    private String detailExplanation;
 
     @Column(name = "address") //이 주소에는 추가로 ..동
     private String address;
@@ -61,19 +56,23 @@ public class BrokerItem extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_option_id")
+    @JsonManagedReference
     private BrokerOption brokerOption;
 
 
-    public void setItemImages(List<ItemImage> itemImages) {
-        // 기존 이미지들의 참조를 제거
-        if (this.itemImages != null) {
-            this.itemImages.forEach(image -> image.setBrokerItem(null));
-        }
-        // 새로운 이미지 리스트와 이 BrokerItem 인스턴스의 연결을 설정
-        itemImages.forEach(image -> image.setBrokerItem(this));
-        // 이 BrokerItem의 itemImages 필드를 새로운 리스트로 업데이트
-        this.itemImages = itemImages;
-    }
+//    public void setItemImages(List<ItemImage> itemImages) {
+//        // 기존 이미지들의 참조를 제거
+//        if (this.itemImages != null) {
+//            this.itemImages.forEach(image -> image.setBrokerItem(null));
+//        }
+//        // 새로운 이미지 리스트와 이 BrokerItem 인스턴스의 연결을 설정
+//        itemImages.forEach(image -> image.setBrokerItem(this));
+//        // 이 BrokerItem의 itemImages 필드를 새로운 리스트로 업데이트
+//        this.itemImages = itemImages;
+//    }
+
+
+
 
     public void setBrokerOption(BrokerOption brokerOption) {
         if (brokerOption == null) {
