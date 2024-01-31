@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class BrokerItemAddressServiceImpl implements BrokerItemAddressService {
 
     private final BrokerItemRepository brokerItemRepository;
-    private final BrokerOptionRepository brokerOptionRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -24,7 +23,7 @@ public class BrokerItemAddressServiceImpl implements BrokerItemAddressService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BrokerItemException(ErrorStatus.USER_NOT_FOUND)); // 여기서 수정
         BrokerItem brokerItem = new AddBrokerItemAddressRequest().toEntity(user, address, dong, x, y);
-        brokerItemRepository.save(brokerItem);
+//        BrokerItem savedBrokerItemByAddress = brokerItemRepository.save(brokerItem);
         return brokerItem;
     }
 
