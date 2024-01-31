@@ -2,12 +2,13 @@ package backend.zip.domain.item;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 //@DynamicInsert
@@ -19,13 +20,24 @@ public class ItemContent extends BaseEntity {
     private Long itemContentId;
 
     @OneToOne
-    @JoinColumn(name = "broker_id")
+    @JsonBackReference
+    @JoinColumn(name = "broker_item_id")
     private BrokerItem brokerItem;
 
-    @Column(name = "simple_content")
-    private String simpleContent;
+    @Column(name = "short_introduction")
+    private String shortIntroduction;
 
-    @Column(name = "spec_content")
-    private String specificContent;
+    @Column(name = "specific_introduction")
+    private String specificIntroduction;
+
+    public ItemContent(String shortIntroduction, String specificIntroduction, BrokerItem brokerItem) {
+        this.shortIntroduction = shortIntroduction;
+        this.specificIntroduction = specificIntroduction;
+        this.brokerItem = brokerItem;
+    }
+
+    public void setBrokerItem(BrokerItem brokerItem) {
+        this.brokerItem = brokerItem;
+    }
 
 }

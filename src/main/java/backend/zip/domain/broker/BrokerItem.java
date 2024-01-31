@@ -72,7 +72,10 @@ public class BrokerItem extends BaseEntity {
 //    }
 
 
-
+    public void setDetails(List<ItemImage> itemImages, ItemContent itemContent) {
+        this.itemImages = itemImages;
+        this.itemContent = itemContent;
+    }
 
     public void setBrokerOption(BrokerOption brokerOption) {
         if (brokerOption == null) {
