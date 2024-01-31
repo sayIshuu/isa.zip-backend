@@ -28,4 +28,11 @@ public class RefreshTokenRedisServiceImpl implements RefreshTokenRedisService {
         return refreshTokenRedisRepository.findById(id)
                 .orElse(null);
     }
+
+    @Override
+    public void deleteRefreshToken(Long id) {
+        refreshTokenRedisRepository.delete(
+                RefreshToken.builder().id(id).build()
+        );
+    }
 }
