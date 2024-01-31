@@ -2,7 +2,7 @@ package backend.zip.controller;
 
 import backend.zip.dto.auth.request.AuthRequest;
 import backend.zip.global.apipayload.ApiResponse;
-import backend.zip.service.AuthService;
+import backend.zip.service.Auth.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -33,17 +33,19 @@ public class AuthController {
     //    return ApiResponse.onSuccess(authService.login());
     //}
 
-    // 이메일 중복 확인
-    @PostMapping("/auth/check-email")
-    public String checkEmail() {
-        return null;
+    // 이메일 인증번호 요청
+    @Operation(summary = "이메일 인증 번호 요청", description = "이메일로 인증 번호를 전송하는 API입니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @PostMapping("/auth/authcode-request")
+    public ApiResponse<String> AuthcodeRequest(@RequestBody AuthRequest.AuthcodeRequest AuthcodeRequest) {
+        authService.sendCodeToEmail(AuthcodeRequest.getEmail());
+        return ApiResponse.onSuccess("인증번호가 전송되었습니다.");
     }
 
-    // 이메일 인증번호 요청
-    //@PostMapping("/auth/code-request")
-
     // 이메일 인증번호 확인
-    //@PostMapping("/auth/code-check")
+    // @PostMapping("/auth/code-check")
 
     // 카카오로 회원가입
 }

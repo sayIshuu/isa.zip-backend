@@ -25,4 +25,9 @@ public class AuthRequest {
         String email;
         String password;
     }
+
+    @Getter
+    public static class AuthcodeRequest {
+        String email;
+    }
 }
