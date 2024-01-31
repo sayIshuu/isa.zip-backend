@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static backend.zip.global.status.ErrorStatus.USER_NOT_FOUND;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
