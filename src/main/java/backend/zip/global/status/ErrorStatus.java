@@ -36,6 +36,9 @@ public enum ErrorStatus implements BaseErrorCode {
 //    ADDRESS_IO_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "ADDRESS_001", "입출력 처리 중 오류가 발생했습니다."),
     ADDRESS_NOT_FOUND(HttpStatus.NOT_FOUND, "ADDRESS_001", "주소를 찾을 수 없습니다."),
 
+    //이미지 관련 에러
+    ERROR_AT_AMAZONS3_MANAGER_UPLOADFILE(HttpStatus.INTERNAL_SERVER_ERROR,"IMAGE_001","이미지를 첨부하는 동안 오류가 발생했습니다"),
+
     //BrokerItem 관련 에러
     BROKER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND,"BROKER_ITEM_001","해당 매물을 찾을 수 없습니다");
 

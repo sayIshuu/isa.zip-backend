@@ -22,16 +22,16 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
     private final BrokerOptionRepository brokerOptionRepository;
 
     @Override
-    public BrokerOption saveBrokerItemOptions(Long brokerItemId, AddBrokerItemOptionsRequest addBrokerItemOptionsRequest) {
-        BrokerItem brokerItem = brokerItemRepository.findById(brokerItemId)
-                .orElseThrow(() -> new BrokerItemException(ErrorStatus.BROKER_ITEM_NOT_FOUND));
+    public BrokerOption saveBrokerItemOptions(AddBrokerItemOptionsRequest addBrokerItemOptionsRequest) {
+//        BrokerItem brokerItem = brokerItemRepository.findById(brokerItemId)
+//                .orElseThrow(() -> new BrokerItemException(ErrorStatus.BROKER_ITEM_NOT_FOUND));
 
         BrokerOption brokerOption = createBrokerOption(addBrokerItemOptionsRequest);
         brokerOption = brokerOptionRepository.save(brokerOption);
 
         // BrokerOption을 BrokerItem과 연결
-        brokerItem.setBrokerOption(brokerOption);
-        brokerItemRepository.save(brokerItem);
+//        brokerItem.setBrokerOption(brokerOption);
+//        brokerItemRepository.save(brokerItem);
 
         return brokerOption;
     }
