@@ -1,6 +1,7 @@
 package backend.zip.service;
 
 import backend.zip.domain.user.User;
+import backend.zip.dto.user.response.UserResponse;
 import backend.zip.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,4 +17,6 @@ public interface UserService {
     public void logout();
 
     void deleteUser();
+
+    UserResponse.ProfileResponse getProfile();
 }

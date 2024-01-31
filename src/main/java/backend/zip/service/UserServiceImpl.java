@@ -1,6 +1,8 @@
 package backend.zip.service;
 
 import backend.zip.domain.user.User;
+import backend.zip.dto.user.response.UserResponse;
+import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.global.exception.user.UserNotFoundException;
 import backend.zip.repository.UserRepository;
 import backend.zip.security.SecurityUtils;
@@ -29,5 +31,17 @@ public class UserServiceImpl implements UserService {
 
         refreshTokenRedisService.deleteRefreshToken(user.getId());
         userRepository.delete(user);
+    }
+
+    @Override
+    public UserResponse.ProfileResponse getProfile() {
+        User user = userRepository.findById(Long.parseLong(SecurityUtils.getLoggedInUserId()))
+                .orElseThrow(()-> new UserNotFoundException(USER_NOT_FOUND));
+        return UserResponse.ProfileResponse.builder()
+                .id(user.getId())
+                .userImg(user.getUserImg())
+                .nickName(user.getNickName())
+                .email(user.getEmail())
+                .build();
     }
 }
