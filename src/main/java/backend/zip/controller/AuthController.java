@@ -39,13 +39,21 @@ public class AuthController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
     @PostMapping("/auth/authcode-request")
-    public ApiResponse<String> AuthcodeRequest(@RequestBody AuthRequest.AuthcodeRequest AuthcodeRequest) {
+    public ApiResponse<String> authcodeRequest(@RequestBody AuthRequest.AuthcodeRequest AuthcodeRequest) {
         authService.sendCodeToEmail(AuthcodeRequest.getEmail());
         return ApiResponse.onSuccess("인증번호가 전송되었습니다.");
     }
 
     // 이메일 인증번호 확인
-    // @PostMapping("/auth/code-check")
+    @Operation(summary = "이메일 인증 번호 검증", description = "이메일 인증 번호를 검증하는 API입니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @PostMapping("/auth/authcode-check")
+    public ApiResponse<String> authcodeCheck(@RequestBody AuthRequest.VerificationRequest verificationRequest) {
+        authService.verifyCode(verificationRequest.getEmail(), verificationRequest.getCode());
+        return ApiResponse.onSuccess("이메일 인증에 성공하셨습니다.");
+    }
 
     // 카카오로 회원가입
 }

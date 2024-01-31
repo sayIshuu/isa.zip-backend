@@ -30,4 +30,10 @@ public class AuthRequest {
     public static class AuthcodeRequest {
         String email;
     }
+
+    @Getter
+    public static class VerificationRequest {
+        String email;
+        String code;
+    }
 }

@@ -7,4 +7,6 @@ public interface AuthService {
     void signUp(AuthRequest.SignUpRequest signUpRequest);
 
     void sendCodeToEmail(String email);
+
+    void verifyCode(String email, String code);
 }

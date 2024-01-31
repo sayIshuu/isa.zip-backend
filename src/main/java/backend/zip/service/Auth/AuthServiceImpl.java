@@ -1,8 +1,10 @@
 package backend.zip.service.Auth;
 
+import backend.zip.domain.auth.AuthCode;
 import backend.zip.domain.user.User;
 import backend.zip.dto.auth.request.AuthRequest;
 import backend.zip.global.exception.CustomNoSuchAlgorithmException;
+import backend.zip.global.exception.auth.AuthcodeException;
 import backend.zip.global.exception.auth.DuplicatedEmailException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.UserRepository;
@@ -47,11 +49,22 @@ public class AuthServiceImpl implements AuthService {
         authCodeRedisService.setCode(EAUTH + email, authCode);
     }
 
+    @Override
+    public void verifyCode(String email, String code) {
+        AuthCode redisAuthCode = authCodeRedisService.getCode(EAUTH + email);
+
+        if( redisAuthCode == null || !redisAuthCode.getCode().equals(code)) {
+            throw new AuthcodeException(ErrorStatus.INVALID_AUTH_CODE);
+        }
+    }
+
+    // 이메일 중복 확인
     private void checkEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if(user.isPresent()) throw new DuplicatedEmailException(ErrorStatus.NO_SUCH_ALGORITHM);
     }
 
+    // 인증번호 생성
     private String createCode() {
         int length = 6;
         try {

@@ -22,6 +22,7 @@ public enum ErrorStatus implements BaseErrorCode {
     NO_SUCH_ALGORITHM(HttpStatus.INTERNAL_SERVER_ERROR, "NO_SUCH_ALGORITHM", "알 수 없는 알고리즘입니다."),
     DUPLICATED_EMAIL(HttpStatus.CONFLICT, "DUPLICATED_EMAIL", "존재하는 이메일 주소입니다."),
     UNABLE_TO_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE_TO_SEND_EMAIL", "이메일을 보낼 수 없습니다."),
+    INVALID_AUTH_CODE(HttpStatus.BAD_REQUEST, "INVALID_AUTH_CODE", "일치하지 않는 인증번호 입니다."),
 
     //Address 관련 에러
 //    ADDRESS_IO_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "ADDRESS_001", "입출력 처리 중 오류가 발생했습니다."),
