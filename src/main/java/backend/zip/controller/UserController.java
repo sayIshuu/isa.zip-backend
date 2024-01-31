@@ -38,8 +38,13 @@ public class UserController {
     }
 
     // 회원 탈퇴
-    @DeleteMapping("/users/{userId}")
-    public String deleteUser() {
-        return null;
+    @Operation(summary = "회원 탈퇴", description = "회원 탈퇴하는 API입니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @DeleteMapping("/users")
+    public ApiResponse<String> deleteUser() {
+        userService.deleteUser();
+        return ApiResponse.onSuccess("회원 탈퇴에 성공하셨습니다.");
     }
 }

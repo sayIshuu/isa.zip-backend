@@ -14,4 +14,6 @@ public interface UserService {
 
     // 로그아웃
     public void logout();
+
+    void deleteUser();
 }
