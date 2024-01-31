@@ -24,7 +24,7 @@ public class BrokerItemOptionResponse {
     private String roomSize;
 //    private Integer managementPrice;
     private List<BrokerFloor> floors;
-    private String customFloor;
+//    private String customFloor;
     private List<BrokerInternalFacility> internalFacilities;
     private List<BrokerExtraFilter> extraFilters;
     private ApproveDate approvedDate;
@@ -37,7 +37,7 @@ public class BrokerItemOptionResponse {
         this.roomSize = brokerOption.getRoomSize();
 //        this.managementPrice = managementPrice;
         this.floors = brokerOption.getBrokerFloors();
-        this.customFloor = brokerOption.getCustomFloor();
+//        this.customFloor = brokerOption.getCustomFloor();
         this.internalFacilities = brokerOption.getBrokerInternalFacilities();
         this.extraFilters = brokerOption.getBrokerExtraFilters();
         this.approvedDate = brokerOption.getApprovedDate();

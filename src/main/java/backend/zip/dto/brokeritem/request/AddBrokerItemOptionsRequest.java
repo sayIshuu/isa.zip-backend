@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddBrokerItemOptionsRequest {
-    private Long brokerItemId;
+//    private Long brokerItemId;
     private RoomType roomType;
     private Set<DealType> dealTypes;
     private Map<DealType, DealInfo> dealInfoMap;
