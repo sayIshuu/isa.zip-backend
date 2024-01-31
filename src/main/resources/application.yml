@@ -1,7 +1,9 @@
 spring:
-  redis:
-    host: ${REDIS_URL}
-    port: ${REDIS_PORT}
+  data:
+    redis:
+      host: ${REDIS_URL}
+      port: ${REDIS_PORT}
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DATABASE_URL}:3306/isa-zip?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -9,11 +11,12 @@ spring:
     password: ${DATABASE_PW}
 
   #  datasource:
-#    url: jdbc:mysql://localhost:3306/
-#    username: rootgit fetch origin
+  #    url: jdbc:mysql://localhost:3306/
+  #    username: rootgit fetch origin
   #git checkout feature/redis
-#    password:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    password:
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,22 +25,28 @@ spring:
         show_sql: true
         format_sql: true
 
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username:
-#    password:
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
-#            required: true
-#          connectiontimeout: 5000
-#          timeout: 5000
-#          writetimeout: 5000
-#    auth-code-expiration-millis: 1800000  # 30 * 60 * 1000 == 30분
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+      auth-code-expiration-millis: 1800000 # 30분
+
+jwt:
+  access-expired-in: ${JWT_ACCESS_EXPIRED_IN}
+  refresh-expired-in: ${JWT_REFRESH_EXPIRED_IN}
+  secret: ${JWT_SECRET}
+
 
 kakao:
   api-key: ${KAKAO_API_KEY}

@@ -3,6 +3,7 @@ package backend.zip.domain.user;
 import backend.zip.domain.broker.Broker;
 import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.Role;
+import backend.zip.domain.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -25,9 +26,6 @@ public class User extends BaseEntity {
     @JoinColumn(name = "broker_id")
     private Broker broker;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     @Column(name = "email",nullable = false)
     private String email;
 
@@ -37,8 +35,11 @@ public class User extends BaseEntity {
     @Column(name = "nickname",nullable = false)
     private String nickName;
 
-    @Column(name = "is_social")
-    private Boolean isSocial;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "social_type")
+    private SocialType socialType;
 
     @Column(name = "review_point")
     private Integer reviewPoint;

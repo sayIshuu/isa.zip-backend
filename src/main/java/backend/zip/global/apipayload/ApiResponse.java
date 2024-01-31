@@ -23,6 +23,10 @@ public class ApiResponse<T> {
                 true, SuccessStatus._OK.getCode(), SuccessStatus._OK.getMessage(), data);
     }
 
+    public static <T> ApiResponse<T> onSuccess(String message, T data) {
+        return new ApiResponse<>(true, SuccessStatus._OK.getCode(), message, data);
+    }
+
     public static <T> ApiResponse<T> onSuccess(BaseCode code, T data) {
         return new ApiResponse<>(true, code.getReasonHttpStatus().getCode(),
                 code.getReasonHttpStatus().getMessage(), data);
