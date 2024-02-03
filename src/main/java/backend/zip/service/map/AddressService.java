@@ -9,5 +9,5 @@ public interface AddressService {
     public String getKaKaoApiFromInputAddress(String roadFullAddress);
     public HashMap<String, String> getXYMapFromJson(String jsonString);
 
-    public BrokerItemAddressResponse returnAddressAndDongAndXY(String jsonString);
+    public BrokerItemAddressResponse returnAddressInfo(String jsonString);
 }
