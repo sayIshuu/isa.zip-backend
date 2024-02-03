@@ -25,7 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BrokerItemSaveServiceImpl implements BrokerItemSaveService {
+public class BrokerItemServiceImpl implements BrokerItemService {
     private final BrokerItemRepository brokerItemRepository;
     private final BrokerOptionRepository brokerOptionRepository;
     private final BrokerItemAddressService brokerItemAddressService;
@@ -59,5 +59,10 @@ public class BrokerItemSaveServiceImpl implements BrokerItemSaveService {
         brokerItemRepository.save(brokerItem);
 
         return brokerItem;
+    }
+
+    @Override
+    public void deleteBrokerItem(Long brokerItemId) {
+        brokerItemRepository.deleteById(brokerItemId);
     }
 }

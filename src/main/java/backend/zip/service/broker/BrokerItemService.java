@@ -6,7 +6,10 @@ import backend.zip.dto.brokeritem.request.AddBrokerItemOptionsRequest;
 import backend.zip.dto.brokeritem.response.BrokerItemAddressResponse;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface BrokerItemSaveService {
+public interface BrokerItemService {
     public BrokerItem saveBrokerItem(Long userId, BrokerItem brokerItem, BrokerItemAddressResponse brokerItemAddressResponse,
                                      AddBrokerItemDetailsRequest detailsRequest, MultipartFile[] brokerItemImg, AddBrokerItemOptionsRequest optionsRequest);
+
+    public void deleteBrokerItem(Long brokerItemId);
+
 }
