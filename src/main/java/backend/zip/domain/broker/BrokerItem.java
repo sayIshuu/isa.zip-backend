@@ -56,7 +56,6 @@ public class BrokerItem extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_option_id")
-    @JsonManagedReference
     private BrokerOption brokerOption;
 
 
