@@ -1,6 +1,7 @@
 package backend.zip.service.map;
 
 import backend.zip.dto.brokeritem.response.BrokerItemAddressResponse;
+import backend.zip.dto.useritem.response.UserItemAddressResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,4 +11,6 @@ public interface AddressService {
     public HashMap<String, String> getXYMapFromJson(String jsonString);
 
     public BrokerItemAddressResponse returnAddressAndDongAndXY(String jsonString);
+
+    public UserItemAddressResponse returnUserItemAddressAndDong(String jsonString);
 }
