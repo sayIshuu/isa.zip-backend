@@ -14,13 +14,15 @@ import java.util.List;
 @Setter
 @Builder
 public class BrokerItemResponse {
+    private Long brokerItemId;
     private BrokerItemAddressResponse addressResponse;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemResponse(BrokerItemAddressResponse addressResponse,
+    public BrokerItemResponse(Long brokerItemId, BrokerItemAddressResponse addressResponse,
                               BrokerItemDetailResponse detailResponse,
                               BrokerItemOptionResponse optionResponse) {
+        this.brokerItemId = brokerItemId;
         this.addressResponse = addressResponse;
         this.detailResponse = detailResponse;
         this.optionResponse = optionResponse;
@@ -37,7 +39,7 @@ public class BrokerItemResponse {
         BrokerItemOptionResponse optionResponse = new BrokerItemOptionResponse(brokerOption);
 
         // BrokerItemResponse 생성
-        BrokerItemResponse itemResponse = new BrokerItemResponse(addressResponse, detailResponse, optionResponse);
+        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),addressResponse, detailResponse, optionResponse);
 
         return itemResponse;
     }
