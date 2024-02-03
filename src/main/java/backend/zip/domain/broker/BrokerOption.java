@@ -46,7 +46,6 @@ public class BrokerOption extends BaseEntity {
     private ApproveDate approvedDate;
 
     @OneToOne(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    @JsonBackReference
     private BrokerItem brokerItem;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
