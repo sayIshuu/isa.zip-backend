@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class AddBrokerItemAddressRequest {
-    private Long userId;
     private String address;
     private String dong;
     private Double x;

@@ -54,9 +54,8 @@ public class BrokerItem extends BaseEntity {
     @OneToMany(mappedBy = "brokerItem", cascade = CascadeType.ALL)
     private List<ItemImage> itemImages; // BrokerItem과 연결된 이미지들의 리스트
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "broker_option_id")
-    @JsonManagedReference
     private BrokerOption brokerOption;
 
 
