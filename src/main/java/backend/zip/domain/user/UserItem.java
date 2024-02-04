@@ -1,6 +1,8 @@
 package backend.zip.domain.user;
 
+import backend.zip.domain.broker.BrokerOption;
 import backend.zip.domain.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +29,15 @@ public class UserItem extends BaseEntity {
     @Column(name = "dong")
     private String dong;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "broker_option_id")
+    @JsonManagedReference
+    private UserOption userOption;
+    public void setUserOption(UserOption userOption) {
+        // 예외처리 not found
+        if (userOption == null) {
+            throw new IllegalArgumentException("UserOption이 존재하지 않습니다.");
+        }
+        this.userOption = userOption;
+    }
 }
