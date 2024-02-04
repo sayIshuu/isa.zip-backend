@@ -30,7 +30,7 @@ public class UserItemController {
     */
 
     @Operation(summary = "유저 매물 요청정보 저장", description = "유저가 요청한 매물 정보를 저장합니다.")
-    @PostMapping("{userId}/items")
+    @PostMapping("/items")
     public ApiResponse<String> saveUserItem(@RequestParam("address") String address,
                                             @RequestBody AddUserItemOptionsRequest addUserItemOptionsRequest) {
 

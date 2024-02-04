@@ -30,7 +30,7 @@ public class UserItem extends BaseEntity {
     private String dong;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "broker_option_id")
+    @JoinColumn(name = "user_option_id")
     @JsonManagedReference
     private UserOption userOption;
     public void setUserOption(UserOption userOption) {

@@ -9,6 +9,7 @@ import backend.zip.service.userItem.UserItemOptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ public class UserItemOptionServiceImpl implements UserItemOptionService {
     }
 
     private UserOption createUserOption(AddUserItemOptionsRequest optionsRequest) {
+        /*
         // RoomType 생성 로직
         List<UserRoomType> roomTypes = optionsRequest.getRoomType().stream()
                 .map(roomType -> UserRoomType.builder()
@@ -85,17 +87,18 @@ public class UserItemOptionServiceImpl implements UserItemOptionService {
                         UserExtraFilter.builder()
                                 .extraFilter(extraFilter)
                                 .build()).collect(Collectors.toList());
+        */
 
         // UserOption 완성 로직
         UserOption userOption = UserOption.builder()
-                .userRoomTypes(roomTypes)
-                .userDealTypes(dealTypes)
-                .userRoomSizes(roomSizes)
-                .userFloors(floors)
-                .userManagementOptions(managementOptions)
-                .userInternalFacilities(internalFacilities)
+                .userRoomTypes(new ArrayList<>())
+                .userDealTypes(new ArrayList<>())
+                .userRoomSizes(new ArrayList<>())
+                .userFloors(new ArrayList<>())
+                .userManagementOptions(new ArrayList<>())
+                .userInternalFacilities(new ArrayList<>())
                 .approveDate(optionsRequest.getApproveDate())
-                .userExtraFilters(extraFilters)
+                .userExtraFilters(new ArrayList<>())
                 .build();
 
         // 참조 설정을 여기에서 수행 ( 잘이해안됨 이방법 먼지.. 근데 일단 응답보셨고, 옵션저장로직 그대로 차용해서 일단적용했습니다. )
