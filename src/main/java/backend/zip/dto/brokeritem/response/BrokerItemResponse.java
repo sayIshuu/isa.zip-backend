@@ -14,13 +14,15 @@ import java.util.List;
 @Setter
 @Builder
 public class BrokerItemResponse {
+    private Long brokerItemId;
     private BrokerItemAddressResponse addressResponse;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemResponse(BrokerItemAddressResponse addressResponse,
+    public BrokerItemResponse(Long brokerItemId, BrokerItemAddressResponse addressResponse,
                               BrokerItemDetailResponse detailResponse,
                               BrokerItemOptionResponse optionResponse) {
+        this.brokerItemId = brokerItemId;
         this.addressResponse = addressResponse;
         this.detailResponse = detailResponse;
         this.optionResponse = optionResponse;
@@ -34,11 +36,47 @@ public class BrokerItemResponse {
 
         // BrokerOptionResponse 생성
         BrokerOption brokerOption = savedBrokerItem.getBrokerOption();
-        BrokerItemOptionResponse optionResponse = new BrokerItemOptionResponse(brokerOption);
+        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
+                brokerOption.getBrokerOptionId(),brokerOption.getBrokerDealTypes(),brokerOption.getRoomType()
+        ,brokerOption.getRoomSize(),brokerOption.getBrokerFloors(),brokerOption.getBrokerManagementOptions(),brokerOption.getBrokerInternalFacilities()
+        ,brokerOption.getBrokerExtraFilters(),brokerOption.getApprovedDate());
 
         // BrokerItemResponse 생성
-        BrokerItemResponse itemResponse = new BrokerItemResponse(addressResponse, detailResponse, optionResponse);
+        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),addressResponse, detailResponse, optionResponse);
 
         return itemResponse;
     }
+
+
+    public static BrokerItemResponse getBrokerItemResponse(BrokerItem brokerItem) {
+        BrokerItemAddressResponse addressResponse = BrokerItemAddressResponse.of(
+                brokerItem.getAddress(),
+                brokerItem.getRoadAddress(),
+                brokerItem.getDong(),
+                brokerItem.getRoadDong(),
+                brokerItem.getPostNumber(),
+                brokerItem.getX(),
+                brokerItem.getY()
+        );
+
+        BrokerItemDetailResponse detailResponse = BrokerItemDetailResponse.of(
+                brokerItem.getItemImages(),
+                brokerItem.getItemContent()
+        );
+
+        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
+                brokerItem.getBrokerOption().getBrokerOptionId(),
+                brokerItem.getBrokerOption().getBrokerDealTypes(),
+                brokerItem.getBrokerOption().getRoomType(),
+                brokerItem.getBrokerOption().getRoomSize(),
+                brokerItem.getBrokerOption().getBrokerFloors(),
+                brokerItem.getBrokerOption().getBrokerManagementOptions(),
+                brokerItem.getBrokerOption().getBrokerInternalFacilities(),
+                brokerItem.getBrokerOption().getBrokerExtraFilters(),
+                brokerItem.getBrokerOption().getApprovedDate()
+        );
+
+        return new BrokerItemResponse(brokerItem.getBrokerItemId(), addressResponse, detailResponse, optionResponse);
+    }
+
 }
