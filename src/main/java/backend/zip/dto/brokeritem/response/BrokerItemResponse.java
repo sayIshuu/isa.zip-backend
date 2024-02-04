@@ -2,6 +2,7 @@ package backend.zip.dto.brokeritem.response;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.broker.BrokerOption;
+import backend.zip.domain.enums.ItemStatus;
 import backend.zip.domain.item.ItemContent;
 import backend.zip.domain.item.ItemImage;
 import lombok.Builder;
@@ -15,14 +16,16 @@ import java.util.List;
 @Builder
 public class BrokerItemResponse {
     private Long brokerItemId;
+    private ItemStatus itemStatus;
     private BrokerItemAddressResponse addressResponse;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemResponse(Long brokerItemId, BrokerItemAddressResponse addressResponse,
+    public BrokerItemResponse(Long brokerItemId,ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
                               BrokerItemDetailResponse detailResponse,
                               BrokerItemOptionResponse optionResponse) {
         this.brokerItemId = brokerItemId;
+        this.itemStatus = itemStatus;
         this.addressResponse = addressResponse;
         this.detailResponse = detailResponse;
         this.optionResponse = optionResponse;
@@ -42,7 +45,7 @@ public class BrokerItemResponse {
         ,brokerOption.getBrokerExtraFilters(),brokerOption.getApprovedDate());
 
         // BrokerItemResponse 생성
-        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),addressResponse, detailResponse, optionResponse);
+        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),savedBrokerItem.getItemStatus(),addressResponse, detailResponse, optionResponse);
 
         return itemResponse;
     }
@@ -76,7 +79,7 @@ public class BrokerItemResponse {
                 brokerItem.getBrokerOption().getApprovedDate()
         );
 
-        return new BrokerItemResponse(brokerItem.getBrokerItemId(), addressResponse, detailResponse, optionResponse);
+        return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
     }
 
 }

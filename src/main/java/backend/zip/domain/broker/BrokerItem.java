@@ -52,7 +52,7 @@ public class BrokerItem extends BaseEntity {
     @Column(name = "y")
     private Double y;
 
-    @Enumerated(EnumType.STRING) //매물 상태 그 때 뭐뭐 하기로 했죠....?
+    @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
 
     @OneToOne(mappedBy = "brokerItem",cascade = CascadeType.ALL)
@@ -65,6 +65,9 @@ public class BrokerItem extends BaseEntity {
     @JoinColumn(name = "broker_option_id")
     private BrokerOption brokerOption;
 
+    public void setItemStatus(ItemStatus itemStatus) {
+        this.itemStatus = itemStatus;
+    }
     public void setDetails(List<ItemImage> itemImages, ItemContent itemContent) {
         this.itemImages = itemImages;
         this.itemContent = itemContent;

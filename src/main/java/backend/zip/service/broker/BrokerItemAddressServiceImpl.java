@@ -18,10 +18,10 @@ public class BrokerItemAddressServiceImpl implements BrokerItemAddressService {
     private final UserRepository userRepository;
 
     @Override
-    public BrokerItem saveBrokerItemAddress(Long userId, String address, String dong, Double x, Double y) {
+    public BrokerItem saveBrokerItemAddress(Long userId, String address, String roadAddress, String dong, String roadDong, String postNumber, Double x, Double y) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BrokerItemException(ErrorStatus.USER_NOT_FOUND)); // 여기서 수정
-        BrokerItem brokerItem = new AddBrokerItemAddressRequest().toEntity(user, address, dong, x, y);
+        BrokerItem brokerItem = new AddBrokerItemAddressRequest().toEntity(user, address, roadAddress, dong, roadDong, postNumber, x, y);
 //        BrokerItem savedBrokerItemByAddress = brokerItemRepository.save(brokerItem);
         return brokerItem;
     }
