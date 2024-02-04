@@ -7,7 +7,6 @@ import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.broker.BrokerItemRepository;
 import backend.zip.repository.UserRepository;
-import backend.zip.repository.broker.BrokerOptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +26,12 @@ public class BrokerItemAddressServiceImpl implements BrokerItemAddressService {
         return brokerItem;
     }
 
+    @Override
+    public BrokerItem updateBrokerItemAddress(Long brokerItemId, String address,String roadAddress, String dong,String roadDong,String postNumber,Double x, Double y) {
+        BrokerItem brokerItem = brokerItemRepository.findById(brokerItemId)
+                .orElseThrow(() -> new BrokerItemException(ErrorStatus.BROKER_ITEM_NOT_FOUND));
 
+        brokerItem.updateAddressDetail(address, roadAddress, dong, roadDong,postNumber, x, y);
+        return brokerItem;
+    }
 }
