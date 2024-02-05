@@ -3,6 +3,7 @@ package backend.zip.domain.user.options;
 import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.DealType;
 import backend.zip.domain.user.UserOption;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,7 @@ public class UserDealType extends BaseEntity {
     private Long dealId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "user_option_id")
     private UserOption userOption;
 
