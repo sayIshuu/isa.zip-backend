@@ -7,8 +7,6 @@ import backend.zip.domain.item.ItemImage;
 import backend.zip.domain.user.User;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,11 +31,20 @@ public class BrokerItem extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "address") //이 주소에는 추가로 ..동
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "road_address")
+    private String roadAddress;
 
     @Column(name = "dong")
     private String dong;
+
+    @Column(name = "road_dong")
+    private String roadDong;
+
+    @Column(name = "post_number")
+    private String postNumber;
 
     @Column(name = "x")
     private Double x;
@@ -45,7 +52,7 @@ public class BrokerItem extends BaseEntity {
     @Column(name = "y")
     private Double y;
 
-    @Enumerated(EnumType.STRING) //매물 상태 그 때 뭐뭐 하기로 했죠....?
+    @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
 
     @OneToOne(mappedBy = "brokerItem",cascade = CascadeType.ALL)
@@ -58,19 +65,9 @@ public class BrokerItem extends BaseEntity {
     @JoinColumn(name = "broker_option_id")
     private BrokerOption brokerOption;
 
-
-//    public void setItemImages(List<ItemImage> itemImages) {
-//        // 기존 이미지들의 참조를 제거
-//        if (this.itemImages != null) {
-//            this.itemImages.forEach(image -> image.setBrokerItem(null));
-//        }
-//        // 새로운 이미지 리스트와 이 BrokerItem 인스턴스의 연결을 설정
-//        itemImages.forEach(image -> image.setBrokerItem(this));
-//        // 이 BrokerItem의 itemImages 필드를 새로운 리스트로 업데이트
-//        this.itemImages = itemImages;
-//    }
-
-
+    public void setItemStatus(ItemStatus itemStatus) {
+        this.itemStatus = itemStatus;
+    }
     public void setDetails(List<ItemImage> itemImages, ItemContent itemContent) {
         this.itemImages = itemImages;
         this.itemContent = itemContent;
@@ -81,7 +78,29 @@ public class BrokerItem extends BaseEntity {
             throw new BrokerItemException(ErrorStatus.BROKER_ITEM_NOT_FOUND);
         }
         this.brokerOption = brokerOption;
-//        brokerOption.setBrokerItem(this);
+    }
+
+    public void updateAddressDetail(String address, String roadAddress, String dong, String roadDong, String postNumber, Double x, Double y) {
+
+        this.address = address;
+        this.roadAddress = roadAddress;
+        this.dong = dong;
+        this.roadDong = roadDong;
+        this.postNumber = postNumber;
+        this.x = x;
+        this.y = y;
+    }
+
+    public void updateItemContent(ItemContent itemContent) {
+        this.itemContent = itemContent;
+    }
+
+    public void updateItemImages(List<ItemImage> itemImages) {
+        this.itemImages = itemImages;
+    }
+
+    public void updateOptions(BrokerOption brokerOption) {
+        this.brokerOption = brokerOption;
     }
 
 }

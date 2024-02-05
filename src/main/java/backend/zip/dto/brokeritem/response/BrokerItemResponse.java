@@ -2,6 +2,7 @@ package backend.zip.dto.brokeritem.response;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.broker.BrokerOption;
+import backend.zip.domain.enums.ItemStatus;
 import backend.zip.domain.item.ItemContent;
 import backend.zip.domain.item.ItemImage;
 import lombok.Builder;
@@ -15,14 +16,16 @@ import java.util.List;
 @Builder
 public class BrokerItemResponse {
     private Long brokerItemId;
+    private ItemStatus itemStatus;
     private BrokerItemAddressResponse addressResponse;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemResponse(Long brokerItemId, BrokerItemAddressResponse addressResponse,
+    public BrokerItemResponse(Long brokerItemId,ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
                               BrokerItemDetailResponse detailResponse,
                               BrokerItemOptionResponse optionResponse) {
         this.brokerItemId = brokerItemId;
+        this.itemStatus = itemStatus;
         this.addressResponse = addressResponse;
         this.detailResponse = detailResponse;
         this.optionResponse = optionResponse;
@@ -36,11 +39,47 @@ public class BrokerItemResponse {
 
         // BrokerOptionResponse 생성
         BrokerOption brokerOption = savedBrokerItem.getBrokerOption();
-        BrokerItemOptionResponse optionResponse = new BrokerItemOptionResponse(brokerOption);
+        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
+                brokerOption.getBrokerOptionId(),brokerOption.getBrokerDealTypes(),brokerOption.getRoomType()
+        ,brokerOption.getRoomSize(),brokerOption.getBrokerFloors(),brokerOption.getBrokerManagementOptions(),brokerOption.getBrokerInternalFacilities()
+        ,brokerOption.getBrokerExtraFilters(),brokerOption.getApprovedDate());
 
         // BrokerItemResponse 생성
-        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),addressResponse, detailResponse, optionResponse);
+        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),savedBrokerItem.getItemStatus(),addressResponse, detailResponse, optionResponse);
 
         return itemResponse;
     }
+
+
+    public static BrokerItemResponse getBrokerItemResponse(BrokerItem brokerItem) {
+        BrokerItemAddressResponse addressResponse = BrokerItemAddressResponse.of(
+                brokerItem.getAddress(),
+                brokerItem.getRoadAddress(),
+                brokerItem.getDong(),
+                brokerItem.getRoadDong(),
+                brokerItem.getPostNumber(),
+                brokerItem.getX(),
+                brokerItem.getY()
+        );
+
+        BrokerItemDetailResponse detailResponse = BrokerItemDetailResponse.of(
+                brokerItem.getItemImages(),
+                brokerItem.getItemContent()
+        );
+
+        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
+                brokerItem.getBrokerOption().getBrokerOptionId(),
+                brokerItem.getBrokerOption().getBrokerDealTypes(),
+                brokerItem.getBrokerOption().getRoomType(),
+                brokerItem.getBrokerOption().getRoomSize(),
+                brokerItem.getBrokerOption().getBrokerFloors(),
+                brokerItem.getBrokerOption().getBrokerManagementOptions(),
+                brokerItem.getBrokerOption().getBrokerInternalFacilities(),
+                brokerItem.getBrokerOption().getBrokerExtraFilters(),
+                brokerItem.getBrokerOption().getApprovedDate()
+        );
+
+        return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
+    }
+
 }
