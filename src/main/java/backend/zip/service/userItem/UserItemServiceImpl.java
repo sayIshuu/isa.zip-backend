@@ -3,7 +3,7 @@ package backend.zip.service.userItem;
 import backend.zip.domain.user.UserItem;
 import backend.zip.domain.user.UserOption;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
-import backend.zip.repository.UserItemRepository;
+import backend.zip.Repository.schedule.UserItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

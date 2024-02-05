@@ -1,9 +1,8 @@
-package backend.zip.service;
+package backend.zip.service.event;
 
 import backend.zip.domain.schedule.Event;
-import backend.zip.repository.EventRepository;
+import backend.zip.Repository.event.EventRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

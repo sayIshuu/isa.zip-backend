@@ -1,4 +1,4 @@
-package backend.zip.service.impl;
+package backend.zip.service.schedule;
 
 import backend.zip.domain.schedule.Schedule;
 import backend.zip.domain.user.User;
@@ -6,7 +6,6 @@ import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
 import backend.zip.repository.ScheduleRepository;
 import backend.zip.repository.UserRepository;
-import backend.zip.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

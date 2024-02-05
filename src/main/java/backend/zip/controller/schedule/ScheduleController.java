@@ -1,13 +1,12 @@
-package backend.zip.controller;
+package backend.zip.controller.schedule;
 
 import backend.zip.domain.schedule.Schedule;
-import backend.zip.dto.brokeritem.response.BrokerItemResponse;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
 import backend.zip.dto.schedule.response.ScheduleResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.security.SecurityUtils;
-import backend.zip.service.ScheduleService;
+import backend.zip.service.schedule.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package backend.zip.repository;
+package backend.zip.Repository.event;
 
 import backend.zip.domain.schedule.Event;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package backend.zip.repository;
+package backend.zip.Repository.schedule;
 
 import backend.zip.domain.user.User;
 import backend.zip.domain.user.UserItem;

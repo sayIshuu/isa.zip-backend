@@ -1,7 +1,7 @@
-package backend.zip.controller;
+package backend.zip.controller.event;
 
 
-import backend.zip.service.EventService;
+import backend.zip.service.event.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
