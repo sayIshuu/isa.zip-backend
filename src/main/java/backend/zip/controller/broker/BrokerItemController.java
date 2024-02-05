@@ -10,8 +10,8 @@ import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.global.status.SuccessStatus;
 import backend.zip.security.SecurityUtils;
 import backend.zip.service.broker.BrokerItemAddressService;
-import backend.zip.service.broker.BrokerItemDetailService;
 import backend.zip.service.broker.BrokerItemService;
+import backend.zip.service.broker.BrokerItemShowService;
 import backend.zip.service.map.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -29,6 +29,7 @@ import static backend.zip.dto.brokeritem.response.BrokerItemResponse.getBrokerIt
 @RequestMapping(value = "/brokers")
 public class BrokerItemController {
     private final BrokerItemAddressService brokerItemAddressService;
+    private final BrokerItemShowService brokerItemShowService;
     private final BrokerItemService brokerItemService;
     private final AddressService addressService;
 
@@ -38,6 +39,9 @@ public class BrokerItemController {
     })
     @GetMapping(value = "/map", produces = "application/json;charset=UTF-8")
     public ApiResponse<List<AddressResponse>> returnAddress(@RequestParam("address") String roadFullAddress) {
+//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+//        Long userId = Long.valueOf(loggedInUserId);
+//        brokerItemShowService.checkBroker(userId);
         String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
         List<AddressResponse> addressResponses = AddressConfig.extractAddress(kaKaoApiFromInputAddress);
         return ApiResponse.onSuccess(addressResponses);
@@ -53,11 +57,10 @@ public class BrokerItemController {
                                                               @RequestPart("detailsRequest") AddBrokerItemDetailsRequest detailsRequest,
                                                               @RequestPart("optionsRequest") AddBrokerItemOptionsRequest optionsRequest,
                                                               @RequestPart("multipartFiles") MultipartFile[] multipartFiles) {
-
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
         Long userId = Long.valueOf(loggedInUserId);
-
-        //주소만 저장된 매물 아이템
+//        brokerItemShowService.checkBroker(userId);
+//        주소만 저장된 매물 아이템
         String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
         BrokerItemAddressResponse addressResponse = addressService.returnAddressInfo(kaKaoApiFromInputAddress);
         BrokerItem savedBrokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddressName(), addressResponse.getRoadName()
