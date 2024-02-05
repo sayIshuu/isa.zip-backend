@@ -8,4 +8,7 @@ public interface BrokerItemShowService {
     List<BrokerItem> findBrokerItemList(Long userId);
 
     BrokerItem findBrokerItem(Long brokerItemId);
+
+    void checkBroker(Long userId);
+
 }

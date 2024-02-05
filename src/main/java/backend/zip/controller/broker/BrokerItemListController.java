@@ -3,6 +3,8 @@ package backend.zip.controller.broker;
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.dto.brokeritem.response.BrokerItemResponse;
 import backend.zip.global.apipayload.ApiResponse;
+import backend.zip.global.exception.user.UserException;
+import backend.zip.global.status.ErrorStatus;
 import backend.zip.security.SecurityUtils;
 import backend.zip.service.broker.BrokerItemShowService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +35,7 @@ public class BrokerItemListController {
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
         Long userId = Long.valueOf(loggedInUserId);
 
+//        brokerItemShowService.checkBroker(userId);
         List<BrokerItem> brokerItemList = brokerItemShowService.findBrokerItemList(userId);
         List<BrokerItemResponse> findAllBrokerItemList = brokerItemList.stream()
                 .map(brokerItem -> getBrokerItemResponse(brokerItem))

@@ -17,6 +17,7 @@ public enum ErrorStatus implements BaseErrorCode {
 
     //User 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_001", "존재 하지 않는 사용자 입니다."),
+    USER_NOT_AUTHENTICATION_BROKER(HttpStatus.NOT_FOUND,"USER_002","인증되지 않은 공인중개사입니다."),
 
     //Auth 관련 에러
     NO_SUCH_ALGORITHM(HttpStatus.INTERNAL_SERVER_ERROR, "NO_SUCH_ALGORITHM", "알 수 없는 알고리즘입니다."),
