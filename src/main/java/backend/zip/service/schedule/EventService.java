@@ -1,7 +1,7 @@
-package backend.zip.service.event;
+package backend.zip.service.schedule;
 
 import backend.zip.domain.schedule.Event;
-import backend.zip.Repository.event.EventRepository;
+import backend.zip.Repository.schedule.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

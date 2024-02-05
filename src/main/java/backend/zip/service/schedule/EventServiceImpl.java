@@ -1,4 +1,4 @@
-package backend.zip.service.event;
+package backend.zip.service.schedule;
 
 public interface EventServiceImpl {
 }
