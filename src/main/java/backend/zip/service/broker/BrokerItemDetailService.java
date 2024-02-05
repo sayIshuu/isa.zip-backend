@@ -14,4 +14,8 @@ public interface BrokerItemDetailService {
 
     public List<ItemImage> saveBrokerItemImageDetails(MultipartFile[] brokerItemImg, BrokerItem brokerItem);
 
+    public ItemContent updateBrokerItemContent(Long brokerItemId, AddBrokerItemDetailsRequest detailsRequest);
+
+    public List<ItemImage> updateBrokerItemImages(Long brokerItemId, MultipartFile[] multipartFiles);
+
 }

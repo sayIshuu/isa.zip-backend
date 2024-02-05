@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @Getter
 public class AddBrokerItemDetailsRequest {
-    private MultipartFile[] brokerItemImg;
+//    private MultipartFile[] brokerItemImg;
     private String shortIntroduction;
     private String specificIntroduction;
 
