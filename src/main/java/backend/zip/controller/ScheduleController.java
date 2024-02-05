@@ -6,6 +6,7 @@ import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
 import backend.zip.dto.schedule.response.ScheduleResponse;
 import backend.zip.global.apipayload.ApiResponse;
+import backend.zip.security.SecurityUtils;
 import backend.zip.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,11 @@ import java.util.Optional;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @GetMapping("{userId}/schedule")
-    public ApiResponse<ScheduleResponse> getSchedule(@PathVariable Long userId) {
+    @GetMapping("/schedule")
+    public ApiResponse<ScheduleResponse> getSchedule() {
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
         Optional<Schedule> optionalSchedule = scheduleService.getScheduleByUserId(userId);
 
         if (optionalSchedule.isPresent()) {
@@ -35,9 +39,11 @@ public class ScheduleController {
 //        }
     }
 
-    @PostMapping("{userId}/schedule")
-    public ApiResponse<ScheduleResponse> addSchedule(@PathVariable Long userId, @RequestBody AddScheduleRequest request) {
-
+    @PostMapping("/schedule")
+    public ApiResponse<ScheduleResponse> addSchedule(@RequestBody AddScheduleRequest request) {
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
         Schedule schedule = scheduleService.addSchedule(userId, request);
 
         ScheduleResponse scheduleResponse = ScheduleResponse.fromEntity(schedule);
@@ -46,12 +52,13 @@ public class ScheduleController {
 //        return null;
     }
 
-    @PutMapping("{userId}/schedule")
+    @PutMapping("/schedule")
     public ApiResponse<ScheduleResponse> updateSchedule(
-            @PathVariable Long userId,
             @RequestBody UpdateScheduleRequest request
     ) {
-
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
         Optional<Schedule> optionalSchedule = scheduleService.updateSchedule(userId, request);
 
         if (optionalSchedule.isPresent()) {
@@ -66,8 +73,11 @@ public class ScheduleController {
 //        }
     }
 
-    @DeleteMapping("{userId}/schedule")
-    public ApiResponse<String> deleteSchedule(@PathVariable Long userId) {
+    @DeleteMapping("/schedule")
+    public ApiResponse<String> deleteSchedule() {
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
         scheduleService.deleteSchedule(userId);
         return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
     }
