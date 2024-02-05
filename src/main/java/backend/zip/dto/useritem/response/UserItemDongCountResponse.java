@@ -8,18 +8,18 @@ import java.util.Map;
 
 @NoArgsConstructor
 @Getter
-public class UserItemDongGunResponse {
+public class UserItemDongCountResponse {
     private String dong;
     private Long dongCount;
 
-    public UserItemDongGunResponse(String dong, Long dongCount) {
+    public UserItemDongCountResponse(String dong, Long dongCount) {
         this.dong = dong;
         this.dongCount = dongCount;
     }
 
-    public static List<UserItemDongGunResponse> from(Map<String, Long> dongCountMap) {
+    public static List<UserItemDongCountResponse> from(Map<String, Long> dongCountMap) {
         return dongCountMap.entrySet().stream()
-                .map(entry -> new UserItemDongGunResponse(entry.getKey(), entry.getValue()))
+                .map(entry -> new UserItemDongCountResponse(entry.getKey(), entry.getValue()))
                 .toList();
     }
 }

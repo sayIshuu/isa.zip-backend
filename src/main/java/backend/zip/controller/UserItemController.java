@@ -1,9 +1,9 @@
 package backend.zip.controller;
 
-import backend.zip.domain.user.UserItem;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
 import backend.zip.dto.useritem.response.UserItemAddressResponse;
-import backend.zip.dto.useritem.response.UserItemDongGunResponse;
+import backend.zip.dto.useritem.response.UserItemByDongResponse;
+import backend.zip.dto.useritem.response.UserItemDongCountResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.security.SecurityUtils;
 import backend.zip.service.userItem.UserItemServiceImpl;
@@ -26,11 +26,16 @@ public class UserItemController {
     // 추후 공인중개사가 가지고 있는 지역의 매물 요청만 뜨게끔 broker코드와 조율해야합니다.
     // 리스폰스 dto 따로 만들어서 동 저장, 동당 건수 세는 로직으로 저장해서 리턴
     @Operation(summary = "유저 매물 요청 동별로 조회", description = "모든 유저가 요청한 매물 요청들의 동,동당건수를 조회합니다.")
-    @GetMapping("/items")
-    public ApiResponse<List<UserItemDongGunResponse>> getUserItemDongGun() {
-        return ApiResponse.onSuccess(userItemService.getUserItemDongGun());
+    @GetMapping("/items/dong-count")
+    public ApiResponse<List<UserItemDongCountResponse>> getUserItemDongCount() {
+        return ApiResponse.onSuccess(userItemService.getUserItemDongCount());
     }
 
+    @Operation(summary = "유저 매물 요청 전체조회", description = "동별로 요청된 매물 정보를 조회합니다.")
+    @GetMapping("/items")
+    public ApiResponse<List<UserItemByDongResponse>> getUserItemSortedByDong() {
+        return ApiResponse.onSuccess(userItemService.getUserItemSortedByDong());
+    }
 
     /*
     @GetMapping("{userId}/items")
