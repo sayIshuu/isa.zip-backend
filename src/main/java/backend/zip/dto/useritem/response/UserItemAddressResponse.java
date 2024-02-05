@@ -13,4 +13,8 @@ public class UserItemAddressResponse {
         this.address = address;
         this.dong = dong;
     }
+
+    public static UserItemAddressResponse from(String address, String dong) {
+        return new UserItemAddressResponse(address, dong);
+    }
 }
