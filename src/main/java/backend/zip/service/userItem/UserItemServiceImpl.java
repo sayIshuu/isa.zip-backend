@@ -3,10 +3,15 @@ package backend.zip.service.userItem;
 import backend.zip.domain.user.UserItem;
 import backend.zip.domain.user.UserOption;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
+import backend.zip.dto.useritem.response.UserItemDongGunResponse;
 import backend.zip.repository.UserItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -51,4 +56,12 @@ public class UserItemServiceImpl implements UserItemService{
 
         return userItem;
     }
+
+    public List<UserItemDongGunResponse> getUserItemDongGun() {
+        List<String> dongList = userItemRepository.findAllDongs();
+        Map<String, Long> dongCountMap = dongList.stream()
+                .collect(Collectors.groupingBy(dong -> dong, Collectors.counting()));
+        return UserItemDongGunResponse.from(dongCountMap);
+    }
+
 }

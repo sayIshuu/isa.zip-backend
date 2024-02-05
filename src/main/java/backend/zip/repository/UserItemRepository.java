@@ -2,6 +2,7 @@ package backend.zip.repository;
 
 import backend.zip.domain.user.User;
 import backend.zip.domain.user.UserItem;
+import backend.zip.dto.useritem.response.UserItemDongGunResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -32,4 +34,8 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
 
     // 특정 UserItem을 삭제하는데, User 객체와의 조인 조건 추가
     void deleteByUserId(Long userId);
+
+    // UserItem의 dong을 모두 찾기
+    @Query("SELECT u.dong FROM UserItem u")
+    List<String> findAllDongs();
 }
