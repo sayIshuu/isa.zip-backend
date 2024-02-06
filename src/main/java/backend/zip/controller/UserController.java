@@ -1,5 +1,6 @@
 package backend.zip.controller;
 
+import backend.zip.dto.user.request.UserRequest;
 import backend.zip.dto.user.response.UserResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.service.UserService;
@@ -26,9 +27,9 @@ public class UserController {
     }
 
     // 프로필 수정
-    @PutMapping("/users/{userId}/change-profile")
-    public String updateProfile() {
-        return null;
+    @PutMapping("/users")
+    public ApiResponse<UserResponse.ProfileResponse> updateProfile(@RequestBody UserRequest.ProfileRequest profileRequest) {
+        return ApiResponse.onSuccess("프로필이 수정되었습니다.", userService.updateProfile(profileRequest));
     }
 
     // 로그아웃
