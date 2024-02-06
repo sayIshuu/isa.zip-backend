@@ -1,12 +1,10 @@
-package backend.zip.service.broker;
+package backend.zip.service.brokeritem;
 
-import backend.zip.config.AmazonConfig;
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.item.ItemContent;
 import backend.zip.domain.item.ItemImage;
 import backend.zip.domain.s3.Uuid;
 import backend.zip.dto.brokeritem.request.AddBrokerItemDetailsRequest;
-import backend.zip.dto.brokeritem.response.BrokerItemDetailResponse;
 import backend.zip.global.aws.s3.AmazonS3Manager;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
