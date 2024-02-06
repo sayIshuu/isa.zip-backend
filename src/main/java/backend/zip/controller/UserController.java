@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -28,8 +29,8 @@ public class UserController {
 
     // 프로필 수정
     @PutMapping("/users")
-    public ApiResponse<UserResponse.ProfileResponse> updateProfile(@RequestBody UserRequest.ProfileRequest profileRequest) {
-        return ApiResponse.onSuccess("프로필이 수정되었습니다.", userService.updateProfile(profileRequest));
+    public ApiResponse<UserResponse.ProfileResponse> updateProfile(@RequestPart(required = false) MultipartFile userImg, @RequestPart(required = false) String nickName, @RequestPart(required = false) String password) {
+        return ApiResponse.onSuccess("프로필이 수정되었습니다.", userService.updateProfile(userImg, nickName, password));
     }
 
     // 로그아웃
