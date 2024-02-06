@@ -47,6 +47,10 @@ public class User extends BaseEntity {
     @Column(name = "review_point")
     private Integer reviewPoint;
 
+    public void updateUserImg(String url) {
+        this.userImg = url;
+    }
+
     public void updateNickName(String nickName) {
         this.nickName = nickName;
     }

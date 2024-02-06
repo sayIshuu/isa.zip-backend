@@ -6,11 +6,4 @@ import lombok.Builder;
 import lombok.Getter;
 
 public class UserRequest {
-    @Getter
-    public static class ProfileRequest{
-        String userImg;
-        String nickName;
-        String password;
-
-    }
 }
