@@ -15,7 +15,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @AllArgsConstructor
 @Builder
 //@DynamicInsert
-//@DynamicUpdate
+@DynamicUpdate
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //기본 키이며 자동으로 1씩 증가함
@@ -35,6 +35,9 @@ public class User extends BaseEntity {
     @Column(name = "nickname",nullable = false)
     private String nickName;
 
+    @Column(name = "user_img")
+    private String userImg;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -43,5 +46,13 @@ public class User extends BaseEntity {
 
     @Column(name = "review_point")
     private Integer reviewPoint;
+
+    public void updateNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void updatePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
 
 }
