@@ -1,17 +1,19 @@
-package backend.zip.service.broker;
+package backend.zip.service.brokeritem;
 
 import backend.zip.domain.broker.BrokerItem;
-import backend.zip.domain.enums.Role;
 import backend.zip.domain.user.User;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.exception.user.UserException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.UserRepository;
 import backend.zip.repository.broker.BrokerItemRepository;
+import backend.zip.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static backend.zip.domain.enums.Role.ROLE_USER;
 
@@ -44,10 +46,29 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
     }
 
     @Override
-    public void checkBroker(Long userId) {
+    public Long checkBroker() {
+        Long userId = Long.valueOf(SecurityUtils.getLoggedInUserId());
         User user = userRepository.findById(userId).get();
         if (user.getRole() == ROLE_USER) {
             throw new UserException(ErrorStatus.USER_NOT_AUTHENTICATION_BROKER);
         }
+        return userId;
+    }
+
+    @Override
+    public Set<String> findDongOfBrokerItem(Long userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(ErrorStatus.USER_NOT_FOUND));
+
+//        Set<String> collect = brokerItemRepository.findBrokerItemByUser(userId).stream()
+//                .map(brokerItem -> brokerItem.getDong())
+//                .collect(Collectors.toSet());
+//
+//        System.out.println("collect = " + collect);
+
+
+        return brokerItemRepository.findBrokerItemByUser(userId).stream()
+                .map(brokerItem -> brokerItem.getDong())
+                .collect(Collectors.toSet());
     }
 }

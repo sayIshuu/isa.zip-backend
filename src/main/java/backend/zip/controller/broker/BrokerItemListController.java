@@ -3,10 +3,8 @@ package backend.zip.controller.broker;
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.dto.brokeritem.response.BrokerItemResponse;
 import backend.zip.global.apipayload.ApiResponse;
-import backend.zip.global.exception.user.UserException;
-import backend.zip.global.status.ErrorStatus;
 import backend.zip.security.SecurityUtils;
-import backend.zip.service.broker.BrokerItemShowService;
+import backend.zip.service.brokeritem.BrokerItemShowService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -32,15 +30,10 @@ public class BrokerItemListController {
     })
     @GetMapping(value = "items/show")
     public ApiResponse<List<BrokerItemResponse>> findBrokerItemList() {
-        String loggedInUserId = SecurityUtils.getLoggedInUserId();
-        Long userId = Long.valueOf(loggedInUserId);
-
-//        brokerItemShowService.checkBroker(userId);
-        List<BrokerItem> brokerItemList = brokerItemShowService.findBrokerItemList(userId);
+        List<BrokerItem> brokerItemList = brokerItemShowService.findBrokerItemList(brokerItemShowService.checkBroker());
         List<BrokerItemResponse> findAllBrokerItemList = brokerItemList.stream()
                 .map(brokerItem -> getBrokerItemResponse(brokerItem))
                 .collect(Collectors.toList());
-
 
         return ApiResponse.onSuccess(findAllBrokerItemList);
     }
