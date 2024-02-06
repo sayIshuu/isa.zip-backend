@@ -40,4 +40,8 @@ public class ItemContent extends BaseEntity {
         this.brokerItem = brokerItem;
     }
 
+    public void updateDetails(String shortIntroduction, String specificIntroduction) {
+        this.shortIntroduction = shortIntroduction;
+        this.specificIntroduction = specificIntroduction;
+    }
 }

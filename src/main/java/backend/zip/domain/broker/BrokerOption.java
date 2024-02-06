@@ -26,27 +26,17 @@ public class BrokerOption extends BaseEntity {
     private Long brokerOptionId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "room_type")
+    @Column(name = "broker_room_type")
     private RoomType roomType;
 
     @Column(name = "broker_room_size")
     private String roomSize;
-
-//    @Column(name = "broker_custom_floor")
-//    private String customFloor;
-//
-//    @Column(name = "broker_floor")
-//    private Floor floor;
-
-//    @Column(name = "management_price")
-//    private Integer managementPrice;
 
     @Column(name = "broker_approved_date")
     @Enumerated(EnumType.STRING)
     private ApproveDate approvedDate;
 
     @OneToOne(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    @JsonBackReference
     private BrokerItem brokerItem;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)

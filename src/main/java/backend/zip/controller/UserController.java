@@ -1,5 +1,7 @@
 package backend.zip.controller;
 
+import backend.zip.dto.user.request.UserRequest;
+import backend.zip.dto.user.response.UserResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,16 +16,20 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+    @Operation(summary = "프로필 조회", description = "프로필을 조회하는 API입니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
     // 프로필 조회
-    @GetMapping("/users/{userId}")
-    public String getProfile() {
-        return null;
+    @GetMapping("/users")
+    public ApiResponse<UserResponse.ProfileResponse> getProfile() {
+        return ApiResponse.onSuccess(userService.getProfile());
     }
 
     // 프로필 수정
-    @PutMapping("/users/{userId}/change-profile")
-    public String updateProfile() {
-        return null;
+    @PutMapping("/users")
+    public ApiResponse<UserResponse.ProfileResponse> updateProfile(@RequestBody UserRequest.ProfileRequest profileRequest) {
+        return ApiResponse.onSuccess("프로필이 수정되었습니다.", userService.updateProfile(profileRequest));
     }
 
     // 로그아웃
@@ -38,7 +44,7 @@ public class UserController {
     }
 
     // 회원 탈퇴
-    @Operation(summary = "회원 탈퇴", description = "회원 탈퇴하는 API입니다.")
+    @Operation(summary = "회원 탈퇴", description = "회원을 탈퇴하는 API입니다.")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })

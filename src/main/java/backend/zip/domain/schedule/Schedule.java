@@ -33,25 +33,11 @@ public class Schedule extends BaseEntity {
     @Column(name = "move_date")
     private LocalDate moveDate;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setMoveDate(LocalDate moveDate){
+    public void setMoveDate(LocalDate moveDate) {
         this.moveDate = moveDate;
     }
 
-    public LocalDate getMoveDate()
-    {
-        return this.moveDate;
-    }
-
-    public void setPeriod(Period period)
-    {
+    public void setPeriod(Period period) {
         this.period = period;
-    }
-
-    public Period getPeriod(){
-        return this.period;
     }
 }

@@ -1,115 +1,122 @@
 package backend.zip.controller.broker;
 
+import backend.zip.config.AddressConfig;
 import backend.zip.domain.broker.BrokerItem;
-import backend.zip.domain.broker.BrokerOption;
-import backend.zip.domain.item.ItemContent;
-import backend.zip.domain.item.ItemImage;
+import backend.zip.domain.enums.ItemStatus;
 import backend.zip.dto.brokeritem.request.AddBrokerItemDetailsRequest;
 import backend.zip.dto.brokeritem.request.AddBrokerItemOptionsRequest;
-import backend.zip.dto.brokeritem.response.BrokerItemAddressResponse;
-import backend.zip.dto.brokeritem.response.BrokerItemDetailResponse;
-import backend.zip.dto.brokeritem.response.BrokerItemOptionResponse;
-import backend.zip.dto.brokeritem.response.BrokerItemResponse;
+import backend.zip.dto.brokeritem.response.*;
 import backend.zip.global.apipayload.ApiResponse;
+import backend.zip.global.status.SuccessStatus;
+import backend.zip.security.SecurityUtils;
 import backend.zip.service.broker.BrokerItemAddressService;
-import backend.zip.service.broker.BrokerItemDetailService;
-import backend.zip.service.broker.BrokerItemOptionService;
-import backend.zip.service.broker.BrokerItemSaveService;
+import backend.zip.service.broker.BrokerItemService;
+import backend.zip.service.broker.BrokerItemShowService;
 import backend.zip.service.map.AddressService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static backend.zip.dto.brokeritem.response.BrokerItemResponse.getBrokerItemResponse;
+
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/brokers")
 public class BrokerItemController {
     private final BrokerItemAddressService brokerItemAddressService;
-    private final BrokerItemDetailService brokerItemDetailService;
-    private final BrokerItemOptionService brokerItemOptionService;
-    private final BrokerItemSaveService brokerItemSaveService;
+    private final BrokerItemShowService brokerItemShowService;
+    private final BrokerItemService brokerItemService;
     private final AddressService addressService;
 
-    /**
-     * 주소 입력 받으면 주소, 동, x좌표, y좌표 저장
-     */
-    @GetMapping(value = "/{userId}/map", produces = "application/json;charset=UTF-8")
-    public ApiResponse<BrokerItemAddressResponse> saveAddress(@PathVariable Long userId,
-                                                              @RequestParam("address") String roadFullAddress) {
-
+    @Operation(summary = "매물 새로 등록 시 Step 1 주소 입력 하기", description = "주소를 입력하면 관련된 주소를 반환해 줍니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @GetMapping(value = "/map", produces = "application/json;charset=UTF-8")
+    public ApiResponse<List<AddressResponse>> returnAddress(@RequestParam("address") String roadFullAddress) {
+//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+//        Long userId = Long.valueOf(loggedInUserId);
+//        brokerItemShowService.checkBroker(userId);
         String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
-        BrokerItemAddressResponse brokerItemAddressResponse = addressService.returnAddressAndDongAndXY(kaKaoApiFromInputAddress);
-
-        brokerItemAddressService.saveBrokerItemAddress(userId,brokerItemAddressResponse.getAddress()
-                , brokerItemAddressResponse.getDong(), brokerItemAddressResponse.getX(), brokerItemAddressResponse.getY());
-
-        return ApiResponse.onSuccess(brokerItemAddressResponse);
+        List<AddressResponse> addressResponses = AddressConfig.extractAddress(kaKaoApiFromInputAddress);
+        return ApiResponse.onSuccess(addressResponses);
     }
 
-//    /**
-//     * 옵션 입력 받으면 옵션 저장
-//     */
-//    @PostMapping("/items/{brokerItemId}/options")
-//    public ApiResponse<BrokerItemOptionResponse> saveOptions(@PathVariable Long brokerItemId,
-//                                                             @RequestBody AddBrokerItemOptionsRequest addBrokerItemOptionsRequest) {
-//
-//        BrokerOption brokerOption = brokerItemOptionService.saveBrokerItemOptions(brokerItemId, addBrokerItemOptionsRequest);
-//        BrokerItemOptionResponse brokerItemOptionResponse = new BrokerItemOptionResponse(brokerOption);
-//
-//        return ApiResponse.onSuccess(brokerItemOptionResponse);
-//    }
 
-    /**
-     * 매물 올리기(공인중개사 입장에서 저장)
-     */
-    @PostMapping(value = "/{userId}/items",produces = "application/json;charset=UTF-8")
-    public ApiResponse<BrokerItemResponse> completeRegistration(@PathVariable Long userId,
-                                                                @RequestParam("address") String roadFullAddress,
-                                                                @RequestPart("detailsRequest") AddBrokerItemDetailsRequest detailsRequest,
-                                                                @RequestPart("optionsRequest") AddBrokerItemOptionsRequest optionsRequest,
-                                                                @RequestPart("multipartFiles") MultipartFile[] multipartFiles) {
-        /**
-         * 주소,동 ,x, y 좌표 저장
-         */
+    @Operation(summary = "매물 새로 등록 시 Step1 & 2 & 3", description = "공인중개사가 매물을 새로 등록할 수 있습니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @PostMapping(value = "/items", consumes = "multipart/form-data")
+    public ApiResponse<BrokerItemResponse> registerBrokerItem(@RequestParam("address") String roadFullAddress,
+                                                              @RequestPart("detailsRequest") AddBrokerItemDetailsRequest detailsRequest,
+                                                              @RequestPart("optionsRequest") AddBrokerItemOptionsRequest optionsRequest,
+                                                              @RequestPart("multipartFiles") MultipartFile[] multipartFiles) {
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
+//        brokerItemShowService.checkBroker(userId);
+//        주소만 저장된 매물 아이템
         String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
-        BrokerItemAddressResponse addressResponse = addressService.returnAddressAndDongAndXY(kaKaoApiFromInputAddress);
-        BrokerItem savedBrokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddress()
-                , addressResponse.getDong(), addressResponse.getX(), addressResponse.getY()); //주소만 저장된 매물 아이템
+        BrokerItemAddressResponse addressResponse = addressService.returnAddressInfo(kaKaoApiFromInputAddress);
+        BrokerItem savedBrokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddressName(), addressResponse.getRoadName()
+                , addressResponse.getDong(), addressResponse.getRoadDong(), addressResponse.getPostNumber(), addressResponse.getX(), addressResponse.getY());
 
-        MultipartFile[] brokerItemImg = detailsRequest.getBrokerItemImg();
-        brokerItemImg = multipartFiles;
 
         // 주소 저장과 디테일, 옵션 저장 로직을 하나의 트랜잭션으로 실행
-        savedBrokerItem = brokerItemSaveService.saveBrokerItem(userId,savedBrokerItem,
-                addressResponse.getAddress(), addressResponse.getDong(), addressResponse.getX(), addressResponse.getY(),
-                detailsRequest,
-                brokerItemImg,
-                optionsRequest
-        );
+        BrokerItem brokerItem = brokerItemService.saveBrokerItem(userId, savedBrokerItem, addressResponse, detailsRequest, multipartFiles, optionsRequest);
+        BrokerItemResponse brokerItemResponse = getBrokerItemResponse(brokerItem, addressResponse);
 
-        BrokerItemResponse itemResponse = getBrokerItemResponse(savedBrokerItem, addressResponse);
-
-        // 성공 응답 반환
-        return ApiResponse.onSuccess(itemResponse);
+        return ApiResponse.onSuccess(brokerItemResponse);
     }
 
-    private static BrokerItemResponse getBrokerItemResponse(BrokerItem savedBrokerItem, BrokerItemAddressResponse addressResponse) {
-        // BrokerDetailResponse 생성
-        List<ItemImage> itemImages = savedBrokerItem.getItemImages();
-        ItemContent itemContent = savedBrokerItem.getItemContent();
-        BrokerItemDetailResponse detailResponse = new BrokerItemDetailResponse(itemImages, itemContent);
-
-        // BrokerOptionResponse 생성
-        BrokerOption brokerOption = savedBrokerItem.getBrokerOption();
-        BrokerItemOptionResponse optionResponse = new BrokerItemOptionResponse(brokerOption);
-
-        // BrokerItemResponse 생성
-        BrokerItemResponse itemResponse = new BrokerItemResponse(addressResponse, detailResponse, optionResponse);
-
-        return itemResponse;
+    @Operation(summary = "매물을 삭제할 수 있습니다.", description = "공인중개사가 매물을 삭제 할 수 있습니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @DeleteMapping(value = "/items/{brokerItemId}")
+    public ApiResponse<SuccessStatus> deleteBrokerItem(@PathVariable Long brokerItemId) {
+        brokerItemService.deleteBrokerItem(brokerItemId);
+        return ApiResponse.onSuccess(SuccessStatus._OK);
     }
+
+    @Operation(summary = "매물 정보 업데이트", description = "매물의 정보를 업데이트합니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @PutMapping(value = "/items/{brokerItemId}")
+    public ApiResponse<BrokerItemResponse> updateBrokerItem(@PathVariable Long brokerItemId,
+                                                            @RequestParam(value = "address",required = false) String roadFullAddress,
+                                                            @RequestPart(value = "detailsRequest",required = false) AddBrokerItemDetailsRequest detailsRequest,
+                                                            @RequestPart(value = "optionsRequest",required = false) AddBrokerItemOptionsRequest optionsRequest,
+                                                            @RequestPart(value = "multipartFiles",required = false) MultipartFile[] multipartFiles) {
+
+//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+//        Long userId = Long.valueOf(loggedInUserId);
+
+        BrokerItem updateBrokerItem = brokerItemService.updateBrokerItem(brokerItemId, roadFullAddress, detailsRequest, optionsRequest, multipartFiles);
+        BrokerItemResponse brokerItemResponse = getBrokerItemResponse(updateBrokerItem);
+
+        return ApiResponse.onSuccess(brokerItemResponse);
+    }
+
+    @Operation(summary = "매물 SOLD OUT", description = "매물을 판매 완료 상태로 변경 합니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @PatchMapping(value = "/items/{brokerItemId}/soldout")
+    public ApiResponse<BrokerItemResponse> makeSoldOut(@PathVariable Long brokerItemId) {
+        BrokerItem soldBrokerItem = brokerItemService.makeBrokerItemSoldOut(brokerItemId);
+        BrokerItemResponse brokerItemResponse = getBrokerItemResponse(soldBrokerItem);
+
+        return ApiResponse.onSuccess(brokerItemResponse);
+    }
+
+
 }
 
 

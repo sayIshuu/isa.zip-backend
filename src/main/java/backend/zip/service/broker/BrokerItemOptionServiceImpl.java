@@ -3,97 +3,40 @@ package backend.zip.service.broker;
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.broker.BrokerOption;
 import backend.zip.domain.broker.options.*;
+import backend.zip.domain.enums.DealType;
+import backend.zip.domain.enums.ExtraFilter;
+import backend.zip.domain.enums.InternalFacility;
+import backend.zip.domain.enums.ManagementOption;
 import backend.zip.dto.brokeritem.request.AddBrokerItemOptionsRequest;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
+import backend.zip.repository.broker.option.*;
 import backend.zip.repository.broker.BrokerItemRepository;
 import backend.zip.repository.broker.BrokerOptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
     private final BrokerItemRepository brokerItemRepository;
     private final BrokerOptionRepository brokerOptionRepository;
+    private final BrokerDealTypeRepository brokerDealTypeRepository;
+    private final BrokerManagementOptionRepository brokerManagementOptionRepository;
+    private final BrokerFloorRepository brokerFloorRepository;
+    private final BrokerInternalFacilityRepository brokerInternalFacilityRepository;
+    private final BrokerExtraFilterRepository brokerExtraFilterRepository;
 
     @Override
     public BrokerOption saveBrokerItemOptions(AddBrokerItemOptionsRequest addBrokerItemOptionsRequest) {
-//        BrokerItem brokerItem = brokerItemRepository.findById(brokerItemId)
-//                .orElseThrow(() -> new BrokerItemException(ErrorStatus.BROKER_ITEM_NOT_FOUND));
-
         BrokerOption brokerOption = createBrokerOption(addBrokerItemOptionsRequest);
-        brokerOption = brokerOptionRepository.save(brokerOption);
-
-        // BrokerOption을 BrokerItem과 연결
-//        brokerItem.setBrokerOption(brokerOption);
-//        brokerItemRepository.save(brokerItem);
-
-        return brokerOption;
+        return brokerOptionRepository.save(brokerOption);
     }
 
-    private BrokerOption createBrokerOption(AddBrokerItemOptionsRequest optionsRequest) {
-
-        // DealType과 관련된 옵션 엔티티 생성 로직
-        List<BrokerDealType> dealTypes = optionsRequest.getDealTypes().stream()
-                .map(dealType -> {
-                    AddBrokerItemOptionsRequest.DealInfo dealInfo = optionsRequest.getDealInfoMap().get(dealType);
-
-                    return BrokerDealType.builder()
-                            .dealType(dealType)
-                            .price(dealInfo.getPrice())
-                            .deposit(dealInfo.getDeposit())
-                            .monthPrice(dealInfo.getMonthPrice())
-                            .build();
-
-                }).collect(Collectors.toList());
-
-
-        // Floor 리스트 생성 로직
-//        List<BrokerFloor> brokerFloors = new ArrayList<>();
-        if (optionsRequest.getSelectedFloor() != null) {
-            List<BrokerFloor> floors = optionsRequest.getSelectedFloor().stream()
-                    .map(floor -> BrokerFloor.builder()
-                            .floor(floor)
-                            .build())
-                    .collect(Collectors.toList());
-        }
-        if (optionsRequest.getCustomFloor() != null && !optionsRequest.getCustomFloor().isEmpty()) {
-            BrokerFloor floor = BrokerFloor.builder()
-                    .customFloor(optionsRequest.getCustomFloor())
-                    .build();
-        }
-
-
-        // ManagementOption 리스트 생성 로직
-        List<BrokerManagementOption> managementOptionEntities = optionsRequest.getManagementOptions().stream()
-                .map(managementOption ->
-                        BrokerManagementOption.builder()
-                                .managementOption(managementOption)
-                                .managementPrice(optionsRequest.getManagementPrice()) // 이 부분에 적절한 값을 설정
-                                .build()).collect(Collectors.toList());
-
-
-        // InternalFacility 리스트 생성 로직
-        List<BrokerInternalFacility> internalFacilityEntities = optionsRequest.getInternalFacilities().stream()
-                .map(internalFacility ->
-                        BrokerInternalFacility.builder()
-                                .internalFacility(internalFacility)
-                                .build()).collect(Collectors.toList());
-
-
-        // ExtraFilter 리스트 생성 로직
-        List<BrokerExtraFilter> extraFilterEntities = optionsRequest.getExtraFilters().stream()
-                .map(extraFilter ->
-                        BrokerExtraFilter.builder()
-                                .extraFilter(extraFilter)
-                                .build()).collect(Collectors.toList());
-
-
+    public BrokerOption createBrokerOption(AddBrokerItemOptionsRequest optionsRequest) {
         // BrokerOption 생성 로직
         BrokerOption brokerOption = BrokerOption.builder()
                 .roomType(optionsRequest.getRoomType())
@@ -112,7 +55,7 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
         return brokerOption;
     }
 
-    private void setBrokerOptionReference(AddBrokerItemOptionsRequest optionsRequest, BrokerOption brokerOption) {
+    public void setBrokerOptionReference(AddBrokerItemOptionsRequest optionsRequest, BrokerOption brokerOption) {
         //DealType 엔티티들에 BrokerOption 참조 설정
         optionsRequest.getDealTypes().forEach(dealType -> {
             AddBrokerItemOptionsRequest.DealInfo dealInfo = optionsRequest.getDealInfoMap().get(dealType);
@@ -136,8 +79,6 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
             brokerOption.getBrokerManagementOptions().add(management);
         });
 
-        System.out.println("optionsRequest = " + optionsRequest.getCustomFloor());
-        System.out.println("optionsRequest = " + optionsRequest.getSelectedFloor());
         // Floor 엔티티들에 BrokerOption 참조 설정
         if (optionsRequest.getCustomFloor()==null) {
             optionsRequest.getSelectedFloor().forEach(floor -> {
@@ -176,4 +117,91 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
         });
     }
 
+
+    @Transactional
+    @Override
+    public BrokerOption updateBrokerItemOptions(Long brokerItemId, AddBrokerItemOptionsRequest optionsRequest) {
+        // 1. 기존 옵션 조회
+        BrokerItem brokerItem = brokerItemRepository.findById(brokerItemId)
+                .orElseThrow(() -> new BrokerItemException(ErrorStatus.BROKER_ITEM_NOT_FOUND));
+        BrokerOption brokerOption = brokerItem.getBrokerOption();
+
+        brokerDealTypeRepository.deleteByBrokerOption(brokerOption);
+        brokerManagementOptionRepository.deleteByBrokerOption(brokerOption);
+        brokerFloorRepository.deleteByBrokerOption(brokerOption);
+        brokerInternalFacilityRepository.deleteByBrokerOption(brokerOption);
+        brokerExtraFilterRepository.deleteByBrokerOption(brokerOption);
+
+
+        brokerOption.setRoomType(optionsRequest.getRoomType());
+        brokerOption.setRoomSize(optionsRequest.getRoomSize());
+        brokerOption.setApprovedDate(optionsRequest.getApproveDate());
+
+        // DealType 업데이트
+        brokerOption.getBrokerDealTypes().clear(); // 기존 거래 유형을 모두 제거
+        for (DealType dealType : optionsRequest.getDealTypes()) {
+            AddBrokerItemOptionsRequest.DealInfo dealInfo = optionsRequest.getDealInfoMap().get(dealType);
+
+            BrokerDealType brokerDealType = BrokerDealType.builder()
+                    .dealType(dealType)
+                    .price(dealInfo.getPrice())
+                    .deposit(dealInfo.getDeposit())
+                    .monthPrice(dealInfo.getMonthPrice())
+                    .brokerOption(brokerOption) // 참조 설정
+                    .build();
+            brokerOption.getBrokerDealTypes().add(brokerDealType);
+        }
+
+        // ManagementOption 업데이트
+        brokerOption.getBrokerManagementOptions().clear(); // 기존 관리 옵션을 모두 제거
+        for (ManagementOption managementOption : optionsRequest.getManagementOptions()) {
+            BrokerManagementOption management = BrokerManagementOption.builder()
+                    .managementOption(managementOption)
+                    .managementPrice(optionsRequest.getManagementPrice())
+                    .brokerOption(brokerOption) // 참조 설정
+                    .build();
+            brokerOption.getBrokerManagementOptions().add(management);
+        }
+
+        // Floor 업데이트
+        brokerOption.getBrokerFloors().clear(); // 기존 층 정보를 모두 제거
+        // 선택된 층 정보가 있으면 업데이트
+        optionsRequest.getSelectedFloor().forEach(floor -> {
+            BrokerFloor brokerFloor = BrokerFloor.builder()
+                    .floor(floor)
+                    .brokerOption(brokerOption)
+                    .build();
+            brokerOption.getBrokerFloors().add(brokerFloor);
+        });
+        // 사용자 지정 층 정보가 있으면 업데이트
+        if (optionsRequest.getCustomFloor() != null) {
+            BrokerFloor brokerFloor = BrokerFloor.builder()
+                    .customFloor(optionsRequest.getCustomFloor())
+                    .brokerOption(brokerOption)
+                    .build();
+            brokerOption.getBrokerFloors().add(brokerFloor);
+        }
+
+        // InternalFacility 업데이트
+        brokerOption.getBrokerInternalFacilities().clear(); // 기존 내부 시설 정보를 모두 제거
+        for (InternalFacility internalFacility : optionsRequest.getInternalFacilities()) {
+            BrokerInternalFacility facility = BrokerInternalFacility.builder()
+                    .internalFacility(internalFacility)
+                    .brokerOption(brokerOption) // 참조 설정
+                    .build();
+            brokerOption.getBrokerInternalFacilities().add(facility);
+        }
+
+        // ExtraFilter 업데이트
+        brokerOption.getBrokerExtraFilters().clear(); // 기존 추가 필터 정보를 모두 제거
+        for (ExtraFilter extraFilter : optionsRequest.getExtraFilters()) {
+            BrokerExtraFilter filter = BrokerExtraFilter.builder()
+                    .extraFilter(extraFilter)
+                    .brokerOption(brokerOption) // 참조 설정
+                    .build();
+            brokerOption.getBrokerExtraFilters().add(filter);
+        }
+        brokerOptionRepository.save(brokerOption);
+        return brokerOption;
+    }
 }

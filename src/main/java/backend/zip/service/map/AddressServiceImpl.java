@@ -1,6 +1,7 @@
 package backend.zip.service.map;
 
 import backend.zip.dto.brokeritem.response.BrokerItemAddressResponse;
+import backend.zip.dto.useritem.response.UserItemAddressResponse;
 import backend.zip.global.exception.map.AddressException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.broker.BrokerItemRepository;
@@ -110,17 +111,34 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public BrokerItemAddressResponse returnAddressAndDongAndXY(String jsonString) {
+    public BrokerItemAddressResponse returnAddressInfo(String jsonString) {
+        JSONObject jsonResponse = new JSONObject(jsonString);
+        JSONArray documents = jsonResponse.getJSONArray("documents");
+        JSONObject document = documents.getJSONObject(0); // 첫 번째 문서 객체를 가져옴
+
+
+        String addressName = document.getJSONObject("address").getString("address_name");
+        String roadName = document.getString("address_name");
+        String postNumber = document.getJSONObject("road_address").getString("zone_no");
+        String dong = document.getJSONObject("address").getString("region_3depth_name");
+        String roadDong = document.getJSONObject("address").getString("region_3depth_h_name");
+        Double x = Double.valueOf(document.getString("x"));
+        Double y = Double.valueOf(document.getString("y"));
+
+        return BrokerItemAddressResponse.of(addressName,roadName,postNumber,dong,roadDong, x, y);
+    }
+
+
+    // 아예 함수 재사용할수도있는데 혼란없이 구분하기 좋게 일단은 따로 만들었습니다.
+    @Override
+    public UserItemAddressResponse returnUserItemAddressAndDong(String jsonString) {
         JSONObject jsonResponse = new JSONObject(jsonString);
         JSONArray documents = jsonResponse.getJSONArray("documents");
         JSONObject document = documents.getJSONObject(0); // 첫 번째 문서 객체를 가져옴
 
         String address = document.getJSONObject("address").getString("address_name");
         String dong = document.getJSONObject("address").getString("region_3depth_name");
-        Double x = Double.valueOf(document.getString("x"));
-        Double y = Double.valueOf(document.getString("y"));
 
-        return new BrokerItemAddressResponse(address, dong, x, y);
+        return new UserItemAddressResponse(address, dong);
     }
-
 }
