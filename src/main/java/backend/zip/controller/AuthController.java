@@ -33,7 +33,7 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
-    @PostMapping("/auth/authcode-request")
+    @PostMapping("/auth/code-request")
     public ApiResponse<String> authcodeRequest(@RequestBody AuthRequest.AuthcodeRequest AuthcodeRequest) {
         authService.sendCodeToEmail(AuthcodeRequest.getEmail());
         return ApiResponse.onSuccess("인증번호가 전송되었습니다.");
@@ -44,7 +44,7 @@ public class AuthController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
-    @PostMapping("/auth/authcode-check")
+    @PostMapping("/auth/code-check")
     public ApiResponse<String> authcodeCheck(@RequestBody AuthRequest.VerificationRequest verificationRequest) {
         authService.verifyCode(verificationRequest.getEmail(), verificationRequest.getCode());
         return ApiResponse.onSuccess("이메일 인증에 성공하셨습니다.");
