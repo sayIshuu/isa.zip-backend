@@ -6,6 +6,7 @@ import backend.zip.dto.useritem.response.UserItemByDongResponse;
 import backend.zip.dto.useritem.response.UserItemDongCountResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.security.SecurityUtils;
+import backend.zip.service.brokeritem.BrokerItemShowService;
 import backend.zip.service.userItem.UserItemServiceImpl;
 import backend.zip.service.map.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserItemController {
-
+    private final BrokerItemShowService brokerItemShowService;
     private final UserItemServiceImpl userItemService;
     private final AddressService addressService;
 
@@ -28,7 +29,8 @@ public class UserItemController {
     @Operation(summary = "유저 매물 요청 동별로 조회", description = "모든 유저가 요청한 매물 요청들의 동,동당건수를 조회합니다.")
     @GetMapping("/items/dong-count")
     public ApiResponse<List<UserItemDongCountResponse>> getUserItemDongCount() {
-        return ApiResponse.onSuccess(userItemService.getUserItemDongCount());
+        Long userId = brokerItemShowService.checkBroker();
+        return ApiResponse.onSuccess(userItemService.getUserItemDongCount(userId));
     }
 
     @Operation(summary = "유저 매물 요청 전체조회", description = "동별로 요청된 매물 정보를 조회합니다.")

@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserItemService {
     public UserItem saveUserItem(Long userId, String address, String dong, AddUserItemOptionsRequest addUserItemOptionsRequest);
 
-    List<UserItemDongCountResponse> getUserItemDongCount();
+    List<UserItemDongCountResponse> getUserItemDongCount(Long userId);
 
     List<UserItemByDongResponse> getUserItemSortedByDong();
 }
