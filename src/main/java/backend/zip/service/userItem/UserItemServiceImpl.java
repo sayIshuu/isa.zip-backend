@@ -28,9 +28,9 @@ public class UserItemServiceImpl implements UserItemService{
     private final UserRepository userRepository;
 
     public UserItem saveUserItem(Long userId,
-                             String address,
-                             String dong,
-                             AddUserItemOptionsRequest addUserItemOptionsRequest) {
+                                 String address,
+                                 String dong,
+                                 AddUserItemOptionsRequest addUserItemOptionsRequest) {
 
 
         // userItem 생성
