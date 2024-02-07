@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void authenticateBroker(AuthRequest.BrokerRequest brokerRequest) {
+    public void authenticateBroker(UserRequest.BrokerRequest brokerRequest) {
         Broker broker = brokerRepository.findById(brokerRequest.getBrokerId()).orElseThrow(() -> new BrokerNotFoundException(ErrorStatus.BROKER_NOT_FOUND));
 
         if(brokerRequest.getName() == null || !broker.getName().equals(brokerRequest.getName())) {

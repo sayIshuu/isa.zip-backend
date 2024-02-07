@@ -58,7 +58,7 @@ public class UserController {
 
     // 공인중개사 인증
     @PostMapping("/users/auth-broker")
-    public ApiResponse<String> authenticateBroker(@RequestBody AuthRequest.BrokerRequest brokerRequest) {
+    public ApiResponse<String> authenticateBroker(@RequestBody UserRequest.BrokerRequest brokerRequest) {
         userService.authenticateBroker(brokerRequest);
         return ApiResponse.onSuccess("공인중개사 인증이 완료되었습니다.");
     }

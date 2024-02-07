@@ -16,5 +16,5 @@ public interface UserService {
     UserResponse.ProfileResponse updateProfile(MultipartFile userImg, String nickName, String password);
     public void logout();
     void deleteUser();
-    void authenticateBroker(AuthRequest.BrokerRequest brokerRequest);
+    void authenticateBroker(UserRequest.BrokerRequest brokerRequest);
 }
