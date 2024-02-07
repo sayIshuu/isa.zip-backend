@@ -24,6 +24,7 @@ public enum ErrorStatus implements BaseErrorCode {
     DUPLICATED_EMAIL(HttpStatus.CONFLICT, "DUPLICATED_EMAIL", "존재하는 이메일 주소입니다."),
     UNABLE_TO_SEND_EMAIL(HttpStatus.INTERNAL_SERVER_ERROR, "UNABLE_TO_SEND_EMAIL", "이메일을 보낼 수 없습니다."),
     INVALID_AUTH_CODE(HttpStatus.BAD_REQUEST, "INVALID_AUTH_CODE", "일치하지 않는 인증번호 입니다."),
+    BROKER_NOT_FOUND(HttpStatus.NOT_FOUND, "BROKER_NOT_FOUND", "존재 하는 공인중개사가 없습니다."),
 
     //Token 관련 에러
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "INVALID_TOKEN", "유효하지 않은 토큰입니다."),
