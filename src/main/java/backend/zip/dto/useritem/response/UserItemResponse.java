@@ -10,13 +10,19 @@ import java.util.List;
 @Getter
 public class UserItemResponse {
     private Long userItemId;
+    private Long userId;
+    private String userNickname;
     private UserItemAddressResponse userItemAddressResponse;
     private UserItemOptionResponse userItemOptionsResponse;
 
     public UserItemResponse(Long userItemId,
+                            Long userId,
+                            String userNickname,
                             UserItemAddressResponse userItemAddressResponse,
                             UserItemOptionResponse userItemOptionsResponse) {
         this.userItemId = userItemId;
+        this.userId = userId;
+        this.userNickname = userNickname;
         this.userItemAddressResponse = userItemAddressResponse;
         this.userItemOptionsResponse = userItemOptionsResponse;
     }
@@ -24,6 +30,8 @@ public class UserItemResponse {
     public static UserItemResponse from(List<UserItem> value) {
         return new UserItemResponse(
                 value.get(0).getUserItemId(),
+                value.get(0).getUser().getId(), //이런식으로 조인되서 데이터 가져옴 성능 괜찮나
+                value.get(0).getUser().getNickName(),
                 UserItemAddressResponse.from(value.get(0).getAddress(), value.get(0).getDong()),
                 UserItemOptionResponse.from(
                         value.get(0).getUserOption().getUserOptionId(),
