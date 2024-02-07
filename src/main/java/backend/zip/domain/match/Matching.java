@@ -28,6 +28,9 @@ public class Matching extends BaseEntity {
     @JoinColumn(name = "broker_item_id")
     private BrokerItem brokerItem;
 
+    @Column(name = "match_dong") //매칭테이블에서 동으로 필터링 할 때(편의상)쓰이는 동
+    private Long matchDong;
+
     @Enumerated(EnumType.STRING)
     private MatchStatus matchStatus;
 
