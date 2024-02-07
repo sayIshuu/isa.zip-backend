@@ -1,4 +1,4 @@
-package backend.zip.service.broker;
+package backend.zip.service.brokeritem;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.user.User;

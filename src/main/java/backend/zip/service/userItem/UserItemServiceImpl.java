@@ -6,12 +6,14 @@ import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
 import backend.zip.dto.useritem.response.UserItemByDongResponse;
 import backend.zip.dto.useritem.response.UserItemDongCountResponse;
 import backend.zip.repository.UserItemRepository;
+import backend.zip.service.brokeritem.BrokerItemShowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class UserItemServiceImpl implements UserItemService{
     private final UserItemRepository userItemRepository;
     private final UserItemOptionService userItemOptionService;
+    private final BrokerItemShowService brokerItemShowService;
 
     public UserItem saveUserItem(Long userId,
                              String address,
@@ -60,11 +63,18 @@ public class UserItemServiceImpl implements UserItemService{
 
     // 지역별 요청 개수 확인
     // 근데 로그인된 공인중개사 유저가 가지고 있는 매물에 해당하는 지역(동)만 뜨게
-    public List<UserItemDongCountResponse> getUserItemDongCount() {
+    public List<UserItemDongCountResponse> getUserItemDongCount(Long userId) {
         List<String> dongList = userItemRepository.findAllDongs();
         Map<String, Long> dongCountMap = dongList.stream()
                 .collect(Collectors.groupingBy(dong -> dong, Collectors.counting()));
-        // =====현수님 필터작업 하나 해놓으시면 됩니다.=======
+
+        //공인중개사가 보는 화면 이니까 자기 userId를 넣어 야겠죠?
+        Set<String> dongOfBrokerItem = brokerItemShowService.findDongOfBrokerItem(userId);
+        dongCountMap = dongCountMap.entrySet().stream()
+                .filter(value
+                        -> dongOfBrokerItem.contains(value.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
         return UserItemDongCountResponse.from(dongCountMap);
     }
 

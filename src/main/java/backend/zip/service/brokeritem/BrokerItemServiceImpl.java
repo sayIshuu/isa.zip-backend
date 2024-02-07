@@ -1,16 +1,14 @@
-package backend.zip.service.broker;
+package backend.zip.service.brokeritem;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.broker.BrokerOption;
 import backend.zip.domain.enums.ItemStatus;
 import backend.zip.domain.item.ItemContent;
 import backend.zip.domain.item.ItemImage;
-import backend.zip.domain.user.User;
 import backend.zip.dto.brokeritem.request.AddBrokerItemDetailsRequest;
 import backend.zip.dto.brokeritem.request.AddBrokerItemOptionsRequest;
 import backend.zip.dto.brokeritem.response.BrokerItemAddressResponse;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
-import backend.zip.global.exception.user.UserException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.UserRepository;
 import backend.zip.repository.broker.BrokerItemRepository;

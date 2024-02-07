@@ -2,16 +2,15 @@ package backend.zip.controller.broker;
 
 import backend.zip.config.AddressConfig;
 import backend.zip.domain.broker.BrokerItem;
-import backend.zip.domain.enums.ItemStatus;
 import backend.zip.dto.brokeritem.request.AddBrokerItemDetailsRequest;
 import backend.zip.dto.brokeritem.request.AddBrokerItemOptionsRequest;
 import backend.zip.dto.brokeritem.response.*;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.global.status.SuccessStatus;
 import backend.zip.security.SecurityUtils;
-import backend.zip.service.broker.BrokerItemAddressService;
-import backend.zip.service.broker.BrokerItemService;
-import backend.zip.service.broker.BrokerItemShowService;
+import backend.zip.service.brokeritem.BrokerItemAddressService;
+import backend.zip.service.brokeritem.BrokerItemService;
+import backend.zip.service.brokeritem.BrokerItemShowService;
 import backend.zip.service.map.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -39,9 +38,7 @@ public class BrokerItemController {
     })
     @GetMapping(value = "/map", produces = "application/json;charset=UTF-8")
     public ApiResponse<List<AddressResponse>> returnAddress(@RequestParam("address") String roadFullAddress) {
-//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
-//        Long userId = Long.valueOf(loggedInUserId);
-//        brokerItemShowService.checkBroker(userId);
+        brokerItemShowService.checkBroker();
         String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
         List<AddressResponse> addressResponses = AddressConfig.extractAddress(kaKaoApiFromInputAddress);
         return ApiResponse.onSuccess(addressResponses);
@@ -54,20 +51,16 @@ public class BrokerItemController {
     })
     @PostMapping(value = "/items", consumes = "multipart/form-data")
     public ApiResponse<BrokerItemResponse> registerBrokerItem(@RequestParam("address") String roadFullAddress,
-                                                              @RequestPart("detailsRequest") AddBrokerItemDetailsRequest detailsRequest,
-                                                              @RequestPart("optionsRequest") AddBrokerItemOptionsRequest optionsRequest,
-                                                              @RequestPart("multipartFiles") MultipartFile[] multipartFiles) {
-        String loggedInUserId = SecurityUtils.getLoggedInUserId();
-        Long userId = Long.valueOf(loggedInUserId);
-//        brokerItemShowService.checkBroker(userId);
-//        주소만 저장된 매물 아이템
+                                                              @RequestPart(value = "detailsRequest",required = false) AddBrokerItemDetailsRequest detailsRequest,
+                                                              @RequestPart(value = "optionsRequest",required = false) AddBrokerItemOptionsRequest optionsRequest,
+                                                              @RequestPart(value = "multipartFiles",required = false) MultipartFile[] multipartFiles) {
+
+        Long userId = brokerItemShowService.checkBroker();
         String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
         BrokerItemAddressResponse addressResponse = addressService.returnAddressInfo(kaKaoApiFromInputAddress);
         BrokerItem savedBrokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddressName(), addressResponse.getRoadName()
                 , addressResponse.getDong(), addressResponse.getRoadDong(), addressResponse.getPostNumber(), addressResponse.getX(), addressResponse.getY());
 
-
-        // 주소 저장과 디테일, 옵션 저장 로직을 하나의 트랜잭션으로 실행
         BrokerItem brokerItem = brokerItemService.saveBrokerItem(userId, savedBrokerItem, addressResponse, detailsRequest, multipartFiles, optionsRequest);
         BrokerItemResponse brokerItemResponse = getBrokerItemResponse(brokerItem, addressResponse);
 
@@ -81,6 +74,7 @@ public class BrokerItemController {
     @DeleteMapping(value = "/items/{brokerItemId}")
     public ApiResponse<SuccessStatus> deleteBrokerItem(@PathVariable Long brokerItemId) {
         brokerItemService.deleteBrokerItem(brokerItemId);
+
         return ApiResponse.onSuccess(SuccessStatus._OK);
     }
 
@@ -94,9 +88,6 @@ public class BrokerItemController {
                                                             @RequestPart(value = "detailsRequest",required = false) AddBrokerItemDetailsRequest detailsRequest,
                                                             @RequestPart(value = "optionsRequest",required = false) AddBrokerItemOptionsRequest optionsRequest,
                                                             @RequestPart(value = "multipartFiles",required = false) MultipartFile[] multipartFiles) {
-
-//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
-//        Long userId = Long.valueOf(loggedInUserId);
 
         BrokerItem updateBrokerItem = brokerItemService.updateBrokerItem(brokerItemId, roadFullAddress, detailsRequest, optionsRequest, multipartFiles);
         BrokerItemResponse brokerItemResponse = getBrokerItemResponse(updateBrokerItem);
