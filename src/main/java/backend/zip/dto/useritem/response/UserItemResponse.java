@@ -27,8 +27,26 @@ public class UserItemResponse {
         this.userItemOptionsResponse = userItemOptionsResponse;
     }
 
-    public static UserItemResponse from(List<UserItem> value) {
+    public static UserItemResponse from(UserItem value) {
         return new UserItemResponse(
+                value.getUserItemId(),
+                value.getUser().getId(),
+                value.getUser().getNickName(),
+                UserItemAddressResponse.from(value.getAddress(), value.getDong()),
+                UserItemOptionResponse.from(
+                        value.getUserOption().getUserOptionId(),
+                        value.getUserOption().getUserRoomTypes(),
+                        value.getUserOption().getUserDealTypes(),
+                        value.getUserOption().getUserRoomSizes(),
+                        value.getUserOption().getUserFloors(),
+                        value.getUserOption().getUserManagementOptions(),
+                        value.getUserOption().getUserInternalFacilities(),
+                        value.getUserOption().getApproveDate(),
+                        value.getUserOption().getUserExtraFilters())
+        );
+    }
+
+    /*
                 value.get(0).getUserItemId(),
                 value.get(0).getUser().getId(), //이런식으로 조인되서 데이터 가져옴 성능 괜찮나
                 value.get(0).getUser().getNickName(),
@@ -43,6 +61,6 @@ public class UserItemResponse {
                         value.get(0).getUserOption().getUserInternalFacilities(),
                         value.get(0).getUserOption().getApproveDate(),
                         value.get(0).getUserOption().getUserExtraFilters())
-        );
-    }
+
+                 */
 }

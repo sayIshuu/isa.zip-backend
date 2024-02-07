@@ -6,24 +6,27 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
 public class UserItemByDongResponse {
     private String dong;
-    private UserItemResponse userItemResponse;
+    private List<UserItemResponse> userItemResponses;
 
-    public UserItemByDongResponse(String dong, UserItemResponse userItemResponse) {
+    public UserItemByDongResponse(String dong, List<UserItemResponse> userItemResponses) {
         this.dong = dong;
-        this.userItemResponse = userItemResponse;
+        this.userItemResponses = userItemResponses;
     }
 
     public static List<UserItemByDongResponse> from(Map<String, List<UserItem>> userItemByDong) {
         return userItemByDong.entrySet().stream()
-                .map(entry -> {
-                    UserItemResponse userItemResponse = UserItemResponse.from(entry.getValue());
-                    return new UserItemByDongResponse(entry.getKey(), userItemResponse);
-                })
-                .toList();
+                .map(entry -> new UserItemByDongResponse(
+                        entry.getKey(),
+                        entry.getValue().stream()
+                                .map(UserItemResponse::from)
+                                .collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
     }
 }
