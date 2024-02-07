@@ -1,11 +1,13 @@
 package backend.zip.service.userItem;
 
+import backend.zip.domain.user.User;
 import backend.zip.domain.user.UserItem;
 import backend.zip.domain.user.UserOption;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
 import backend.zip.dto.useritem.response.UserItemByDongResponse;
 import backend.zip.dto.useritem.response.UserItemDongCountResponse;
 import backend.zip.repository.UserItemRepository;
+import backend.zip.repository.UserRepository;
 import backend.zip.service.brokeritem.BrokerItemShowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,33 +25,20 @@ public class UserItemServiceImpl implements UserItemService{
     private final UserItemRepository userItemRepository;
     private final UserItemOptionService userItemOptionService;
     private final BrokerItemShowService brokerItemShowService;
+    private final UserRepository userRepository;
 
     public UserItem saveUserItem(Long userId,
                              String address,
                              String dong,
                              AddUserItemOptionsRequest addUserItemOptionsRequest) {
 
+
+        // userItem 생성
         UserItem userItem = UserItem.builder()
-                .userItemId(userId)
+                .user(userRepository.findById(userId).orElseThrow())
                 .address(address)
                 .dong(dong)
                 .build();
-
-        // 옵션 저장 로직
-        // 유저 옵션을 만들어서 useritem에 저장해줘야함.
-        /* 왜 안될까요 리스트라서?
-        UserOption userOption = UserOption.builder()
-                .userItem(userItem)
-                .userRoomTypes(addUserItemOptionsRequest.getRoomType())
-                .dealInfoMap(addUserItemOptionsRequest.getDealInfoMap())
-                .roomSize(addUserItemOptionsRequest.getRoomSize())
-                .floor(addUserItemOptionsRequest.getFloor())
-                .managementOption(addUserItemOptionsRequest.getManagementOption())
-                .internalFacility(addUserItemOptionsRequest.getInternalFacility())
-                .approveDate(addUserItemOptionsRequest.getApproveDate())
-                .extraFilter(addUserItemOptionsRequest.getExtraFilter())
-                .build();
-        */
 
         // 옵션 저장 현수님 방법 차용
         UserOption userOption = userItemOptionService.saveUserItemOptions(addUserItemOptionsRequest);
@@ -67,14 +56,12 @@ public class UserItemServiceImpl implements UserItemService{
         List<String> dongList = userItemRepository.findAllDongs();
         Map<String, Long> dongCountMap = dongList.stream()
                 .collect(Collectors.groupingBy(dong -> dong, Collectors.counting()));
-
         //공인중개사가 보는 화면 이니까 자기 userId를 넣어 야겠죠?
         Set<String> dongOfBrokerItem = brokerItemShowService.findDongOfBrokerItem(userId);
         dongCountMap = dongCountMap.entrySet().stream()
                 .filter(value
                         -> dongOfBrokerItem.contains(value.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
         return UserItemDongCountResponse.from(dongCountMap);
     }
 
