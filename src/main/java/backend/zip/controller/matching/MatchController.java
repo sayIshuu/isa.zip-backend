@@ -1,4 +1,4 @@
-package backend.zip.controller;
+package backend.zip.controller.matching;
 
 import backend.zip.service.MatchService;
 import io.swagger.v3.oas.annotations.Operation;
