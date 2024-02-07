@@ -24,10 +24,9 @@ public class Broker extends BaseEntity {
     @Column(name = "phone_num")
     private String phoneNum;
 
-    @Column(name = "business_num")
-    private String businessNum;
+    @Column(name = "business_name")
+    private String businessName;
 
-    @OneToOne(mappedBy = "broker", cascade = CascadeType.ALL)    //Json 무한 루프 문제 발생
-    private User user;                                           //@JsonBackReference를 사용하면 Broker에 User 접근도 안됨
-
+    @OneToOne(mappedBy = "broker", cascade = CascadeType.ALL)
+    private User user;
 }

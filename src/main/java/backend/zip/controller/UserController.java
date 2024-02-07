@@ -1,5 +1,6 @@
 package backend.zip.controller;
 
+import backend.zip.dto.auth.request.AuthRequest;
 import backend.zip.dto.user.request.UserRequest;
 import backend.zip.dto.user.response.UserResponse;
 import backend.zip.global.apipayload.ApiResponse;
@@ -53,5 +54,12 @@ public class UserController {
     public ApiResponse<String> deleteUser() {
         userService.deleteUser();
         return ApiResponse.onSuccess("회원 탈퇴에 성공하셨습니다.");
+    }
+
+    // 공인중개사 인증
+    @PostMapping("/users/auth-broker")
+    public ApiResponse<String> authenticateBroker(@RequestBody AuthRequest.BrokerRequest brokerRequest) {
+        userService.authenticateBroker(brokerRequest);
+        return ApiResponse.onSuccess("공인중개사 인증이 완료되었습니다.");
     }
 }

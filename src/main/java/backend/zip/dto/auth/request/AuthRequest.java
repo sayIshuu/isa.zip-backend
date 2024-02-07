@@ -36,4 +36,12 @@ public class AuthRequest {
         String email;
         String code;
     }
+
+    @Getter
+    public static class BrokerRequest {
+        Long brokerId;
+        String name;
+        String phoneNum;
+        String businessName;
+    }
 }
