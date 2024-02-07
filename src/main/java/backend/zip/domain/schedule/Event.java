@@ -4,33 +4,50 @@ import backend.zip.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-//@DynamicInsert
-//@DynamicUpdate
 public class Event extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
     private Long eventId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
+
+    @Column(name = "event_date")
+    private LocalDate eventDate;
 
     @Column(name = "event_title")
     private String eventTitle;
 
-    public String getEventTitle()
+    public void setSchedule(Schedule schedule)
     {
-        return this.eventTitle;
+        this.schedule = schedule;
     }
 
     public void setEventTitle(String eventTitle)
     {
         this.eventTitle = eventTitle;
+    }
+
+    public void setEventDate(LocalDate eventDate)
+    {
+        this.eventDate = eventDate;
+    }
+
+    public static Event toEntity(Schedule schedule, LocalDate eventDate, String eventTitle)
+    {
+        return Event.builder()
+                .schedule(schedule)
+                .eventDate(eventDate)
+                .eventTitle(eventTitle)
+                .build();
     }
 }
