@@ -44,4 +44,10 @@ public class BrokerItemOptionResponse {
                 .build();
     }
 
+    public static BrokerItemOptionResponse of(Long brokerOptionId) {
+        return BrokerItemOptionResponse.builder()
+                .brokerOptionId(brokerOptionId)
+                .build();
+    }
+
 }

@@ -8,10 +8,7 @@ import backend.zip.service.brokeritem.BrokerItemShowService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +25,7 @@ public class BrokerItemListController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
-    @GetMapping(value = "items/show")
+    @GetMapping(value = "/items/show")
     public ApiResponse<List<BrokerItemResponse>> findBrokerItemList() {
         List<BrokerItem> brokerItemList = brokerItemShowService.findBrokerItemList(brokerItemShowService.checkBroker());
         List<BrokerItemResponse> findAllBrokerItemList = brokerItemList.stream()
@@ -42,12 +39,28 @@ public class BrokerItemListController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
-    @GetMapping(value = "items/show/{brokerItemId}")
+    @GetMapping(value = "/items/show/details/{brokerItemId}")
     public ApiResponse<BrokerItemResponse> findBrokerItem(@PathVariable Long brokerItemId) {
         BrokerItem findBrokerItem = brokerItemShowService.findBrokerItem(brokerItemId);
         BrokerItemResponse brokerItemResponse = getBrokerItemResponse(findBrokerItem);
 
         return ApiResponse.onSuccess(brokerItemResponse);
     }
+
+    @Operation(summary = "공인중개사 매물 '동'으로 필터링후 매물 조회", description = "공인중개사 자신이 가지고 있는 매물들 중 '동'으로 필터링 후 반환.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
+    })
+    @GetMapping(value = "/items/dong/{dong}")
+    public ApiResponse<List<BrokerItemResponse>> findBrokerItemByDong(@PathVariable(name = "dong") String dong) {
+        List<BrokerItem> brokerItemSortedByDong = brokerItemShowService.findBrokerItemSortedByDong(dong);
+        List<BrokerItemResponse> brokerItemResponseList = brokerItemSortedByDong.stream()
+                .map(brokerItem -> getBrokerItemResponse(brokerItem))
+                .collect(Collectors.toList());
+
+        return ApiResponse.onSuccess(brokerItemResponseList);
+    }
+
+
 
 }

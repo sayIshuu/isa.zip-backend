@@ -60,15 +60,14 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
         userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(ErrorStatus.USER_NOT_FOUND));
 
-//        Set<String> collect = brokerItemRepository.findBrokerItemByUser(userId).stream()
-//                .map(brokerItem -> brokerItem.getDong())
-//                .collect(Collectors.toSet());
-//
-//        System.out.println("collect = " + collect);
-
-
         return brokerItemRepository.findBrokerItemByUser(userId).stream()
                 .map(brokerItem -> brokerItem.getDong())
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<BrokerItem> findBrokerItemSortedByDong(String dong) {
+        List<BrokerItem> findAllBrokerItemByDong = brokerItemRepository.findAllByDong(dong);
+        return findAllBrokerItemByDong;
     }
 }
