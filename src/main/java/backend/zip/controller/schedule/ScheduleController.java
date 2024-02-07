@@ -15,11 +15,11 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/users/schedule")
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @GetMapping("/schedule")
+    @GetMapping()
     public ApiResponse<ScheduleResponse> getSchedule() {
         //현재 로그인 중인 userId를 가져옴
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
@@ -38,7 +38,7 @@ public class ScheduleController {
 //        }
     }
 
-    @PostMapping("/schedule")
+    @PostMapping()
     public ApiResponse<ScheduleResponse> addSchedule(@RequestBody AddScheduleRequest request) {
         //현재 로그인 중인 userId를 가져옴
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
@@ -51,7 +51,7 @@ public class ScheduleController {
 //        return null;
     }
 
-    @PutMapping("/schedule")
+    @PutMapping()
     public ApiResponse<ScheduleResponse> updateSchedule(
             @RequestBody UpdateScheduleRequest request
     ) {
@@ -72,13 +72,13 @@ public class ScheduleController {
 //        }
     }
 
-    @DeleteMapping("/schedule")
-    public ApiResponse<String> deleteSchedule() {
-        //현재 로그인 중인 userId를 가져옴
-        String loggedInUserId = SecurityUtils.getLoggedInUserId();
-        Long userId = Long.valueOf(loggedInUserId);
-        scheduleService.deleteSchedule(userId);
-        return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
-    }
+//    @DeleteMapping()
+//    public ApiResponse<String> deleteSchedule() {
+//        //현재 로그인 중인 userId를 가져옴
+//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+//        Long userId = Long.valueOf(loggedInUserId);
+//        scheduleService.deleteSchedule(userId);
+//        return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
+//    }
 }
 
