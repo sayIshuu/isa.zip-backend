@@ -14,4 +14,5 @@ public interface BrokerItemShowService {
 
     Set<String> findDongOfBrokerItem(Long userId);
 
+    List<BrokerItem> findBrokerItemSortedByDong(String dong);
 }

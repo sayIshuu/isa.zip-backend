@@ -82,4 +82,25 @@ public class BrokerItemResponse {
         return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
     }
 
+    public static BrokerItemResponse from(BrokerItem brokerItem) {
+        BrokerItemAddressResponse addressResponse = BrokerItemAddressResponse.of(
+                brokerItem.getAddress(),
+                brokerItem.getDong(),
+                brokerItem.getX(),
+                brokerItem.getY()
+        );
+
+        BrokerItemDetailResponse detailResponse = BrokerItemDetailResponse.of(
+                brokerItem.getItemImages(),
+                brokerItem.getItemContent()
+        );
+
+        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
+                brokerItem.getBrokerOption().getBrokerOptionId()
+        );
+        return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
+    }
+
+
+
 }
