@@ -1,6 +1,8 @@
-package backend.zip.Repository.event;
+package backend.zip.Repository.schedule;
 
 import backend.zip.domain.schedule.Event;
+import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event,Long> {
-    Optional<Event> findById(Long eventId);
-
+    //schedule로 조회
+    List<Event> findBySchedule(Schedule schedule);
 }
