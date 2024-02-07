@@ -50,6 +50,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void signUp(AuthRequest.SignUpRequest signUpRequest) {
+        checkEmail(signUpRequest.getEmail());
+
         User user = signUpRequest.toUser(
                 passwordEncoder.encode(signUpRequest.getPassword())
         );
