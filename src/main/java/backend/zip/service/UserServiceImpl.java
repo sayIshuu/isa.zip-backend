@@ -117,5 +117,6 @@ public class UserServiceImpl implements UserService {
 
         user.updateRole(Role.ROLE_BROKER);
 
+        userRepository.save(user);
     }
 }
