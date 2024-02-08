@@ -1,10 +1,10 @@
 package backend.zip.service.match;
 
 import backend.zip.domain.broker.BrokerItem;
+import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
-import backend.zip.domain.user.UserItem;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
-import backend.zip.global.exception.user.UserException;
+import backend.zip.global.exception.match.MatchingException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.MatchRepository;
 import backend.zip.repository.UserItemRepository;
@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static backend.zip.domain.enums.MatchStatus.MATCH_COMPLETE;
+import static backend.zip.domain.enums.MatchStatus.WAITING;
 
 @Transactional
 @Service
@@ -40,6 +43,28 @@ public class MatchServiceImpl implements MatchService {
             matchRepository.save(matching);
         }
         return matchingList;
+    }
+
+    @Override
+    public Matching findMatch(Long matchId) {
+        return matchRepository.findById(matchId)
+                .orElseThrow(() -> new MatchingException(ErrorStatus.MATCH_NOT_FOUND));
+    }
+
+    @Override
+    public Matching updateMatchStatusToComplete(Long matchId) {
+        Matching matching = findMatch(matchId);
+        if (matching.getMatchStatus() == WAITING) {
+            matching.updateMatchStatus(MATCH_COMPLETE);
+        }
+        matchRepository.save(matching);
+        System.out.println("matching.getMatchStatus() = " + matching.getMatchStatus());
+        return matching;
+    }
+
+    @Override
+    public List<Matching> findAllMatch() {
+        return matchRepository.findAll();
     }
 
     public void unmatchBrokerItems() {
