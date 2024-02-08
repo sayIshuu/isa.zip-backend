@@ -30,7 +30,7 @@ public class Matching extends BaseEntity {
     @JoinColumn(name = "broker_item_id")
     private BrokerItem brokerItem;
 
-    @Column(name = "match_dong")
+//    @Column(name = "match_dong")
     private String matchDong;
 
     @Enumerated(EnumType.STRING)

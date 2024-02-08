@@ -1,5 +1,6 @@
 package backend.zip.dto.match.response;
 
+import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
 import backend.zip.dto.brokeritem.response.BrokerItemResponse;
 import backend.zip.dto.useritem.response.UserItemResponse;
@@ -20,6 +21,7 @@ public class MatchItemListResponse {
     @AllArgsConstructor
     public static class MatchListDetails {
         private Long matchId;
+        private MatchStatus matchStatus;
         private UserItemResponse userItemResponse;
         private BrokerItemResponse brokerItemResponse;
     }
@@ -28,6 +30,7 @@ public class MatchItemListResponse {
         List<MatchListDetails> matchListDetailsList = matchingList.stream()
                 .map(matching -> new MatchListDetails(
                         matching.getMatchID(),
+                        matching.getMatchStatus(),
                         UserItemResponse.from(matching.getUserItem()),
                         BrokerItemResponse.getBrokerItemResponse(matching.getBrokerItem())
                 )).collect(Collectors.toList());
