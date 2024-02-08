@@ -55,7 +55,7 @@ public class BrokerItemListController {
     public ApiResponse<List<BrokerItemResponse>> findBrokerItemByDong(@PathVariable(name = "dong") String dong) {
         List<BrokerItem> brokerItemSortedByDong = brokerItemShowService.findBrokerItemSortedByDong(dong);
         List<BrokerItemResponse> brokerItemResponseList = brokerItemSortedByDong.stream()
-                .map(brokerItem -> getBrokerItemResponse(brokerItem))
+                .map(brokerItem -> BrokerItemResponse.of(brokerItem))
                 .collect(Collectors.toList());
 
         return ApiResponse.onSuccess(brokerItemResponseList);
