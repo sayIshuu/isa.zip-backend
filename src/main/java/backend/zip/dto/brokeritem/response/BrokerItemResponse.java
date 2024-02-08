@@ -82,7 +82,7 @@ public class BrokerItemResponse {
         return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
     }
 
-    public static BrokerItemResponse from(BrokerItem brokerItem) {
+    public static BrokerItemResponse of(BrokerItem brokerItem) {
         BrokerItemAddressResponse addressResponse = BrokerItemAddressResponse.of(
                 brokerItem.getAddress(),
                 brokerItem.getDong(),

@@ -7,6 +7,8 @@ import backend.zip.domain.user.UserItem;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,9 +31,18 @@ public class Matching extends BaseEntity {
     private BrokerItem brokerItem;
 
     @Column(name = "match_dong") //매칭테이블에서 동으로 필터링 할 때(편의상)쓰이는 동
-    private Long matchDong;
+    private String matchDong;
 
     @Enumerated(EnumType.STRING)
     private MatchStatus matchStatus;
+
+    public static Matching createMatching(UserItem userItem, BrokerItem brokerItem) {
+        return Matching.builder()
+                .matchStatus(MatchStatus.WAITING)
+                .matchDong(userItem.getDong())
+                .userItem(userItem)
+                .brokerItem(brokerItem)
+                .build();
+    }
 
 }
