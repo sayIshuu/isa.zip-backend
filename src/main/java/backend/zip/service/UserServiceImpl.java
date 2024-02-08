@@ -113,6 +113,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(Long.parseLong(SecurityUtils.getLoggedInUserId()))
                 .orElseThrow(()-> new UserNotFoundException(USER_NOT_FOUND));
 
+        user.updateBroker(broker);
+
         user.updateRole(Role.ROLE_BROKER);
+
     }
 }
