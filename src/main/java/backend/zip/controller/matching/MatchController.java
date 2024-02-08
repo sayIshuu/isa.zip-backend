@@ -1,10 +1,13 @@
 package backend.zip.controller.matching;
 
 import backend.zip.domain.broker.BrokerItem;
+import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
 import backend.zip.dto.match.request.BrokerItemIdRequest;
+import backend.zip.dto.match.response.MatchItemAllByUserResponse;
 import backend.zip.dto.match.response.MatchItemResponse;
 import backend.zip.global.apipayload.ApiResponse;
+import backend.zip.security.SecurityUtils;
 import backend.zip.service.match.MatchService;
 import backend.zip.service.brokeritem.BrokerItemShowService;
 import backend.zip.service.userItem.UserItemService;
@@ -46,10 +49,12 @@ public class MatchController {
 
     }
 
-    @Operation(summary = "매칭전체조회", description = "일반유저의 요청에 대해 매칭된 매물 전체 조회")
+    @Operation(summary = "유저사이드매칭조회", description = "일반유저의 요청에 대해 매칭된 매물조회 (매칭요청 : WAITING, 매칭완료 : COMPLETED)")
     @GetMapping("/users/items")
-    public void matchUserItems() {
-
+    public ApiResponse<List<MatchItemAllByUserResponse>> matchUserItems(@RequestParam MatchStatus matchStatus) {
+        Long userId = Long.valueOf(SecurityUtils.getLoggedInUserId());
+        // 결국 컨트롤러 선에서 서비스 get함수에 넘기는 인자는 데이터 쿼리문 작성을 위한것
+        return ApiResponse.onSuccess(matchService.getMatchItemsByStatus(userId, matchStatus));
     }
 
     //일단은 여기까지먼저.
