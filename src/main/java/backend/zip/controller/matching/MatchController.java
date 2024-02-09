@@ -44,12 +44,16 @@ public class MatchController {
 //
 //    }
 
-    @Operation(summary = "매물별매칭완료", description = "매칭 후보에서 매칭 확정시켜서 요청한 사용자가 조회 가능하게 하기")
-    @PatchMapping("/brokers/{matchingId}/complete")
-    public ApiResponse<MatchStatusResponse> matchCompleteBrokerItems(@PathVariable Long matchingId) {
+    @Operation(summary = "매물별매칭상태변경", description = "matchStatus인자에 해당값을 넣어주시면 됩니다." +
+                                                    "공인중개사가 매칭후보를 매칭확정 시키기 : MATCH_COMPLETE" +
+                                                    "일반유저가 자기 매칭요청상태에서 +버튼 눌러서 찜하기 : MATCH_LIKE" +
+                                                    "일반유저가 최종적으로 매칭완료시키기 : MATCH_FINAL_COMPLETE")
+    @PatchMapping("/brokers/{matchingId}")
+    public ApiResponse<MatchStatusResponse> matchCompleteBrokerItems(@PathVariable Long matchingId,
+                                                                     @RequestParam MatchStatus matchStatus) {
         System.out.println("\"matchingId\" = " + "matchingId");
 
-        Matching matching = matchService.updateMatchStatusToComplete(matchingId);
+        Matching matching = matchService.updateMatchStatus(matchingId, matchStatus);
         System.out.println("matching.getMatchStatus() = " + matching.getMatchStatus());
         return ApiResponse.onSuccess(MatchStatusResponse.of(matching));
     }
@@ -63,7 +67,7 @@ public class MatchController {
         return ApiResponse.onSuccess(matchItemListResponse);
     }
     
-    @Operation(summary = "유저사이드매칭조회", description = "일반유저의 요청에 대해 매칭된 매물조회 (매칭요청 : WAITING, 매칭완료 : COMPLETED)")
+    @Operation(summary = "유저사이드매칭조회", description = "일반유저의 요청에 대해 매칭된 매물조회 (매칭요청 : MATCH_COMPLETE, 매칭완료 : MATCH_FINAL_COMPLETE)")
     @GetMapping("/users/items")
     public ApiResponse<List<MatchItemAllByUserResponse>> matchUserItems(@RequestParam MatchStatus matchStatus) {
         Long userId = Long.valueOf(SecurityUtils.getLoggedInUserId());
@@ -71,11 +75,6 @@ public class MatchController {
         return ApiResponse.onSuccess(matchService.getMatchItemsByStatus(userId, matchStatus));
     }
 
-//    @Operation(summary = "매칭전체조회", description = "일반유저의 요청에 대해 매칭된 매물 전체 조회")
-//    @GetMapping("/users/items")
-//    public void matchUserItems() {
-//
-//    }
 
     //일단은 여기까지먼저.
 

@@ -54,14 +54,13 @@ public class MatchServiceImpl implements MatchService {
                 .orElseThrow(() -> new MatchingException(ErrorStatus.MATCH_NOT_FOUND));
     }
 
+
     @Override
-    public Matching updateMatchStatusToComplete(Long matchId) {
+    public Matching updateMatchStatus(Long matchId, MatchStatus matchStatus) {
         Matching matching = findMatch(matchId);
-        if (matching.getMatchStatus() == WAITING) {
-            matching.updateMatchStatus(MATCH_COMPLETE);
-        }
+        //안전한 방법은 아니지만 프론트에서 화면당 구분하여 호출한다면 예외발생날일은 없을거같은데요
+        matching.updateMatchStatus(matchStatus);
         matchRepository.save(matching);
-        System.out.println("matching.getMatchStatus() = " + matching.getMatchStatus());
         return matching;
     }
 

@@ -14,7 +14,7 @@ public interface MatchService {
 
     Matching findMatch(Long matchId);
 
-    Matching updateMatchStatusToComplete(Long matchingId);
+    Matching updateMatchStatus(Long matchingId, MatchStatus matchStatus);
 
     List<Matching> findAllMatch();
 }
