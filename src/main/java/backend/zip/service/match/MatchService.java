@@ -11,4 +11,10 @@ public interface MatchService {
 
 
     List<MatchItemAllByUserResponse> getMatchItemsByStatus(Long userId, MatchStatus matchStatus);
+
+    Matching findMatch(Long matchId);
+
+    Matching updateMatchStatusToComplete(Long matchingId);
+
+    List<Matching> findAllMatch();
 }

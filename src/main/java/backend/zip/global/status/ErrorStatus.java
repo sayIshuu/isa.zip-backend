@@ -42,7 +42,10 @@ public enum ErrorStatus implements BaseErrorCode {
     ERROR_AT_AMAZONS3_MANAGER_UPLOADFILE(HttpStatus.INTERNAL_SERVER_ERROR,"IMAGE_001","이미지를 첨부하는 동안 오류가 발생했습니다"),
 
     //BrokerItem 관련 에러
-    BROKER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND,"BROKER_ITEM_001","해당 매물을 찾을 수 없습니다");
+    BROKER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND,"BROKER_ITEM_001","해당 매물을 찾을 수 없습니다"),
+
+    //Matching 관련 에러
+    MATCH_NOT_FOUND(HttpStatus.NOT_FOUND,"MATCH_001","해당 매치를 찾을 수 없습니다");
 
 
 

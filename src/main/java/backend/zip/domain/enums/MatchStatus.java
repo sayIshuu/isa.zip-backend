@@ -1,5 +1,5 @@
 package backend.zip.domain.enums;
 
 public enum MatchStatus {
-    WAITING,COMPLETED
+    WAITING,MATCH_COMPLETE,MATCH_LIKE,MATCH_FINAL_COMPLETE
 }
