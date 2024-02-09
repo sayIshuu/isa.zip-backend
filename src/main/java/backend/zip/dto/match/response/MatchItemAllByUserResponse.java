@@ -18,23 +18,17 @@ import java.util.stream.Collectors;
 public class MatchItemAllByUserResponse {
     private String dong;
     private Long count;
-    private Long userItemId;
+    private UserItemResponse userItemResponse;
     private List<BrokerItemResponse> brokerItemResponses;
 
-    public MatchItemAllByUserResponse(String dong, Long count, Long userItemId, List<BrokerItemResponse> brokerItemResponses) {
-        this.dong = dong;
-        this.count = count;
-        this.userItemId = userItemId;
-        this.brokerItemResponses = brokerItemResponses;
-    }
-
+    //생성자 필요없다. maybe
 
     public static List<MatchItemAllByUserResponse> from(Map<UserItem, List<Matching>> matchingsByUserItem) {
         return matchingsByUserItem.entrySet().stream()
                 .map(entry -> new MatchItemAllByUserResponse(
                         entry.getKey().getDong(),
                         (long) entry.getValue().size(),
-                        entry.getKey().getUserItemId(),
+                        UserItemResponse.from(entry.getKey()), //얘가 되려나?
                         entry.getValue().stream()
                                 .map(BrokerItemResponse::from)
                                 .collect(Collectors.toList())
