@@ -51,10 +51,7 @@ public class MatchController {
     @PatchMapping("/brokers/{matchingId}")
     public ApiResponse<MatchStatusResponse> matchCompleteBrokerItems(@PathVariable Long matchingId,
                                                                      @RequestParam MatchStatus matchStatus) {
-        System.out.println("\"matchingId\" = " + "matchingId");
-
         Matching matching = matchService.updateMatchStatus(matchingId, matchStatus);
-        System.out.println("matching.getMatchStatus() = " + matching.getMatchStatus());
         return ApiResponse.onSuccess(MatchStatusResponse.of(matching));
     }
 

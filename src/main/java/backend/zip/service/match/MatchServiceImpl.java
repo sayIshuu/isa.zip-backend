@@ -60,7 +60,6 @@ public class MatchServiceImpl implements MatchService {
         Matching matching = findMatch(matchId);
         //안전한 방법은 아니지만 프론트에서 화면당 구분하여 호출한다면 예외발생날일은 없을거같은데요
         matching.updateMatchStatus(matchStatus);
-        matchRepository.save(matching);
         return matching;
     }
 
@@ -69,13 +68,13 @@ public class MatchServiceImpl implements MatchService {
         return matchRepository.findAll();
     }
 
-    public void unmatchBrokerItems() {
-        // 매칭 후보 삭제
-    }
+//    public void unmatchBrokerItems() {
+//        // 매칭 후보 삭제
+//    }
 
-    public void matchCompleteBrokerItems() {
-        // 매칭 완료
-    }
+//    public void matchCompleteBrokerItems() {
+//        // 매칭 완료
+//    }
 
     public List<MatchItemAllByUserResponse> getMatchItemsByStatus(Long userId, MatchStatus matchStatus) {
         // 웨이팅 매칭 객체들 받아와 (유저 요청 id랑 중개사 매물 id 들어있는 ) 이 리스트에 들어있는건 매칭아이템 하나하나일뿐
