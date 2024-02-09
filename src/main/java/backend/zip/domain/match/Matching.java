@@ -7,6 +7,8 @@ import backend.zip.domain.user.UserItem;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static backend.zip.domain.enums.MatchStatus.WAITING;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,7 +30,24 @@ public class Matching extends BaseEntity {
     @JoinColumn(name = "broker_item_id")
     private BrokerItem brokerItem;
 
+//    @Column(name = "match_dong")
+    private String matchDong;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "match_status")
     private MatchStatus matchStatus;
+
+    public static Matching createMatching(UserItem userItem, BrokerItem brokerItem) {
+        return Matching.builder()
+                .userItem(userItem)
+                .brokerItem(brokerItem)
+                .matchStatus(WAITING)
+                .matchDong(userItem.getDong())
+                .build();
+    }
+
+    public void updateMatchStatus(MatchStatus matchStatus) {
+        this.matchStatus = matchStatus;
+    }
 
 }

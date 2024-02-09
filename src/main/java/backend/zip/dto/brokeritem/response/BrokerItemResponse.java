@@ -5,6 +5,7 @@ import backend.zip.domain.broker.BrokerOption;
 import backend.zip.domain.enums.ItemStatus;
 import backend.zip.domain.item.ItemContent;
 import backend.zip.domain.item.ItemImage;
+import backend.zip.domain.match.Matching;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -82,7 +83,7 @@ public class BrokerItemResponse {
         return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
     }
 
-    public static BrokerItemResponse from(BrokerItem brokerItem) {
+    public static BrokerItemResponse of(BrokerItem brokerItem) {
         BrokerItemAddressResponse addressResponse = BrokerItemAddressResponse.of(
                 brokerItem.getAddress(),
                 brokerItem.getDong(),
@@ -102,5 +103,7 @@ public class BrokerItemResponse {
     }
 
 
-
+    public static BrokerItemResponse from(Matching matching) {
+        return BrokerItemResponse.of(matching.getBrokerItem());
+    }
 }
