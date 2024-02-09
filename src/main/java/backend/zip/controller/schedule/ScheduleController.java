@@ -1,12 +1,12 @@
-package backend.zip.controller;
+package backend.zip.controller.schedule;
 
 import backend.zip.domain.schedule.Schedule;
-import backend.zip.dto.brokeritem.response.BrokerItemResponse;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
 import backend.zip.dto.schedule.response.ScheduleResponse;
 import backend.zip.global.apipayload.ApiResponse;
-import backend.zip.service.ScheduleService;
+import backend.zip.security.SecurityUtils;
+import backend.zip.service.schedule.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +15,15 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/users/schedule")
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @GetMapping("{userId}/schedule")
-    public ApiResponse<ScheduleResponse> getSchedule(@PathVariable Long userId) {
+    @GetMapping()
+    public ApiResponse<ScheduleResponse> getSchedule() {
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
         Optional<Schedule> optionalSchedule = scheduleService.getScheduleByUserId(userId);
 
         if (optionalSchedule.isPresent()) {
@@ -35,9 +38,11 @@ public class ScheduleController {
 //        }
     }
 
-    @PostMapping("{userId}/schedule")
-    public ApiResponse<ScheduleResponse> addSchedule(@PathVariable Long userId, @RequestBody AddScheduleRequest request) {
-
+    @PostMapping()
+    public ApiResponse<ScheduleResponse> addSchedule(@RequestBody AddScheduleRequest request) {
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
         Schedule schedule = scheduleService.addSchedule(userId, request);
 
         ScheduleResponse scheduleResponse = ScheduleResponse.fromEntity(schedule);
@@ -46,12 +51,13 @@ public class ScheduleController {
 //        return null;
     }
 
-    @PutMapping("{userId}/schedule")
+    @PutMapping()
     public ApiResponse<ScheduleResponse> updateSchedule(
-            @PathVariable Long userId,
             @RequestBody UpdateScheduleRequest request
     ) {
-
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
         Optional<Schedule> optionalSchedule = scheduleService.updateSchedule(userId, request);
 
         if (optionalSchedule.isPresent()) {
@@ -66,10 +72,13 @@ public class ScheduleController {
 //        }
     }
 
-    @DeleteMapping("{userId}/schedule")
-    public ApiResponse<String> deleteSchedule(@PathVariable Long userId) {
-        scheduleService.deleteSchedule(userId);
-        return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
-    }
+//    @DeleteMapping()
+//    public ApiResponse<String> deleteSchedule() {
+//        //현재 로그인 중인 userId를 가져옴
+//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+//        Long userId = Long.valueOf(loggedInUserId);
+//        scheduleService.deleteSchedule(userId);
+//        return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
+//    }
 }
 

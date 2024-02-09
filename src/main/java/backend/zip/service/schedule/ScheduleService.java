@@ -1,4 +1,4 @@
-package backend.zip.service;
+package backend.zip.service.schedule;
 
 import backend.zip.domain.schedule.Schedule;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
