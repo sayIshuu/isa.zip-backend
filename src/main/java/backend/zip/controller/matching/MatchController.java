@@ -54,9 +54,6 @@ public class MatchController {
         return ApiResponse.onSuccess(MatchStatusResponse.of(matching));
     }
 
-        return ApiResponse.onSuccess(matchItemListResponse);
-        return ApiResponse.onSuccess(matchService.getMatchItemsByStatus(userId, matchStatus));
-    }
     
     @Operation(summary = "매칭전체조회", description = "일반유저의 요청에 대해 매칭된 매물 전체 조회")
     @GetMapping("/brokers/items")
