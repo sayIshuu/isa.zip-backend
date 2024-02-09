@@ -3,6 +3,8 @@ package backend.zip.service.match;
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
+import backend.zip.domain.user.UserItem;
+import backend.zip.dto.match.response.MatchItemAllByUserResponse;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.exception.match.MatchingException;
 import backend.zip.global.status.ErrorStatus;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static backend.zip.domain.enums.MatchStatus.MATCH_COMPLETE;
@@ -75,7 +78,13 @@ public class MatchServiceImpl implements MatchService {
         // 매칭 완료
     }
 
-    public void matchUserItems() {
-        // 매칭 전체 조회
+    public List<MatchItemAllByUserResponse> getMatchItemsByStatus(Long userId, MatchStatus matchStatus) {
+        // 웨이팅 매칭 객체들 받아와 (유저 요청 id랑 중개사 매물 id 들어있는 ) 이 리스트에 들어있는건 매칭아이템 하나하나일뿐
+        List<Matching> matchings = matchRepository.findByUserItemUserIdAndMatchStatus(userId, matchStatus);
+        // 요청별로 리스트 나누기 (반환 리스펀스는 요청 과 매칭된 매물들 그래서 각 리스펀스는 맵형태로 저장)
+        Map<UserItem, List<Matching>> matchingsByUserItem = matchings.stream() // userRequst로 이름 다 바꾸고 싶다 기능구현 끝나고 리팩토링..
+                .collect(Collectors.groupingBy(Matching::getUserItem));
+        return MatchItemAllByUserResponse.from(matchingsByUserItem);
     }
+
 }
