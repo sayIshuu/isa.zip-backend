@@ -17,15 +17,17 @@ import java.util.List;
 @Builder
 public class BrokerItemResponse {
     private Long brokerItemId;
+    private String businessName;
     private ItemStatus itemStatus;
     private BrokerItemAddressResponse addressResponse;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemResponse(Long brokerItemId,ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
+    public BrokerItemResponse(Long brokerItemId,String businessName,ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
                               BrokerItemDetailResponse detailResponse,
                               BrokerItemOptionResponse optionResponse) {
         this.brokerItemId = brokerItemId;
+        this.businessName = businessName;
         this.itemStatus = itemStatus;
         this.addressResponse = addressResponse;
         this.detailResponse = detailResponse;
@@ -41,6 +43,7 @@ public class BrokerItemResponse {
         BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(brokerOption);
 
         BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),
+                savedBrokerItem.getUser().getBroker().getBusinessName(),
                 savedBrokerItem.getItemStatus(),
                 addressResponse, detailResponse, optionResponse);
 
@@ -66,7 +69,10 @@ public class BrokerItemResponse {
 
         BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(brokerItem.getBrokerOption());
 
-        return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
+        return new BrokerItemResponse(brokerItem.getBrokerItemId(),
+                brokerItem.getUser().getBroker().getBusinessName(),
+                brokerItem.getItemStatus(), addressResponse,
+                detailResponse, optionResponse);
     }
 
 
