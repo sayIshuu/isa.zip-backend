@@ -9,6 +9,7 @@ import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.security.SecurityUtils;
 import backend.zip.service.schedule.ScheduleService;
 import backend.zip.service.schedule.EventService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
+    @Operation(summary = "일정 조회", description = "이사 일정 조회하는 API입니다.")
     @GetMapping()
     public ApiResponse<ScheduleResponse> getSchedule() {
         //현재 로그인 중인 userId를 가져옴
@@ -42,6 +44,7 @@ public class ScheduleController {
     }
 
     @PostMapping()
+    @Operation(summary = "일정 등록", description = "이사 일정을 등록하는 API입니다.")
     public ApiResponse<ScheduleResponse> addSchedule(@RequestBody AddScheduleRequest request) {
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
         Long userId = Long.valueOf(loggedInUserId);
@@ -53,6 +56,7 @@ public class ScheduleController {
 
 
     @PutMapping()
+    @Operation(summary = "이사 일정 수정", description = "이사 일정을 수정하는 API입니다.")
     public ApiResponse<ScheduleResponse> updateSchedule(
             @RequestBody UpdateScheduleRequest request
     ) {
@@ -74,6 +78,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping()
+    @Operation(summary = "일정 삭제", description = "이사 일정 삭제하는 API입니다.")
     @Transactional
     public ApiResponse<String> deleteSchedule() {
         //현재 로그인 중인 userId를 가져옴
