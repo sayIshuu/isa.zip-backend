@@ -60,6 +60,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         User deleteUser = userRepository.findById(userId).orElse(null);
 
         if (deleteUser != null) {
+            Optional<Schedule> existingScheduleOptional = getScheduleByUserId(userId);
+            if (existingScheduleOptional.isPresent()) {
+                Schedule existingSchedule = existingScheduleOptional.get();
+                eventService.deleteEvents(existingSchedule.getScheduleId());
+            }
             scheduleRepository.deleteByUser(deleteUser);
         }
     }
