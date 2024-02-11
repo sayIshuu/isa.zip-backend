@@ -22,10 +22,6 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "broker_id")
-    private Broker broker;
-
     @Column(name = "email",nullable = false)
     private String email;
 
@@ -41,11 +37,15 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "social_type")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "broker_id")
+    private Broker broker;
+
+    @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
-    @Column(name = "review_point")
-    private Integer reviewPoint;
+    @Column(name="social_id")
+    private String socialId;
 
     public void updateUserImg(String url) {
         this.userImg = url;

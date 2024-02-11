@@ -12,4 +12,6 @@ public interface AuthService {
     void verifyCode(String email, String code);
 
     AuthResponse.LoginResponse login(AuthRequest.LoginRequest loginRequest);
+
+    AuthResponse.LoginResponse kakaoLogin(AuthRequest.KakaoLoginRequest kakaoLoginRequest);
 }
