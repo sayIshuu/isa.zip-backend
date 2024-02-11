@@ -17,7 +17,7 @@ public class Event extends BaseEntity {
     @Column(name = "event_id")
     private Long eventId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
