@@ -23,26 +23,41 @@ public class BrokerItemOptionResponse {
     private List<BrokerExtraFilter> extraFilters;
     private ApproveDate approvedDate;
 
-    public static BrokerItemOptionResponse of(Long brokerOptionId, List<BrokerDealType> dealTypes,
-                                              RoomType roomType, String roomSize,
-                                              List<BrokerFloor> floors,
-                                              List<BrokerManagementOption> managementOptions,
-                                              List<BrokerInternalFacility> internalFacilities,
-                                              List<BrokerExtraFilter> extraFilters,
-                                              ApproveDate approveDate) {
-
+    public static BrokerItemOptionResponse of(BrokerOption brokerOption) {
         return BrokerItemOptionResponse.builder()
-                .brokerOptionId(brokerOptionId)
-                .dealTypes(dealTypes)
-                .roomType(roomType)
-                .roomSize(roomSize)
-                .floors(floors)
-                .managementOptions(managementOptions)
-                .internalFacilities(internalFacilities)
-                .extraFilters(extraFilters)
-                .approvedDate(approveDate)
+                .brokerOptionId(brokerOption.getBrokerOptionId())
+                .dealTypes(brokerOption.getBrokerDealTypes())
+                .roomType(brokerOption.getRoomType())
+                .roomSize(brokerOption.getRoomSize())
+                .floors(brokerOption.getBrokerFloors())
+                .managementOptions(brokerOption.getBrokerManagementOptions())
+                .internalFacilities(brokerOption.getBrokerInternalFacilities())
+                .extraFilters(brokerOption.getBrokerExtraFilters())
+                .approvedDate(brokerOption.getApprovedDate())
                 .build();
     }
+
+
+//    public static BrokerItemOptionResponse of(Long brokerOptionId, List<BrokerDealType> dealTypes,
+//                                              RoomType roomType, String roomSize,
+//                                              List<BrokerFloor> floors,
+//                                              List<BrokerManagementOption> managementOptions,
+//                                              List<BrokerInternalFacility> internalFacilities,
+//                                              List<BrokerExtraFilter> extraFilters,
+//                                              ApproveDate approveDate) {
+//
+//        return BrokerItemOptionResponse.builder()
+//                .brokerOptionId(brokerOptionId)
+//                .dealTypes(dealTypes)
+//                .roomType(roomType)
+//                .roomSize(roomSize)
+//                .floors(floors)
+//                .managementOptions(managementOptions)
+//                .internalFacilities(internalFacilities)
+//                .extraFilters(extraFilters)
+//                .approvedDate(approveDate)
+//                .build();
+//    }
 
     public static BrokerItemOptionResponse of(Long brokerOptionId) {
         return BrokerItemOptionResponse.builder()

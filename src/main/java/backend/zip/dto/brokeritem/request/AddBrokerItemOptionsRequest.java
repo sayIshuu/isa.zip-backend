@@ -27,7 +27,7 @@ public class AddBrokerItemOptionsRequest {
     private List<Floor> selectedFloor;
     private String customFloor;
     private List<ManagementOption> managementOptions;
-    private Integer managementPrice;
+    private String managementPrice;
     private List<InternalFacility> internalFacilities;
     private ApproveDate approveDate;
     private List<ExtraFilter> extraFilters;
@@ -35,9 +35,9 @@ public class AddBrokerItemOptionsRequest {
     @Getter
     @Setter
     public static class DealInfo {
-        private Integer price;
-        private Integer deposit;
-        private Integer monthPrice;
+        private String price;
+        private String deposit;
+        private String monthPrice;
     }
 
 }

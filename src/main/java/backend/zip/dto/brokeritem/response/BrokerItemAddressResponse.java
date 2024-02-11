@@ -26,13 +26,12 @@ public class BrokerItemAddressResponse {
                 .build();
     }
 
-    public static BrokerItemAddressResponse of(String addressName, String dong, Double x, Double y) {
-        return BrokerItemAddressResponse.builder()
-                .addressName(addressName)
-                .dong(dong)
-                .x(x)
-                .y(y)
-                .build();
-    }
-
+//    public static BrokerItemAddressResponse of(String addressName, String dong, Double x, Double y) {
+//        return BrokerItemAddressResponse.builder()
+//                .addressName(addressName)
+//                .dong(dong)
+//                .x(x)
+//                .y(y)
+//                .build();
+//    }
 }

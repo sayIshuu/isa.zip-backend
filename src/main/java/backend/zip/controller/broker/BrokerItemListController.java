@@ -29,20 +29,20 @@ public class BrokerItemListController {
     public ApiResponse<List<BrokerItemResponse>> findBrokerItemList() {
         List<BrokerItem> brokerItemList = brokerItemShowService.findBrokerItemList(brokerItemShowService.checkBroker());
         List<BrokerItemResponse> findAllBrokerItemList = brokerItemList.stream()
-                .map(brokerItem -> getBrokerItemResponse(brokerItem))
+                .map(brokerItem -> BrokerItemResponse.of(brokerItem))
                 .collect(Collectors.toList());
 
         return ApiResponse.onSuccess(findAllBrokerItemList);
     }
 
-    @Operation(summary = "공인중개사 매물관리 페이지에서 매물 조회", description = "공인중개사 자신이 가지고 있는 매물 전체를 보여줍니다.")
+    @Operation(summary = "공인중개사 매물관리 페이지에서 매물 단건 조회", description = "공인중개사 자신이 가지고 있는 매물을 보여줍니다.")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
     @GetMapping(value = "/items/show/details/{brokerItemId}")
     public ApiResponse<BrokerItemResponse> findBrokerItem(@PathVariable Long brokerItemId) {
         BrokerItem findBrokerItem = brokerItemShowService.findBrokerItem(brokerItemId);
-        BrokerItemResponse brokerItemResponse = getBrokerItemResponse(findBrokerItem);
+        BrokerItemResponse brokerItemResponse = BrokerItemResponse.of(findBrokerItem);
 
         return ApiResponse.onSuccess(brokerItemResponse);
     }
@@ -51,8 +51,8 @@ public class BrokerItemListController {
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
-    @GetMapping(value = "/items/dong/{dong}")
-    public ApiResponse<List<BrokerItemResponse>> findBrokerItemByDong(@PathVariable(name = "dong") String dong) {
+    @GetMapping(value = "/items")
+    public ApiResponse<List<BrokerItemResponse>> findBrokerItemByDong(@RequestParam("dong") String dong) {
         List<BrokerItem> brokerItemSortedByDong = brokerItemShowService.findBrokerItemSortedByDong(dong);
         List<BrokerItemResponse> brokerItemResponseList = brokerItemSortedByDong.stream()
                 .map(brokerItem -> BrokerItemResponse.of(brokerItem))

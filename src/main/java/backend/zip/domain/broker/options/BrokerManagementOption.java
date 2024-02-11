@@ -27,7 +27,7 @@ public class BrokerManagementOption extends BaseEntity {
     private ManagementOption managementOption;
 
     @Column(name = "management_price")
-    private Integer managementPrice;
+    private String managementPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference

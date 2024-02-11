@@ -32,7 +32,7 @@ public class MatchItemListResponse {
                         matching.getMatchID(),
                         matching.getMatchStatus(),
                         UserItemResponse.from(matching.getUserItem()),
-                        BrokerItemResponse.getBrokerItemResponse(matching.getBrokerItem())
+                        BrokerItemResponse.of(matching.getBrokerItem())
                 )).collect(Collectors.toList());
 
         return new MatchItemListResponse(matchListDetailsList);

@@ -33,26 +33,22 @@ public class BrokerItemResponse {
     }
 
     public static BrokerItemResponse getBrokerItemResponse(BrokerItem savedBrokerItem, BrokerItemAddressResponse addressResponse) {
-        // BrokerDetailResponse 생성
         List<ItemImage> itemImages = savedBrokerItem.getItemImages();
         ItemContent itemContent = savedBrokerItem.getItemContent();
-        BrokerItemDetailResponse detailResponse = new BrokerItemDetailResponse(itemImages, itemContent);
+        BrokerItemDetailResponse detailResponse = BrokerItemDetailResponse.of(itemImages, itemContent);
 
-        // BrokerOptionResponse 생성
         BrokerOption brokerOption = savedBrokerItem.getBrokerOption();
-        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
-                brokerOption.getBrokerOptionId(),brokerOption.getBrokerDealTypes(),brokerOption.getRoomType()
-        ,brokerOption.getRoomSize(),brokerOption.getBrokerFloors(),brokerOption.getBrokerManagementOptions(),brokerOption.getBrokerInternalFacilities()
-        ,brokerOption.getBrokerExtraFilters(),brokerOption.getApprovedDate());
+        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(brokerOption);
 
-        // BrokerItemResponse 생성
-        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),savedBrokerItem.getItemStatus(),addressResponse, detailResponse, optionResponse);
+        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),
+                savedBrokerItem.getItemStatus(),
+                addressResponse, detailResponse, optionResponse);
 
         return itemResponse;
     }
 
 
-    public static BrokerItemResponse getBrokerItemResponse(BrokerItem brokerItem) {
+    public static BrokerItemResponse of(BrokerItem brokerItem) {
         BrokerItemAddressResponse addressResponse = BrokerItemAddressResponse.of(
                 brokerItem.getAddress(),
                 brokerItem.getRoadAddress(),
@@ -68,37 +64,8 @@ public class BrokerItemResponse {
                 brokerItem.getItemContent()
         );
 
-        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
-                brokerItem.getBrokerOption().getBrokerOptionId(),
-                brokerItem.getBrokerOption().getBrokerDealTypes(),
-                brokerItem.getBrokerOption().getRoomType(),
-                brokerItem.getBrokerOption().getRoomSize(),
-                brokerItem.getBrokerOption().getBrokerFloors(),
-                brokerItem.getBrokerOption().getBrokerManagementOptions(),
-                brokerItem.getBrokerOption().getBrokerInternalFacilities(),
-                brokerItem.getBrokerOption().getBrokerExtraFilters(),
-                brokerItem.getBrokerOption().getApprovedDate()
-        );
+        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(brokerItem.getBrokerOption());
 
-        return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
-    }
-
-    public static BrokerItemResponse of(BrokerItem brokerItem) {
-        BrokerItemAddressResponse addressResponse = BrokerItemAddressResponse.of(
-                brokerItem.getAddress(),
-                brokerItem.getDong(),
-                brokerItem.getX(),
-                brokerItem.getY()
-        );
-
-        BrokerItemDetailResponse detailResponse = BrokerItemDetailResponse.of(
-                brokerItem.getItemImages(),
-                brokerItem.getItemContent()
-        );
-
-        BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
-                brokerItem.getBrokerOption().getBrokerOptionId()
-        );
         return new BrokerItemResponse(brokerItem.getBrokerItemId(),brokerItem.getItemStatus(), addressResponse, detailResponse, optionResponse);
     }
 
