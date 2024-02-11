@@ -36,17 +36,22 @@ public class BrokerItemResponse {
         // BrokerDetailResponse 생성
         List<ItemImage> itemImages = savedBrokerItem.getItemImages();
         ItemContent itemContent = savedBrokerItem.getItemContent();
-        BrokerItemDetailResponse detailResponse = new BrokerItemDetailResponse(itemImages, itemContent);
+        BrokerItemDetailResponse detailResponse = BrokerItemDetailResponse.of(itemImages, itemContent);
 
         // BrokerOptionResponse 생성
         BrokerOption brokerOption = savedBrokerItem.getBrokerOption();
+
         BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(
-                brokerOption.getBrokerOptionId(),brokerOption.getBrokerDealTypes(),brokerOption.getRoomType()
-        ,brokerOption.getRoomSize(),brokerOption.getBrokerFloors(),brokerOption.getBrokerManagementOptions(),brokerOption.getBrokerInternalFacilities()
-        ,brokerOption.getBrokerExtraFilters(),brokerOption.getApprovedDate());
+                brokerOption.getBrokerOptionId(),brokerOption.getBrokerDealTypes(),
+                brokerOption.getRoomType(),brokerOption.getRoomSize(),
+                brokerOption.getBrokerFloors(),brokerOption.getBrokerManagementOptions(),
+                brokerOption.getBrokerInternalFacilities(),brokerOption.getBrokerExtraFilters(),
+                brokerOption.getApprovedDate());
 
         // BrokerItemResponse 생성
-        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),savedBrokerItem.getItemStatus(),addressResponse, detailResponse, optionResponse);
+        BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),
+                savedBrokerItem.getItemStatus(),
+                addressResponse, detailResponse, optionResponse);
 
         return itemResponse;
     }
