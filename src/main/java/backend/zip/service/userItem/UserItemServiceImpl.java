@@ -67,10 +67,10 @@ public class UserItemServiceImpl implements UserItemService{
 
     // 동별로 요청된 매물 정보들 전부 조회합니다.
     // 상도동 토글이면 상도동 요청들 다뜨게
-    public List<UserItemByDongResponse> getUserItemSortedByDong() {
-        List<UserItem> userItems = userItemRepository.findAll();
-        Map<String, List<UserItem>> userItemByDong = userItems.stream()
-                .collect(Collectors.groupingBy(UserItem::getDong));
-        return UserItemByDongResponse.from(userItemByDong);
+    public UserItemByDongResponse getUserItemSortedByDong(String dongName) {
+        List<UserItem> userItems = userItemRepository.findAllByDong(dongName);
+        //Map<String, List<UserItem>> userItemByDong = userItems.stream()
+        //        .collect(Collectors.groupingBy(UserItem::getDong));
+        return UserItemByDongResponse.from(userItems);
     }
 }
