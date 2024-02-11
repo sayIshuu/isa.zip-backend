@@ -24,13 +24,13 @@ public class BrokerDealType extends BaseEntity {
     private DealType dealType;
 
     @Column(name = "price")
-    private Integer price;
+    private String price;
 
     @Column(name = "deposit")
-    private Integer deposit;
+    private String deposit;
 
     @Column(name = "month_price")
-    private Integer monthPrice;
+    private String monthPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
