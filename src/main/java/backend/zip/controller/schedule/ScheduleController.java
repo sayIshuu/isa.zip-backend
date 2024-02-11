@@ -1,12 +1,15 @@
 package backend.zip.controller.schedule;
 
 import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.schedule.Event;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
 import backend.zip.dto.schedule.response.ScheduleResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.security.SecurityUtils;
 import backend.zip.service.schedule.ScheduleService;
+import backend.zip.service.schedule.EventService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -40,16 +43,14 @@ public class ScheduleController {
 
     @PostMapping()
     public ApiResponse<ScheduleResponse> addSchedule(@RequestBody AddScheduleRequest request) {
-        //현재 로그인 중인 userId를 가져옴
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
         Long userId = Long.valueOf(loggedInUserId);
+        // Create and persist the Schedule entity
         Schedule schedule = scheduleService.addSchedule(userId, request);
-
         ScheduleResponse scheduleResponse = ScheduleResponse.fromEntity(schedule);
         return ApiResponse.onSuccess(scheduleResponse);
-//        }
-//        return null;
     }
+
 
     @PutMapping()
     public ApiResponse<ScheduleResponse> updateSchedule(
@@ -72,13 +73,14 @@ public class ScheduleController {
 //        }
     }
 
-//    @DeleteMapping()
-//    public ApiResponse<String> deleteSchedule() {
-//        //현재 로그인 중인 userId를 가져옴
-//        String loggedInUserId = SecurityUtils.getLoggedInUserId();
-//        Long userId = Long.valueOf(loggedInUserId);
-//        scheduleService.deleteSchedule(userId);
-//        return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
-//    }
+    @DeleteMapping()
+    @Transactional
+    public ApiResponse<String> deleteSchedule() {
+        //현재 로그인 중인 userId를 가져옴
+        String loggedInUserId = SecurityUtils.getLoggedInUserId();
+        Long userId = Long.valueOf(loggedInUserId);
+        scheduleService.deleteSchedule(userId);
+        return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
+    }
 }
 

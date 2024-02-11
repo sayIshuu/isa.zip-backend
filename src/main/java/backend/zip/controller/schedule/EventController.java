@@ -57,9 +57,9 @@ public class EventController {
 //        }
     }
 
-//    @DeleteMapping("/{eventId}")
-//    public ApiResponse<String> deleteEvent(@PathVariable Long eventId) {
-//        eventService.deleteEvent(eventId);
-//        return ApiResponse.onSuccess("이벤트 삭제 성공"+eventId);
-//    }
+    @DeleteMapping("/{eventId}")
+    public ApiResponse<String> deleteEvent(@PathVariable Long eventId) {
+        eventService.deleteEvent(eventId);
+        return ApiResponse.onSuccess("이벤트 삭제 성공"+eventId);
+    }
 }
