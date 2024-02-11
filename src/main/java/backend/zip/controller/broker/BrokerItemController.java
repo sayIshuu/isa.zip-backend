@@ -100,11 +100,11 @@ public class BrokerItemController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
     @PatchMapping(value = "/items/{brokerItemId}/soldout")
-    public ApiResponse<BrokerItemResponse> makeSoldOut(@PathVariable Long brokerItemId) {
+    public ApiResponse<BrokerItemStatusResponse> makeSoldOut(@PathVariable Long brokerItemId) {
         BrokerItem soldBrokerItem = brokerItemService.makeBrokerItemSoldOut(brokerItemId);
-        BrokerItemResponse brokerItemResponse = getBrokerItemResponse(soldBrokerItem);
+        BrokerItemStatusResponse brokerItemStatusResponse = BrokerItemStatusResponse.of(soldBrokerItem);
 
-        return ApiResponse.onSuccess(brokerItemResponse);
+        return ApiResponse.onSuccess(brokerItemStatusResponse);
     }
 
 
