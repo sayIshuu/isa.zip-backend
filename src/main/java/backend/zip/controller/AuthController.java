@@ -56,8 +56,12 @@ public class AuthController {
     })
     @PostMapping("/auth/login")
     public ApiResponse<AuthResponse.LoginResponse> login(@RequestBody AuthRequest.LoginRequest loginRequest) {
-        return ApiResponse.onSuccess("로그인에 성공하셨습니다.", authService.login(loginRequest));
+        return ApiResponse.onSuccess("이메일 로그인에 성공하셨습니다.", authService.login(loginRequest));
     }
 
-    // 카카오로 회원가입
+    // 카카오로 회원가입 및 로그인
+    @PostMapping("/auth/kakao")
+    public ApiResponse<AuthResponse.LoginResponse> kakaoLogin(@RequestBody AuthRequest.KakaoLoginRequest kakaoLoginRequest) {
+        return ApiResponse.onSuccess("카카오 로그인에 성공하셨습니다.", authService.kakaoLogin(kakaoLoginRequest));
+    }
 }

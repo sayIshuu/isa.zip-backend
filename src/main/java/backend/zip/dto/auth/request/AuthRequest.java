@@ -1,6 +1,7 @@
 package backend.zip.dto.auth.request;
 
 import backend.zip.domain.enums.Role;
+import backend.zip.domain.enums.SocialType;
 import backend.zip.domain.user.User;
 import lombok.Getter;
 
@@ -24,6 +25,23 @@ public class AuthRequest {
     public static class LoginRequest{
         String email;
         String password;
+    }
+
+    @Getter
+    public static class KakaoLoginRequest{
+        String socialId;
+        String email;
+        String nickName;
+        public User toUser(String encodedPassword) {
+            return User.builder()
+                    .socialId(this.socialId)
+                    .email(this.email)
+                    .password(encodedPassword)
+                    .nickName(this.nickName)
+                    .role(Role.ROLE_USER)
+                    .socialType(SocialType.KAKAO)
+                    .build();
+        }
     }
 
     @Getter

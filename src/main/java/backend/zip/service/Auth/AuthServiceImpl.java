@@ -7,6 +7,7 @@ import backend.zip.domain.enums.Role;
 import backend.zip.domain.user.User;
 import backend.zip.dto.auth.request.AuthRequest;
 import backend.zip.dto.auth.response.AuthResponse;
+import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.global.exception.CustomNoSuchAlgorithmException;
 import backend.zip.global.exception.auth.AuthcodeException;
 import backend.zip.global.exception.auth.BrokerNotFoundException;
@@ -92,6 +93,31 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+    @Override
+    @Transactional
+    public AuthResponse.LoginResponse kakaoLogin(AuthRequest.KakaoLoginRequest kakaoLoginRequest) {
+        Optional<User> existedUser = userRepository.findBySocialId(kakaoLoginRequest.getSocialId());
+
+        User user;
+        if(existedUser.isPresent()) {
+            user = existedUser.get();
+        } else {
+            checkEmail(kakaoLoginRequest.getEmail());
+
+            user = kakaoLoginRequest.toUser(passwordEncoder.encode(kakaoLoginRequest.getSocialId()));
+            userRepository.save(user);
+        }
+
+        TokenInfo tokenInfo = setFirstAuthentication(user.getId(), kakaoLoginRequest.getSocialId());
+        refreshTokenRedisService.saveRefreshToken(user.getId(), tokenInfo.getRefreshToken());
+
+        return AuthResponse.LoginResponse.builder()
+                .id(user.getId())
+                .accessToken(tokenInfo.getAccessToken())
+                .refreshToken(tokenInfo.getRefreshToken())
+                .build();
+    }
+
     // 이메일 중복 확인
     private void checkEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
@@ -119,5 +145,24 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication = authenticationManagerBuilder.getObject()
                 .authenticate(authenticationToken);
         return jwtTokenProvider.generationToken(authentication);
+    }
+
+    private String createRandomPassword() {
+        String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
+        String CHAR_UPPER = CHAR_LOWER.toUpperCase();
+        String NUMBER = "0123456789";
+
+        String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER;
+        SecureRandom random = new SecureRandom();
+
+        StringBuilder sb = new StringBuilder(16);
+        for (int i = 0; i < 16; i++) {
+            int rndCharAt = random.nextInt(DATA_FOR_RANDOM_STRING.length());
+            char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
+
+            sb.append(rndChar);
+        }
+
+        return sb.toString();
     }
 }
