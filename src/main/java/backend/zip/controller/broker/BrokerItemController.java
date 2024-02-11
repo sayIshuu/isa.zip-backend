@@ -90,7 +90,7 @@ public class BrokerItemController {
                                                             @RequestPart(value = "multipartFiles",required = false) MultipartFile[] multipartFiles) {
 
         BrokerItem updateBrokerItem = brokerItemService.updateBrokerItem(brokerItemId, roadFullAddress, detailsRequest, optionsRequest, multipartFiles);
-        BrokerItemResponse brokerItemResponse = getBrokerItemResponse(updateBrokerItem);
+        BrokerItemResponse brokerItemResponse = BrokerItemResponse.of(updateBrokerItem);
 
         return ApiResponse.onSuccess(brokerItemResponse);
     }

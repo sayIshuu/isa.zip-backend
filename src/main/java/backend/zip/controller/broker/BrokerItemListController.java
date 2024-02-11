@@ -29,7 +29,7 @@ public class BrokerItemListController {
     public ApiResponse<List<BrokerItemResponse>> findBrokerItemList() {
         List<BrokerItem> brokerItemList = brokerItemShowService.findBrokerItemList(brokerItemShowService.checkBroker());
         List<BrokerItemResponse> findAllBrokerItemList = brokerItemList.stream()
-                .map(brokerItem -> getBrokerItemResponse(brokerItem))
+                .map(brokerItem -> BrokerItemResponse.of(brokerItem))
                 .collect(Collectors.toList());
 
         return ApiResponse.onSuccess(findAllBrokerItemList);
@@ -42,7 +42,7 @@ public class BrokerItemListController {
     @GetMapping(value = "/items/show/details/{brokerItemId}")
     public ApiResponse<BrokerItemResponse> findBrokerItem(@PathVariable Long brokerItemId) {
         BrokerItem findBrokerItem = brokerItemShowService.findBrokerItem(brokerItemId);
-        BrokerItemResponse brokerItemResponse = getBrokerItemResponse(findBrokerItem);
+        BrokerItemResponse brokerItemResponse = BrokerItemResponse.of(findBrokerItem);
 
         return ApiResponse.onSuccess(brokerItemResponse);
     }
