@@ -75,4 +75,20 @@ public class EventServiceImpl implements EventService {
             eventRepository.deleteById(eventId);
         }
     }
+
+    @Override
+    public void deleteEvents(Long scheduleId) {
+        Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
+        if (scheduleOptional.isPresent()) {
+            Schedule schedule = scheduleOptional.get();
+            List<Event> events = eventRepository.findBySchedule(schedule);
+            for (Event event : events) {
+                eventRepository.delete(event);
+            }
+
+        } else {
+            //TODO
+            throw new IllegalArgumentException("Schedule with id " + scheduleId + " not found");
+        }
+    }
 }

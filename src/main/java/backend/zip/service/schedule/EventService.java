@@ -17,5 +17,6 @@ public interface EventService {
     List<Event> getEvents(Long userId);
     Optional<Event> updateEvent(UpdateEventRequest request);
     void deleteEvent(Long eventId);
+    void deleteEvents(Long scheduleId);
 }
 
