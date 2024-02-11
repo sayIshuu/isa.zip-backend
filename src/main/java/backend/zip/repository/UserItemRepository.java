@@ -36,4 +36,6 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
     // UserItem의 dong을 모두 찾기
     @Query("SELECT u.dong FROM UserItem u")
     List<String> findAllDongs();
+
+    List<UserItem> findAllByDong(String dongName);
 }
