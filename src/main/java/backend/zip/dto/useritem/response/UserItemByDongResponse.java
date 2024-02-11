@@ -19,6 +19,16 @@ public class UserItemByDongResponse {
         this.userItemResponses = userItemResponses;
     }
 
+    public static UserItemByDongResponse from(List<UserItem> userItems) {
+        return new UserItemByDongResponse(
+                userItems.get(0).getDong(),
+                userItems.stream()
+                        .map(UserItemResponse::from)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    /*
     public static List<UserItemByDongResponse> from(Map<String, List<UserItem>> userItemByDong) {
         return userItemByDong.entrySet().stream()
                 .map(entry -> new UserItemByDongResponse(
@@ -29,4 +39,5 @@ public class UserItemByDongResponse {
                 ))
                 .collect(Collectors.toList());
     }
+     */
 }

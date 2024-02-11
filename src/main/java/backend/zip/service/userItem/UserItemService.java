@@ -12,5 +12,5 @@ public interface UserItemService {
 
     List<UserItemDongCountResponse> getUserItemDongCount(Long userId);
 
-    List<UserItemByDongResponse> getUserItemSortedByDong();
+    UserItemByDongResponse getUserItemSortedByDong(String dongName);
 }
