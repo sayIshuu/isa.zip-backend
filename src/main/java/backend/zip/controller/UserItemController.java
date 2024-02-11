@@ -34,7 +34,7 @@ public class UserItemController {
         return ApiResponse.onSuccess(userItemService.getUserItemDongCount(userId));
     }
 
-    @Operation(summary = "유저 매물 요청 전체조회", description = "동별로 요청된 매물 정보를 조회합니다.")
+    @Operation(summary = "유저 매물 요청 전체조회", description = "동별로 요청된 매물 정보를 조회합니다. 동이름만 띄워쓰기없이 넣어주세요 ex)상도동")
     @GetMapping("/items/{dong-name}")
     public ApiResponse<UserItemByDongResponse> getUserItemSortedByDong(@PathVariable String dongName) {
         return ApiResponse.onSuccess(userItemService.getUserItemSortedByDong(dongName));
