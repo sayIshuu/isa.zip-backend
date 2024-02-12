@@ -21,8 +21,8 @@ public class UserItem {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "address")
-    private String address;
+    //@Column(name = "address")
+    //private String address;
 
     @Column(name = "dong")
     private String dong;
