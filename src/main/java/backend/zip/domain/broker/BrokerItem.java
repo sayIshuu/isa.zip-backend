@@ -9,7 +9,6 @@ import backend.zip.global.status.ErrorStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -58,7 +57,7 @@ public class BrokerItem {
     private ItemContent itemContent;
 
     @OneToMany(mappedBy = "brokerItem", cascade = CascadeType.ALL)
-    private List<ItemImage> itemImages = new ArrayList<>(); // BrokerItem과 연결된 이미지들의 리스트
+    private List<ItemImage> itemImages; // BrokerItem과 연결된 이미지들의 리스트
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "broker_option_id")

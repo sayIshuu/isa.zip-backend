@@ -5,7 +5,6 @@ import backend.zip.domain.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,19 +36,19 @@ public class BrokerOption {
     private BrokerItem brokerItem;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    private List<BrokerFloor> brokerFloors = new ArrayList<>();
+    private List<BrokerFloor> brokerFloors;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    private List<BrokerDealType> brokerDealType = new ArrayList<>();
+    private List<BrokerDealType> brokerDealTypes;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    private List<BrokerManagementOption> brokerManagementOptions = new ArrayList<>();
+    private List<BrokerManagementOption> brokerManagementOptions;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    private List<BrokerInternalFacility> brokerInternalFacilities = new ArrayList<>();
+    private List<BrokerInternalFacility> brokerInternalFacilities;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    private List<BrokerExtraFilter> brokerExtraFilters = new ArrayList<>();
+    private List<BrokerExtraFilter> brokerExtraFilters;
 
     public void setBrokerItem(BrokerItem brokerItem) {
         this.brokerItem = brokerItem;
