@@ -25,9 +25,9 @@ public interface BrokerItemRepository extends JpaRepository<BrokerItem, Long> {
 
 //    @Query("select b from BrokerItem b where b.user.id = :userId")
     @Query("SELECT b FROM BrokerItem b " +
-        "LEFT JOIN FETCH b.brokerOption " +
-        "LEFT JOIN FETCH b.itemContent " +
-        "LEFT JOIN FETCH b.itemImages " +
+        "JOIN FETCH b.brokerOption " +
+        "JOIN FETCH b.itemContent " +
+        "JOIN FETCH b.itemImages " +
         "WHERE b.user.id = :userId")
     List<BrokerItem> findBrokerItemByUser(@Param("userId") Long userId);
 
