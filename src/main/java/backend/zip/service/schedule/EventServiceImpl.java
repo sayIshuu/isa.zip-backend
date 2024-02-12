@@ -1,5 +1,8 @@
 package backend.zip.service.schedule;
 
+import backend.zip.global.exception.schedule.EventNotFoundException;
+import backend.zip.global.exception.schedule.ScheduleNotFoundException;
+import backend.zip.global.exception.user.UserNotFoundException;
 import backend.zip.repository.schedule.EventRepository;
 import backend.zip.repository.UserRepository;
 import backend.zip.repository.schedule.ScheduleRepository;
@@ -11,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.core.userdetails.UserDetailsResourceFactoryBean;
 import org.springframework.stereotype.Service;
 import backend.zip.domain.schedule.Event;
-
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import backend.zip.global.exception.schedule.EventNotFoundException;
+
+import static backend.zip.global.status.ErrorStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +39,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getEvents(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(USER_NOT_FOUND));
         if (user != null)
         {
             Optional<Schedule> scheduleOptional = scheduleRepository.findByUserId(userId);
@@ -42,29 +47,29 @@ public class EventServiceImpl implements EventService {
                 Schedule schedule = scheduleOptional.get();
                 return eventRepository.findBySchedule(schedule);
             }
+            else
+                throw new ScheduleNotFoundException(SCHEDULE_NOT_FOUND);
         }
-
-    //TODO error  처리
         return Collections.emptyList();
     }
 
     @Override
     public Optional<Event> updateEvent(UpdateEventRequest request) {
-
-        //들어오는 값을 어떻게 설정해야할지 의문
         Optional<Event> eventOptional = eventRepository.findById(request.getEventId());
 
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
+            // 엔티티의 변경 사항 설정
             event.setEventDate(request.getEventDate());
             event.setEventTitle(request.getEventTitle());
-            eventRepository.save(event);
+            // 변경된 엔티티 저장
+            event = eventRepository.save(event);
             return Optional.of(event);
         }
-
-    //TODO 에러처리
-        return Optional.empty();
+        else
+            throw new EventNotFoundException(EVENT_NOT_FOUND);
     }
+
 
     @Override
     public void deleteEvent(Long eventId){
@@ -74,6 +79,8 @@ public class EventServiceImpl implements EventService {
             Event event = eventOptional.get();
             eventRepository.deleteById(eventId);
         }
+        else
+            throw new EventNotFoundException(EVENT_NOT_FOUND);
     }
 
     @Override
@@ -87,8 +94,7 @@ public class EventServiceImpl implements EventService {
             }
 
         } else {
-            //TODO
-            throw new IllegalArgumentException("Schedule with id " + scheduleId + " not found");
+            throw new ScheduleNotFoundException(SCHEDULE_NOT_FOUND);
         }
     }
 }
