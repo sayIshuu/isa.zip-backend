@@ -25,6 +25,8 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
     @Query("SELECT u.dong FROM UserItem u")
     List<String> findAllDongs();
 
+    // Fetch Join을 이용해서 option, user를 같이 가져오기
+    @Query("SELECT u FROM UserItem u JOIN FETCH u.user JOIN FETCH u.userOption WHERE u.dong = :dongName")
     List<UserItem> findAllByDong(String dongName);
 
     @Query("SELECT u FROM UserItem u WHERE u.user.id = :userId")
