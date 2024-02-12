@@ -35,7 +35,7 @@ public class EventController {
             eventResponses.add(EventResponse.fromEntity(eventList.get(i)));
         }
         return ApiResponse.onSuccess(eventResponses);
-가    }
+    }
 
     @PutMapping("/{eventId}")
     @Operation(summary = "상세 일정 수정", description = "상세 일정(1개)을 수정하는 API입니다.")
