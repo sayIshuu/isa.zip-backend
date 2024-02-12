@@ -14,9 +14,9 @@ import java.util.Optional;
 @Repository
 public interface UserItemRepository extends JpaRepository<UserItem, Long> {
     // 특정 UserItem을 특정 주소로 업데이트하기
-    @Modifying
-    @Query("UPDATE UserItem u SET u.address = :newAddress WHERE u.userItemId = :userItemId")
-    void updateAddressByUserItemId(@Param("userItemId") Long userItemId, @Param("newAddress") String newAddress);
+    //@Modifying
+    //@Query("UPDATE UserItem u SET u.address = :newAddress WHERE u.userItemId = :userItemId")
+    //void updateAddressByUserItemId(@Param("userItemId") Long userItemId, @Param("newAddress") String newAddress);
 
     // 특정 UserItem을 삭제하는데, User 객체와의 조인 조건 추가
     void deleteByUserId(Long userId);
