@@ -18,16 +18,18 @@ import java.util.List;
 public class BrokerItemResponse {
     private Long brokerItemId;
     private String businessName;
+    private String brokerImage;
     private ItemStatus itemStatus;
     private BrokerItemAddressResponse addressResponse;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemResponse(Long brokerItemId,String businessName,ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
+    public BrokerItemResponse(Long brokerItemId,String businessName,String brokerImage,ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
                               BrokerItemDetailResponse detailResponse,
                               BrokerItemOptionResponse optionResponse) {
         this.brokerItemId = brokerItemId;
         this.businessName = businessName;
+        this.brokerImage = brokerImage;
         this.itemStatus = itemStatus;
         this.addressResponse = addressResponse;
         this.detailResponse = detailResponse;
@@ -44,6 +46,7 @@ public class BrokerItemResponse {
 
         BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),
                 savedBrokerItem.getUser().getBroker().getBusinessName(),
+                savedBrokerItem.getUser().getUserImg(),
                 savedBrokerItem.getItemStatus(),
                 addressResponse, detailResponse, optionResponse);
 
@@ -71,6 +74,7 @@ public class BrokerItemResponse {
 
         return new BrokerItemResponse(brokerItem.getBrokerItemId(),
                 brokerItem.getUser().getBroker().getBusinessName(),
+                brokerItem.getUser().getUserImg(),
                 brokerItem.getItemStatus(), addressResponse,
                 detailResponse, optionResponse);
     }

@@ -21,11 +21,11 @@ public class BrokerDealType {
     @Column(name = "deal_type")
     private DealType dealType;
 
-    @Column(name = "price")
-    private String price;
+    @Column(name = "charter_price")
+    private String charterPrice;
 
-    @Column(name = "deposit")
-    private String deposit;
+    @Column(name = "trading_price")
+    private String tradingPrice;
 
     @Column(name = "month_price")
     private String monthPrice;

@@ -35,8 +35,8 @@ public class AddBrokerItemOptionsRequest {
     @Getter
     @Setter
     public static class DealInfo {
-        private String price;
-        private String deposit;
+        private String charterPrice;
+        private String tradingPrice;
         private String monthPrice;
     }
 
