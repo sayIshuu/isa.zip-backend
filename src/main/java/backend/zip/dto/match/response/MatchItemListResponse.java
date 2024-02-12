@@ -21,6 +21,7 @@ public class MatchItemListResponse {
     @AllArgsConstructor
     public static class MatchListDetails {
         private Long matchId;
+        private String userImage;
         private MatchStatus matchStatus;
         private UserItemResponse userItemResponse;
         private BrokerItemResponse brokerItemResponse;
@@ -30,6 +31,7 @@ public class MatchItemListResponse {
         List<MatchListDetails> matchListDetailsList = matchingList.stream()
                 .map(matching -> new MatchListDetails(
                         matching.getMatchID(),
+                        matching.getUserItem().getUser().getUserImg(),
                         matching.getMatchStatus(),
                         UserItemResponse.from(matching.getUserItem()),
                         BrokerItemResponse.of(matching.getBrokerItem())
