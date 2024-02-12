@@ -1,6 +1,5 @@
 package backend.zip.domain.user.options;
 
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.ExtraFilter;
 import backend.zip.domain.user.UserOption;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -14,7 +13,7 @@ import lombok.*;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class UserExtraFilter extends BaseEntity {
+public class UserExtraFilter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_extra_filter_id")

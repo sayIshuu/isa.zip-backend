@@ -1,11 +1,8 @@
 package backend.zip.domain.broker.options;
 
 import backend.zip.domain.broker.BrokerOption;
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.ExtraFilter;
-import backend.zip.domain.user.UserOption;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +13,7 @@ import lombok.*;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class BrokerExtraFilter extends BaseEntity {
+public class BrokerExtraFilter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "broker_extra_filter_id")

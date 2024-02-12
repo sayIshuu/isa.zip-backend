@@ -1,6 +1,5 @@
 package backend.zip.domain.broker;
 
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.ItemStatus;
 import backend.zip.domain.item.ItemContent;
 import backend.zip.domain.item.ItemImage;
@@ -9,7 +8,6 @@ import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,7 +19,7 @@ import java.util.List;
 //@Setter
 //@DynamicInsert
 //@DynamicUpdate
-public class BrokerItem extends BaseEntity {
+public class BrokerItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "broker_item_id")

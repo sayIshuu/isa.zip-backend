@@ -1,6 +1,5 @@
 package backend.zip.domain.schedule;
 
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.Period;
 import backend.zip.domain.user.User;
 import jakarta.persistence.*;
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class Schedule extends BaseEntity {
+public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")

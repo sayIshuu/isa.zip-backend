@@ -48,7 +48,7 @@ public class MatchController {
                                                     "공인중개사가 매칭후보를 매칭확정 시키기 : MATCH_COMPLETE" +
                                                     "일반유저가 자기 매칭요청상태에서 +버튼 눌러서 찜하기 : MATCH_LIKE" +
                                                     "일반유저가 최종적으로 매칭완료시키기 : MATCH_FINAL_COMPLETE")
-    @PatchMapping("/brokers/{matchingId}")
+    @PatchMapping("/brokers/{matchingId}") // 엔드포인트 변경필요 비직관적임.
     public ApiResponse<MatchStatusResponse> matchCompleteBrokerItems(@PathVariable Long matchingId,
                                                                      @RequestParam MatchStatus matchStatus) {
         Matching matching = matchService.updateMatchStatus(matchingId, matchStatus);
@@ -71,6 +71,8 @@ public class MatchController {
         // 결국 컨트롤러 선에서 서비스 get함수에 넘기는 인자는 데이터 쿼리문 작성을 위한것
         return ApiResponse.onSuccess(matchService.getMatchItemsByStatus(userId, matchStatus));
     }
+
+
 
 
     //일단은 여기까지먼저.

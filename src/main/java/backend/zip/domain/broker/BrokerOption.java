@@ -1,14 +1,10 @@
 package backend.zip.domain.broker;
 
 import backend.zip.domain.broker.options.*;
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +15,7 @@ import java.util.List;
 @Setter
 //@DynamicInsert
 //@DynamicUpdate
-public class BrokerOption extends BaseEntity {
+public class BrokerOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "broker_option_id")

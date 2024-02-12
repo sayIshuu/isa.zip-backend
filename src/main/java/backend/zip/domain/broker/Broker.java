@@ -1,6 +1,5 @@
 package backend.zip.domain.broker;
 
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +11,7 @@ import lombok.*;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class Broker extends BaseEntity {
+public class Broker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "broker_id")

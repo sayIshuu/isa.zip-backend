@@ -1,7 +1,5 @@
 package backend.zip.domain.user;
 
-import backend.zip.domain.broker.BrokerOption;
-import backend.zip.domain.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +11,7 @@ import lombok.*;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class UserItem extends BaseEntity {
+public class UserItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_item_id")

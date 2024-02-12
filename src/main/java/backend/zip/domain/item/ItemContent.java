@@ -1,7 +1,6 @@
 package backend.zip.domain.item;
 
 import backend.zip.domain.broker.BrokerItem;
-import backend.zip.domain.common.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +12,7 @@ import lombok.*;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class ItemContent extends BaseEntity {
+public class ItemContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_content_id")

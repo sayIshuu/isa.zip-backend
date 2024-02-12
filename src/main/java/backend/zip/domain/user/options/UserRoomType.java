@@ -1,7 +1,6 @@
 package backend.zip.domain.user.options;
 
 
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.RoomType;
 import backend.zip.domain.user.UserOption;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -15,7 +14,7 @@ import lombok.*;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class UserRoomType extends BaseEntity {
+public class UserRoomType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_room_type_id")

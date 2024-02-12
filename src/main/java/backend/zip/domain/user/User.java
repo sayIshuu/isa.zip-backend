@@ -1,12 +1,10 @@
 package backend.zip.domain.user;
 
 import backend.zip.domain.broker.Broker;
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.Role;
 import backend.zip.domain.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
@@ -16,7 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Builder
 //@DynamicInsert
 @DynamicUpdate
-public class User extends BaseEntity {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //기본 키이며 자동으로 1씩 증가함
     @Column(name = "user_id")

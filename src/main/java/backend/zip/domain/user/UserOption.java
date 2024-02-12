@@ -1,6 +1,5 @@
 package backend.zip.domain.user;
 
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.ApproveDate;
 import backend.zip.domain.user.options.*;
 import jakarta.persistence.*;
@@ -13,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class UserOption extends BaseEntity {
+public class UserOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_option_id")

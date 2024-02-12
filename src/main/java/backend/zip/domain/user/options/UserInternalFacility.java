@@ -1,6 +1,5 @@
 package backend.zip.domain.user.options;
 
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.InternalFacility;
 import backend.zip.domain.user.UserOption;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -14,7 +13,7 @@ import lombok.*;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class UserInternalFacility extends BaseEntity {
+public class UserInternalFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_internal_facility_id")

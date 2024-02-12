@@ -1,7 +1,6 @@
 package backend.zip.domain.match;
 
 import backend.zip.domain.broker.BrokerItem;
-import backend.zip.domain.common.BaseEntity;
 import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.user.UserItem;
 import jakarta.persistence.*;
@@ -16,7 +15,7 @@ import static backend.zip.domain.enums.MatchStatus.WAITING;
 @Builder
 //@DynamicInsert
 //@DynamicUpdate
-public class Matching extends BaseEntity {
+public class Matching {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "match_id")
