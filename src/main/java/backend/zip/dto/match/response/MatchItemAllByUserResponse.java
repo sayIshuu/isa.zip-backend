@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class MatchItemAllByUserResponse {
-    private String dong;
+    private String dong_requestName;
     private Long matchingCount;
     private List<BrokerItemResponse> matchedBrokerItemResponses;
     private UserItemResponse userRequestInfo;
