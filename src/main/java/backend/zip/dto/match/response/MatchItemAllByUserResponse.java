@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class MatchItemAllByUserResponse {
-    private String dong;
-    private Long count;
-    private UserItemResponse userItemResponse;
-    private List<BrokerItemResponse> brokerItemResponses;
+    private String dong_requestName;
+    private Long matchingCount;
+    private List<BrokerItemResponse> matchedBrokerItemResponses;
+    private UserItemResponse userRequestInfo;
 
     //생성자 필요없다. maybe
 
@@ -28,10 +28,10 @@ public class MatchItemAllByUserResponse {
                 .map(entry -> new MatchItemAllByUserResponse(
                         entry.getKey().getDong(),
                         (long) entry.getValue().size(),
-                        UserItemResponse.from(entry.getKey()), //얘가 되려나?
                         entry.getValue().stream()
                                 .map(BrokerItemResponse::from)
-                                .collect(Collectors.toList())
+                                .collect(Collectors.toList()),
+                        UserItemResponse.from(entry.getKey()) //얘가 되려나?
                 ))
                 .collect(Collectors.toList());
     }
