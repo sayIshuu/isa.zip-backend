@@ -2,6 +2,7 @@ package backend.zip.dto.match.response;
 
 import backend.zip.domain.match.Matching;
 import backend.zip.domain.user.UserItem;
+import backend.zip.dto.brokeritem.response.BrokerItemNoAddressResponse;
 import backend.zip.dto.brokeritem.response.BrokerItemResponse;
 import backend.zip.dto.useritem.response.UserItemResponse;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class MatchItemAllByUserResponse {
     private String dong_requestName;
     private Long matchingCount;
-    private List<BrokerItemResponse> matchedBrokerItemResponses;
+    private List<BrokerItemNoAddressResponse> matchedBrokerItemResponses;
     private UserItemResponse userRequestInfo;
 
     //생성자 필요없다. maybe
@@ -29,7 +30,7 @@ public class MatchItemAllByUserResponse {
                         entry.getKey().getDong(),
                         (long) entry.getValue().size(),
                         entry.getValue().stream()
-                                .map(BrokerItemResponse::from)
+                                .map(BrokerItemNoAddressResponse::from)
                                 .collect(Collectors.toList()),
                         UserItemResponse.from(entry.getKey()) //얘가 되려나?
                 ))
