@@ -27,11 +27,9 @@ public class AddUserItemOptionsRequest {
     @Getter
     @Setter
     public static class DealTypeInfo { //타입에 따라 null 허용
-        private Integer minPrice;
-        private Integer maxPrice;
-        private Integer minDeposit;
-        private Integer maxDeposit;
-        private Integer minMonthPrice;
-        private Integer maxMonthPrice;
+        private String minPrice;
+        private String maxPrice;
+        private String minMonthPrice;
+        private String maxMonthPrice;
     }
 }

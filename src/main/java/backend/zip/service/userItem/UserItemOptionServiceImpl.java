@@ -125,10 +125,7 @@ public class UserItemOptionServiceImpl implements UserItemOptionService {
                     .dealType(dealType)
                     .minPrice(dealTypeInfo.getMinPrice())
                     .maxPrice(dealTypeInfo.getMaxPrice())
-                    .minDeposit(dealTypeInfo.getMinDeposit())
-                    .maxDeposit(dealTypeInfo.getMaxDeposit())
                     .minMonthPrice(dealTypeInfo.getMinMonthPrice())
-                    .maxMonthPrice(dealTypeInfo.getMaxMonthPrice())
                     .userOption(userOption) // 참조설정
                     .build();
             userOption.getUserDealTypes().add(userDealType);
