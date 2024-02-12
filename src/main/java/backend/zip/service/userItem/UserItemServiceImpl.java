@@ -28,7 +28,6 @@ public class UserItemServiceImpl implements UserItemService{
     private final UserRepository userRepository;
 
     public UserItem saveUserItem(Long userId,
-                                 String address,
                                  String dong,
                                  AddUserItemOptionsRequest addUserItemOptionsRequest) {
 
@@ -36,7 +35,6 @@ public class UserItemServiceImpl implements UserItemService{
         // userItem 생성
         UserItem userItem = UserItem.builder()
                 .user(userRepository.findById(userId).orElseThrow())
-                .address(address)
                 .dong(dong)
                 .build();
 

@@ -12,18 +12,18 @@ public class UserItemResponse {
     private Long userItemId;
     private Long userId;
     private String userNickname;
-    private UserItemAddressResponse userItemAddressResponse;
+    private String dong;
     private UserItemOptionResponse userItemOptionsResponse;
 
     public UserItemResponse(Long userItemId,
                             Long userId,
                             String userNickname,
-                            UserItemAddressResponse userItemAddressResponse,
+                            String dong,
                             UserItemOptionResponse userItemOptionsResponse) {
         this.userItemId = userItemId;
         this.userId = userId;
         this.userNickname = userNickname;
-        this.userItemAddressResponse = userItemAddressResponse;
+        this.dong = dong;
         this.userItemOptionsResponse = userItemOptionsResponse;
     }
 
@@ -32,7 +32,7 @@ public class UserItemResponse {
                 value.getUserItemId(),
                 value.getUser().getId(),
                 value.getUser().getNickName(),
-                UserItemAddressResponse.from(value.getAddress(), value.getDong()),
+                value.getDong(),
                 UserItemOptionResponse.from(
                         value.getUserOption().getUserOptionId(),
                         value.getUserOption().getUserRoomTypes(),
