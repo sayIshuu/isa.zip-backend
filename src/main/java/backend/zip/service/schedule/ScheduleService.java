@@ -7,7 +7,7 @@ import backend.zip.dto.schedule.request.UpdateScheduleRequest;
 import java.util.Optional;
 
 public interface ScheduleService {
-    Optional<Schedule> getScheduleByUserId(Long userId);
+    Schedule getScheduleByUserId(Long userId);
 
     Schedule addSchedule(Long userId, AddScheduleRequest request);
 
