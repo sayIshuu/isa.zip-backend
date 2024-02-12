@@ -28,20 +28,14 @@ public class UserDealType {
     private DealType dealType;
 
     @Column(name = "min_price")
-    private Integer minPrice;
+    private String minPrice;
 
     @Column(name = "max_price")
-    private Integer maxPrice;
-
-    @Column(name = "min_deposit")
-    private Integer minDeposit;
-
-    @Column(name = "max_deposit")
-    private Integer maxDeposit;
+    private String maxPrice;
 
     @Column(name = "min_month_price")
-    private Integer minMonthPrice;
+    private String minMonthPrice;
 
     @Column(name = "max_month_price")
-    private Integer maxMonthPrice;
+    private String maxMonthPrice;
 }
