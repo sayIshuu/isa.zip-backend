@@ -2,6 +2,8 @@ package backend.zip.controller.broker;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.dto.brokeritem.response.BrokerItemResponse;
+
+import backend.zip.dto.brokeritem.response.BrokerItemShowResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.security.SecurityUtils;
 import backend.zip.service.brokeritem.BrokerItemShowService;
@@ -26,13 +28,13 @@ public class BrokerItemListController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
     @GetMapping(value = "/items/show")
-    public ApiResponse<List<BrokerItemResponse>> findBrokerItemList() {
+    public ApiResponse<BrokerItemShowResponse> findBrokerItemList() {
         List<BrokerItem> brokerItemList = brokerItemShowService.findBrokerItemList(brokerItemShowService.checkBroker());
-        List<BrokerItemResponse> findAllBrokerItemList = brokerItemList.stream()
-                .map(brokerItem -> BrokerItemResponse.of(brokerItem))
-                .collect(Collectors.toList());
+//        List<BrokerItemShowResponse> findAllBrokerItemList = brokerItemList.stream()
+//                .map(brokerItem -> BrokerItemShowResponse.of(brokerItem))
+//                .collect(Collectors.toList());
 
-        return ApiResponse.onSuccess(findAllBrokerItemList);
+        return ApiResponse.onSuccess(BrokerItemShowResponse.of(brokerItemList));
     }
 
     @Operation(summary = "공인중개사 매물관리 페이지에서 매물 단건 조회", description = "공인중개사 자신이 가지고 있는 매물을 보여줍니다.")
