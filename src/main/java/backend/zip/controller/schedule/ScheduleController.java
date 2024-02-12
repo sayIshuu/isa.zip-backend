@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
@@ -29,19 +30,15 @@ public class ScheduleController {
         //현재 로그인 중인 userId를 가져옴
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
         Long userId = Long.valueOf(loggedInUserId);
-        Optional<Schedule> optionalSchedule = scheduleService.getScheduleByUserId(userId);
+        Schedule schedule = scheduleService.getScheduleByUserId(userId);
 
-        if (optionalSchedule.isPresent()) {
-            Schedule schedule = optionalSchedule.get();
-            ScheduleResponse scheduleResponse = ScheduleResponse.fromEntity(schedule);
-            return ApiResponse.onSuccess(scheduleResponse);
-        }
-        return null;
-//        else {
-//            // Handle the case where the schedule is not found
-//            return ApiResponse.onFailure("Schedule not found for user with ID: " + userId);
-//        }
+
+        ScheduleResponse scheduleResponse = ScheduleResponse.fromEntity(schedule);
+        return ApiResponse.onSuccess(scheduleResponse);
+
     }
+
+
 
     @PostMapping()
     @Operation(summary = "일정 등록", description = "이사 일정을 등록하는 API입니다.")
@@ -65,16 +62,10 @@ public class ScheduleController {
         Long userId = Long.valueOf(loggedInUserId);
         Optional<Schedule> optionalSchedule = scheduleService.updateSchedule(userId, request);
 
-        if (optionalSchedule.isPresent()) {
-            Schedule schedule = optionalSchedule.get();
-            ScheduleResponse scheduleResponse = ScheduleResponse.fromEntity(schedule);
-            return ApiResponse.onSuccess(scheduleResponse);
-        }
-        return null;
-//        else {
-//            // Handle the case where the schedule is not found
-//            return ApiResponse.onFailure("Schedule update failed for user with ID: " + userId);
-//        }
+        Schedule schedule = optionalSchedule.get();
+        ScheduleResponse scheduleResponse = ScheduleResponse.fromEntity(schedule);
+        return ApiResponse.onSuccess(scheduleResponse);
+
     }
 
     @DeleteMapping()
@@ -85,7 +76,7 @@ public class ScheduleController {
         String loggedInUserId = SecurityUtils.getLoggedInUserId();
         Long userId = Long.valueOf(loggedInUserId);
         scheduleService.deleteSchedule(userId);
-        return ApiResponse.onSuccess("스케줄 삭제 성공"+userId);
+        return ApiResponse.onSuccess("스케줄 삭제 성공 : "+userId);
     }
 }
 

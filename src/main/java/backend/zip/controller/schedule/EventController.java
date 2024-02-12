@@ -35,9 +35,6 @@ public class EventController {
             eventResponses.add(EventResponse.fromEntity(eventList.get(i)));
         }
         return ApiResponse.onSuccess(eventResponses);
-        // Note: The following line will never be executed after the return statement
-        // EventResponse eventResponse = EventResponse.fromEntity(event);
-        // TODO: Handle errors
     }
 
     @PutMapping("/{eventId}")
@@ -54,16 +51,13 @@ public class EventController {
             return ApiResponse.onSuccess(eventResponse);
         }
         return null;
-//        else {
-//            // Handle the case where the schedule is not found
-//            return ApiResponse.onFailure("Schedule update failed for user with ID: " + userId);
-//        }
+
     }
 
     @DeleteMapping("/{eventId}")
     @Operation(summary = "상세 일정 삭제", description = "상세 일정(1개)을 삭제하는 API입니다.")
     public ApiResponse<String> deleteEvent(@PathVariable Long eventId) {
         eventService.deleteEvent(eventId);
-        return ApiResponse.onSuccess("이벤트 삭제 성공"+eventId);
+        return ApiResponse.onSuccess("이벤트 삭제 성공 : "+eventId);
     }
 }

@@ -5,6 +5,11 @@ import backend.zip.domain.schedule.Schedule;
 import backend.zip.domain.user.User;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
+import backend.zip.global.exception.schedule.DuplicatedScheduleException;
+import backend.zip.global.exception.schedule.ScheduleNotFoundException;
+import backend.zip.global.exception.user.UserException;
+import backend.zip.global.exception.user.UserNotFoundException;
+import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.schedule.ScheduleRepository;
 import backend.zip.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
+
+import static backend.zip.domain.enums.Role.ROLE_USER;
+import static backend.zip.global.status.ErrorStatus.USER_NOT_FOUND;
+import static backend.zip.global.status.ErrorStatus.SCHEDULE_NOT_FOUND;
+import static backend.zip.global.status.ErrorStatus.DUPLICATED_SCHEDULE;
 
 @Service
 @RequiredArgsConstructor
@@ -25,44 +35,58 @@ public class ScheduleServiceImpl implements ScheduleService {
     private EventService eventService;
 
     @Override
-    public Optional<Schedule> getScheduleByUserId(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        eventService.getEvents(userId);
-        return (user != null) ? scheduleRepository.findByUser(user) : Optional.empty();
+    public Schedule getScheduleByUserId(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
+        Optional<Schedule> schedule = scheduleRepository.findByUser(user);
+        if (!schedule.isPresent()) {
+            throw new ScheduleNotFoundException(SCHEDULE_NOT_FOUND);
+        }
+        return schedule.get();
     }
 
     @Override
     public Schedule addSchedule(Long userId, AddScheduleRequest request) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
+        if (user.getRole() != ROLE_USER) {
+            throw new UserException(ErrorStatus.SCHEDULE_NOT_REGISTERED);
+        }
+        try {
+            getScheduleByUserId(userId);
+            throw new DuplicatedScheduleException(DUPLICATED_SCHEDULE);
+        } catch (ScheduleNotFoundException ex) {
             Schedule newSchedule = new Schedule(null, user, request.getPeriod(), request.getMoveDate());
             generateEventsForSchedule(newSchedule, request);
             return scheduleRepository.save(newSchedule);
         }
-
-        return null;
     }
+
+
 
     @Override
     @Transactional
     public Optional<Schedule> updateSchedule(Long userId, UpdateScheduleRequest request) {
-        return getScheduleByUserId(userId).map(existingSchedule -> {
-            eventService.deleteEvents(existingSchedule.getScheduleId());
-            existingSchedule.setMoveDate(request.getMoveDate());
-            existingSchedule.setPeriod(request.getPeriod());
-            UpdateEventsForSchedule(existingSchedule,request.getMoveDate(),request.getPeriod());
-            return scheduleRepository.save(existingSchedule);
-        });
+        Schedule schedule = getScheduleByUserId(userId);
+        if (schedule != null) {
+            eventService.deleteEvents(schedule.getScheduleId());
+            schedule.setMoveDate(request.getMoveDate());
+            schedule.setPeriod(request.getPeriod());
+            UpdateEventsForSchedule(schedule, request.getMoveDate(), request.getPeriod());
+            return Optional.of(scheduleRepository.save(schedule));
+        } else {
+            throw new ScheduleNotFoundException(SCHEDULE_NOT_FOUND);
+        }
     }
+
+
 
     @Override
     public void deleteSchedule(Long userId) {
-        User deleteUser = userRepository.findById(userId).orElse(null);
+        User deleteUser = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(USER_NOT_FOUND));
 
         if (deleteUser != null) {
-            Optional<Schedule> existingScheduleOptional = getScheduleByUserId(userId);
-            if (existingScheduleOptional.isPresent()) {
-                Schedule existingSchedule = existingScheduleOptional.get();
+            Schedule existingSchedule = getScheduleByUserId(userId);
+            if (existingSchedule != null) {
                 eventService.deleteEvents(existingSchedule.getScheduleId());
             }
             scheduleRepository.deleteByUser(deleteUser);
