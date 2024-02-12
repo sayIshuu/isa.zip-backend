@@ -38,4 +38,7 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
     List<String> findAllDongs();
 
     List<UserItem> findAllByDong(String dongName);
+
+    @Query("SELECT u FROM UserItem u WHERE u.user.id = :userId")
+    List<UserItem> findByUserId(Long userId);
 }

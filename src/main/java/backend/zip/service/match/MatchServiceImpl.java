@@ -82,6 +82,13 @@ public class MatchServiceImpl implements MatchService {
         // 요청별로 리스트 나누기 (반환 리스펀스는 요청 과 매칭된 매물들 그래서 각 리스펀스는 맵형태로 저장)
         Map<UserItem, List<Matching>> matchingsByUserItem = matchings.stream() // userRequst로 이름 다 바꾸고 싶다 기능구현 끝나고 리팩토링..
                 .collect(Collectors.groupingBy(Matching::getUserItem));
+
+        List<UserItem> userItems = userItemRepository.findByUserId(userId);
+
+        // userItems에 해당하는 매칭이 없는 경우를 확인하고 빈 리스트로 초기화하여 추가.
+        for (UserItem userItem : userItems) {
+            matchingsByUserItem.putIfAbsent(userItem, new ArrayList<>());
+        }
         return MatchItemAllByUserResponse.from(matchingsByUserItem);
     }
 
