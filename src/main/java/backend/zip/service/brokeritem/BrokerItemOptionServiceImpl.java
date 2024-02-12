@@ -61,8 +61,8 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
             AddBrokerItemOptionsRequest.DealInfo dealInfo = optionsRequest.getDealInfoMap().get(dealType);
             BrokerDealType brokerDealType = BrokerDealType.builder()
                     .dealType(dealType)
-                    .price(dealInfo.getPrice())
-                    .deposit(dealInfo.getDeposit())
+                    .charterPrice(dealInfo.getCharterPrice())
+                    .tradingPrice(dealInfo.getTradingPrice())
                     .monthPrice(dealInfo.getMonthPrice())
                     .brokerOption(brokerOption) // 참조 설정
                     .build();
@@ -144,8 +144,8 @@ public class BrokerItemOptionServiceImpl implements BrokerItemOptionService {
 
             BrokerDealType brokerDealType = BrokerDealType.builder()
                     .dealType(dealType)
-                    .price(dealInfo.getPrice())
-                    .deposit(dealInfo.getDeposit())
+                    .charterPrice(dealInfo.getCharterPrice())
+                    .tradingPrice(dealInfo.getTradingPrice())
                     .monthPrice(dealInfo.getMonthPrice())
                     .brokerOption(brokerOption) // 참조 설정
                     .build();
