@@ -21,7 +21,7 @@ public class ItemImage {
     @Column(name = "item_image")
     private String itemImage;
 
-    @ManyToOne // 하나의 BrokerItem에 여러 이미지가 연결될 수 있도록 ManyToOne 사용
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_item_id")
     @JsonBackReference
     private BrokerItem brokerItem;

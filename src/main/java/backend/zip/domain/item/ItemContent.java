@@ -18,7 +18,7 @@ public class ItemContent {
     @Column(name = "item_content_id")
     private Long itemContentId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "broker_item_id")
     private BrokerItem brokerItem;

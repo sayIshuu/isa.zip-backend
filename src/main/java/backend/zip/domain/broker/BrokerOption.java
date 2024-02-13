@@ -4,6 +4,7 @@ import backend.zip.domain.broker.options.*;
 import backend.zip.domain.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -36,18 +37,23 @@ public class BrokerOption {
     private BrokerItem brokerItem;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    @BatchSize(size = 10)
     private List<BrokerFloor> brokerFloors;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    @BatchSize(size = 10)
     private List<BrokerDealType> brokerDealTypes;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    @BatchSize(size = 10)
     private List<BrokerManagementOption> brokerManagementOptions;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    @BatchSize(size = 10)
     private List<BrokerInternalFacility> brokerInternalFacilities;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
+    @BatchSize(size = 10)
     private List<BrokerExtraFilter> brokerExtraFilters;
 
     public void setBrokerItem(BrokerItem brokerItem) {
