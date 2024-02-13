@@ -27,6 +27,9 @@ public class UserItem {
     @Column(name = "dong")
     private String dong;
 
+    @Column(name = "is_matched")
+    private Boolean isMatched;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_option_id")
     @JsonManagedReference
