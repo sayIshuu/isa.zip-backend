@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static backend.zip.domain.enums.MatchStatus.MATCH_COMPLETE;
-import static backend.zip.domain.enums.MatchStatus.WAITING;
 
 @Transactional
 @Service
