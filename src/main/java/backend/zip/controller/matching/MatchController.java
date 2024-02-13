@@ -63,7 +63,7 @@ public class MatchController {
         return ApiResponse.onSuccess(matchItemListResponse);
     }
     
-    @Operation(summary = "유저사이드매칭조회", description = "일반유저의 요청에 대해 매칭된 매물조회 (매칭요청 : MATCH_COMPLETE, 매칭완료 : MATCH_FINAL_COMPLETE)")
+    @Operation(summary = "유저사이드매칭조회", description = "일반유저의 요청에 대해 매칭된 매물조회 (매칭요청 : WAITING, 매칭완료 : MATCH_COMPLETE)")
     @GetMapping("/users/items")
     public ApiResponse<List<MatchItemAllByUserResponse>> matchUserItems(@RequestParam MatchStatus matchStatus) {
         Long userId = Long.valueOf(SecurityUtils.getLoggedInUserId());
