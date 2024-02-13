@@ -36,6 +36,7 @@ public class UserItemServiceImpl implements UserItemService{
         UserItem userItem = UserItem.builder()
                 .user(userRepository.findById(userId).orElseThrow())
                 .dong(dong)
+                .isMatched(false)
                 .build();
 
         // 옵션 저장 현수님 방법 차용
@@ -90,6 +91,10 @@ public class UserItemServiceImpl implements UserItemService{
         List<UserItem> userItems = userItemRepository.findAllByDong(dongName);
         //Map<String, List<UserItem>> userItemByDong = userItems.stream()
         //        .collect(Collectors.groupingBy(UserItem::getDong));
+        //만약 userItems의 isMatched가 true이면 리스트에서 제외하고 보냄
+        userItems = userItems.stream()
+                .filter(userItem -> !userItem.getIsMatched())
+                .collect(Collectors.toList());
         return UserItemByDongResponse.from(userItems);
     }
 }

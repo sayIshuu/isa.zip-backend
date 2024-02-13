@@ -27,6 +27,9 @@ public class UserItem {
     @Column(name = "dong")
     private String dong;
 
+    @Column(name = "is_matched")
+    private Boolean isMatched;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_option_id")
     @JsonManagedReference
@@ -37,5 +40,9 @@ public class UserItem {
             throw new IllegalArgumentException("UserOption이 존재하지 않습니다.");
         }
         this.userOption = userOption;
+    }
+
+    public void updateMatched(boolean b) {
+        this.isMatched = b;
     }
 }
