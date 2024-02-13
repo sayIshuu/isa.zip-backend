@@ -37,23 +37,23 @@ public class BrokerOption {
     private BrokerItem brokerItem;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    @BatchSize(size = 10)
+    @BatchSize(size = 20)
     private List<BrokerFloor> brokerFloors;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    @BatchSize(size = 10)
+    @BatchSize(size = 20)
     private List<BrokerDealType> brokerDealTypes;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    @BatchSize(size = 10)
+    @BatchSize(size = 20)
     private List<BrokerManagementOption> brokerManagementOptions;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    @BatchSize(size = 10)
+    @BatchSize(size = 20)
     private List<BrokerInternalFacility> brokerInternalFacilities;
 
     @OneToMany(mappedBy = "brokerOption", cascade = CascadeType.ALL)
-    @BatchSize(size = 10)
+    @BatchSize(size = 20)
     private List<BrokerExtraFilter> brokerExtraFilters;
 
     public void setBrokerItem(BrokerItem brokerItem) {

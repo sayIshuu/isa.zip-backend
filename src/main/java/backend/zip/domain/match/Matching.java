@@ -5,6 +5,7 @@ import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.user.UserItem;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import static backend.zip.domain.enums.MatchStatus.WAITING;
 
