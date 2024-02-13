@@ -45,9 +45,8 @@ public class MatchController {
 //    }
 
     @Operation(summary = "매물별매칭상태변경", description = "matchStatus인자에 해당값을 넣어주시면 됩니다." +
-                                                    "공인중개사가 매칭후보를 매칭확정 시키기 : MATCH_COMPLETE" +
                                                     "일반유저가 자기 매칭요청상태에서 +버튼 눌러서 찜하기 : MATCH_LIKE" +
-                                                    "일반유저가 최종적으로 매칭완료시키기 : MATCH_FINAL_COMPLETE")
+                                                    "일반유저가 최종적으로 매칭완료시키기 : MATCH_COMPLETE")
     @PatchMapping("/brokers/{matchingId}") // 엔드포인트 변경필요 비직관적임.
     public ApiResponse<MatchStatusResponse> matchCompleteBrokerItems(@PathVariable Long matchingId,
                                                                      @RequestParam MatchStatus matchStatus) {

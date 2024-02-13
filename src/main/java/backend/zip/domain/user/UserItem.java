@@ -41,4 +41,8 @@ public class UserItem {
         }
         this.userOption = userOption;
     }
+
+    public void updateMatched(boolean b) {
+        this.isMatched = b;
+    }
 }
