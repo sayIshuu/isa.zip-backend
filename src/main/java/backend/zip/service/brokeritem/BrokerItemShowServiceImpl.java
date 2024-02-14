@@ -2,10 +2,12 @@ package backend.zip.service.brokeritem;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.user.User;
+import backend.zip.dto.main.request.CurrentLocationRequest;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.exception.user.UserException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.UserRepository;
+import backend.zip.repository.broker.BrokerItemByCurrentLocationRepository;
 import backend.zip.repository.broker.BrokerItemRepository;
 import backend.zip.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import static backend.zip.domain.enums.Role.ROLE_USER;
 public class BrokerItemShowServiceImpl implements BrokerItemShowService {
     private final BrokerItemRepository brokerItemRepository;
     private final UserRepository userRepository;
+    private final BrokerItemByCurrentLocationRepository brokerItemByCurrentLocationRepository;
 
     @Override
     public List<BrokerItem> findBrokerItemList(Long userId) {
@@ -69,5 +72,12 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
     public List<BrokerItem> findBrokerItemSortedByDong(String dong) {
         List<BrokerItem> findAllBrokerItemByDong = brokerItemRepository.findAllByDong(dong);
         return findAllBrokerItemByDong;
+    }
+
+    @Override
+    public List<BrokerItem> findBrokerItemByCurrentLocation(CurrentLocationRequest currentLocationRequest) {
+        return brokerItemByCurrentLocationRepository.findBrokerItemsWithinRadius(currentLocationRequest.getX(),
+                currentLocationRequest.getY()
+        );
     }
 }
