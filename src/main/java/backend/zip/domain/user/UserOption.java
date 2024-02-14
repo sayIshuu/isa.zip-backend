@@ -1,5 +1,6 @@
 package backend.zip.domain.user;
 
+import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.enums.ApproveDate;
 import backend.zip.domain.user.options.*;
 import jakarta.persistence.*;
@@ -19,8 +20,9 @@ public class UserOption {
     @Column(name = "user_option_id")
     private Long userOptionId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_item_id")
+    //@OneToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "user_item_id")
+    @OneToOne(mappedBy = "userOption", cascade = CascadeType.ALL)
     private UserItem userItem;
 
     @Enumerated(EnumType.STRING)
@@ -54,4 +56,8 @@ public class UserOption {
     @OneToMany(mappedBy = "userOption", cascade = CascadeType.ALL)
     @BatchSize(size = 20)
     private List<UserRoomSize> userRoomSizes;
+
+    public void setUserItem(Long userItemId) {
+        this.userItem = UserItem.builder().userItemId(userItemId).build();
+    }
 }

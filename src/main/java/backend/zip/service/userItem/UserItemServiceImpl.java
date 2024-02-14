@@ -41,7 +41,6 @@ public class UserItemServiceImpl implements UserItemService{
 
         // 옵션 저장 현수님 방법 차용
         UserOption userOption = userItemOptionService.saveUserItemOptions(addUserItemOptionsRequest);
-
         // userItem에 userOption을 저장
         userItem.setUserOption(userOption);
         userItemRepository.save(userItem);
