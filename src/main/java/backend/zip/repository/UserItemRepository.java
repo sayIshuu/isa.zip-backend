@@ -33,4 +33,6 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
     // Fetch Join을 이용해서 user를 같이 가져오기
     @Query("SELECT u FROM UserItem u JOIN FETCH u.user WHERE u.user.id = :userId")
     List<UserItem> findByUserId(Long userId);
+
+    UserItem findTopByIsMatchedOrderByCreateAtDesc(boolean isMatched);
 }

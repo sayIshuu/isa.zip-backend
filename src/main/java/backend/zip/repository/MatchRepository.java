@@ -2,6 +2,7 @@ package backend.zip.repository;
 
 import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
+import backend.zip.domain.user.UserItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,10 +22,10 @@ public interface MatchRepository extends JpaRepository<Matching, Long> {
             "where m.userItem.user.id = :userId and m.matchStatus = :matchStatus")
     List<Matching> findByUserItemUserIdAndMatchStatus(Long userId, MatchStatus matchStatus);
 
-
     @Query("select m from Matching m join fetch m.userItem ui join fetch ui.userOption uo " +
             "join fetch m.brokerItem bi join fetch bi.itemContent join fetch bi.itemImages join fetch bi.brokerOption " +
             "join fetch bi.user u join fetch u.broker ub ")
     List<Matching> findAll();
-
+  
+  List<Matching> findByUserItem(UserItem userItem);
 }
