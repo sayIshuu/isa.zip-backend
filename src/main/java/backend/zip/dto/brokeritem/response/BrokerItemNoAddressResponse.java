@@ -19,15 +19,20 @@ public class BrokerItemNoAddressResponse {
     private Long brokerItemId;
     private String businessName;
     private ItemStatus itemStatus;
+    private String dongName;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemNoAddressResponse(Long brokerItemId,String businessName,ItemStatus itemStatus,
-                              BrokerItemDetailResponse detailResponse,
-                              BrokerItemOptionResponse optionResponse) {
+    public BrokerItemNoAddressResponse(Long brokerItemId,
+                                       String businessName,
+                                       ItemStatus itemStatus,
+                                       String dongName,
+                                       BrokerItemDetailResponse detailResponse,
+                                       BrokerItemOptionResponse optionResponse) {
         this.brokerItemId = brokerItemId;
         this.businessName = businessName;
         this.itemStatus = itemStatus;
+        this.dongName = dongName;
         this.detailResponse = detailResponse;
         this.optionResponse = optionResponse;
     }
@@ -45,6 +50,7 @@ public class BrokerItemNoAddressResponse {
         return new BrokerItemNoAddressResponse(brokerItem.getBrokerItemId(),
                 brokerItem.getUser().getBroker().getBusinessName(),
                 brokerItem.getItemStatus(),
+                brokerItem.getDong(),
                 detailResponse, optionResponse);
     }
 

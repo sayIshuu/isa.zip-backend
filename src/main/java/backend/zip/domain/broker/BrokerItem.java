@@ -8,6 +8,7 @@ import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class BrokerItem {
     private ItemContent itemContent;
 
     @OneToMany(mappedBy = "brokerItem", cascade = CascadeType.ALL)
+    @BatchSize(size = 20)
     private List<ItemImage> itemImages; // BrokerItem과 연결된 이미지들의 리스트
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
