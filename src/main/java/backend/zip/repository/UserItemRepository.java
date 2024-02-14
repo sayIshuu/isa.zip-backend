@@ -31,4 +31,6 @@ public interface UserItemRepository extends JpaRepository<UserItem, Long> {
 
     @Query("SELECT u FROM UserItem u WHERE u.user.id = :userId")
     List<UserItem> findByUserId(Long userId);
+
+    UserItem findTopByIsMatchedOrderByCreateAtDesc(boolean isMatched);
 }
