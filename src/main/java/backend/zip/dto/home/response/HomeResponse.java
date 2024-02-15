@@ -15,12 +15,12 @@ public class HomeResponse {
 
     @Getter
     public static class ShowHomeResponse {
-        private final RecentMatchingResponse recentMatching;
+        private final MatchedItemsResponse matchedItems;
         private final MovingScheduleResponse movingSchedule;
 
         @Builder
-        public ShowHomeResponse(RecentMatchingResponse recentMatching, MovingScheduleResponse movingSchedule) {
-            this.recentMatching = recentMatching;
+        public ShowHomeResponse(MatchedItemsResponse matchedItems, MovingScheduleResponse movingSchedule) {
+            this.matchedItems = matchedItems;
             this.movingSchedule = movingSchedule;
         }
     }
@@ -38,13 +38,13 @@ public class HomeResponse {
     }
 
     @Getter
-    public static class RecentMatchingResponse {
+    public static class MatchedItemsResponse {
         private final String dong;
         private final Long matchingCount;
         private final List<BrokerItemNoAddressResponse> matchedBrokerItemResponses;
 
         @Builder
-        public RecentMatchingResponse(UserItem userItem, List<Matching> matchingList) {
+        public MatchedItemsResponse(UserItem userItem, List<Matching> matchingList) {
             this.dong = userItem.getDong();
             this.matchingCount = (long)matchingList.size();
             this.matchedBrokerItemResponses = matchingList.stream().map(BrokerItemNoAddressResponse::from).collect(Collectors.toList());

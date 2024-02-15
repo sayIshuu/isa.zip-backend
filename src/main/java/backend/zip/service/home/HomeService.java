@@ -1,4 +1,4 @@
-package backend.zip.service;
+package backend.zip.service.home;
 
 import backend.zip.dto.home.response.HomeResponse;
 
