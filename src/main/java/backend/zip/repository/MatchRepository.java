@@ -22,10 +22,17 @@ public interface MatchRepository extends JpaRepository<Matching, Long> {
             "where m.userItem.user.id = :userId and m.matchStatus = :matchStatus")
     List<Matching> findByUserItemUserIdAndMatchStatus(Long userId, MatchStatus matchStatus);
 
-    @Query("select m from Matching m join fetch m.userItem ui join fetch ui.userOption uo " +
-            "join fetch m.brokerItem bi join fetch bi.itemContent join fetch bi.itemImages join fetch bi.brokerOption " +
-            "join fetch bi.user u join fetch u.broker ub ")
-    List<Matching> findAll();
-  
+    @Query("select m from Matching m " +
+            "join fetch m.userItem ui " +
+            "join fetch ui.userOption uo " +
+            "join fetch m.brokerItem bi " +
+            "join fetch bi.itemContent " +
+            "join fetch bi.itemImages " +
+            "join fetch bi.brokerOption " +
+            "join fetch bi.user u " +
+            "join fetch u.broker ub " +
+            "where u.id = :userId")
+    List<Matching> findAll(@Param("userId") Long userId);
+
   List<Matching> findByUserItem(UserItem userItem);
 }

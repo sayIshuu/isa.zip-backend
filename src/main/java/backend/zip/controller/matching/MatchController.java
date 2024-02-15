@@ -25,7 +25,6 @@ import java.util.List;
 public class MatchController {
     private final MatchService matchService;
     private final BrokerItemShowService brokerItemShowService;
-    private final UserItemService userItemService;
 
     @Operation(summary = "매칭후보등록", description = "요청 지역에 대한 공인중개사 보유 매물중 후보로 올리기")
     @PostMapping("/brokers/{userItemId}")
@@ -58,7 +57,7 @@ public class MatchController {
     @Operation(summary = "매칭전체조회", description = "일반유저의 요청에 대해 매칭된 매물 전체 조회")
     @GetMapping("/brokers/items")
     public ApiResponse<MatchItemListResponse> matchUserItems() {
-        List<Matching> matchingList = matchService.findAllMatch();
+        List<Matching> matchingList = matchService.findAllMatch(brokerItemShowService.checkBroker());
         MatchItemListResponse matchItemListResponse = MatchItemListResponse.of(matchingList);
         return ApiResponse.onSuccess(matchItemListResponse);
     }

@@ -68,8 +68,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Matching> findAllMatch() {
-        return matchRepository.findAll();
+    public List<Matching> findAllMatch(Long userId) {
+        return matchRepository.findAll(userId);
     }
 
 //    public void unmatchBrokerItems() {
