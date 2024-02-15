@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @Builder
 public class BrokerItemNoAddressResponse {
+    private Long matchingId;
     private Long brokerItemId;
     private String businessName;
     private ItemStatus itemStatus;
@@ -23,12 +24,14 @@ public class BrokerItemNoAddressResponse {
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemNoAddressResponse(Long brokerItemId,
+    public BrokerItemNoAddressResponse(Long matchingId,
+                                       Long brokerItemId,
                                        String businessName,
                                        ItemStatus itemStatus,
                                        String dongName,
                                        BrokerItemDetailResponse detailResponse,
                                        BrokerItemOptionResponse optionResponse) {
+        this.matchingId = matchingId;
         this.brokerItemId = brokerItemId;
         this.businessName = businessName;
         this.itemStatus = itemStatus;
@@ -38,7 +41,7 @@ public class BrokerItemNoAddressResponse {
     }
 
 
-    public static BrokerItemNoAddressResponse of(BrokerItem brokerItem) {
+    public static BrokerItemNoAddressResponse of(Matching matching,BrokerItem brokerItem) {
 
         BrokerItemDetailResponse detailResponse = BrokerItemDetailResponse.of(
                 brokerItem.getItemImages(),
@@ -47,7 +50,8 @@ public class BrokerItemNoAddressResponse {
 
         BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(brokerItem.getBrokerOption());
 
-        return new BrokerItemNoAddressResponse(brokerItem.getBrokerItemId(),
+        return new BrokerItemNoAddressResponse(matching.getMatchID(),
+                brokerItem.getBrokerItemId(),
                 brokerItem.getUser().getBroker().getBusinessName(),
                 brokerItem.getItemStatus(),
                 brokerItem.getDong(),
@@ -56,6 +60,6 @@ public class BrokerItemNoAddressResponse {
 
 
     public static BrokerItemNoAddressResponse from(Matching matching) {
-        return BrokerItemNoAddressResponse.of(matching.getBrokerItem());
+        return BrokerItemNoAddressResponse.of(matching,matching.getBrokerItem());
     }
 }
