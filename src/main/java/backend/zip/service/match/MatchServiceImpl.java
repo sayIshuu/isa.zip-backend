@@ -64,6 +64,9 @@ public class MatchServiceImpl implements MatchService {
         }
         //안전한 방법은 아니지만 프론트에서 화면당 구분하여 호출한다면 예외발생날일은 없을거같은데요
         matching.updateMatchStatus(matchStatus);
+
+        UserItem userItem = matching.getUserItem();
+        matchRepository.deleteByUserItemAndMatchStatus(userItem, MatchStatus.WAITING);
         return matching;
     }
 
