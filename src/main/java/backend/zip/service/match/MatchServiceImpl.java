@@ -65,8 +65,11 @@ public class MatchServiceImpl implements MatchService {
         //안전한 방법은 아니지만 프론트에서 화면당 구분하여 호출한다면 예외발생날일은 없을거같은데요
         matching.updateMatchStatus(matchStatus);
 
-        UserItem userItem = matching.getUserItem();
-        matchRepository.deleteByUserItemAndMatchStatus(userItem, MatchStatus.WAITING);
+        if(matchStatus.equals(MatchStatus.MATCH_COMPLETE)) {
+            UserItem userItem = matching.getUserItem();
+            matchRepository.deleteByUserItemAndMatchStatus(userItem, MatchStatus.WAITING);
+        }
+
         return matching;
     }
 
@@ -85,7 +88,7 @@ public class MatchServiceImpl implements MatchService {
 
     public List<MatchItemAllByUserResponse> getMatchItemsByStatus(Long userId, MatchStatus matchStatus) {
         // 웨이팅 매칭 객체들 받아와 (유저 요청 id랑 중개사 매물 id 들어있는 ) 이 리스트에 들어있는건 매칭아이템 하나하나일뿐
-        List<Matching> matchings = matchRepository.findByUserItemUserIdAndMatchStatus(userId, matchStatus);
+        List<Matching> matchings = matchRepository.findByUserItemUserIdAndMatchStatus(userId, matchStatus); // userid가 아니라 밑에서 뽑아낸 userItem으로 가져오기
         // 요청별로 리스트 나누기 (반환 리스펀스는 요청 과 매칭된 매물들 그래서 각 리스펀스는 맵형태로 저장)
         Map<UserItem, List<Matching>> matchingsByUserItem = matchings.stream() // userRequst로 이름 다 바꾸고 싶다 기능구현 끝나고 리팩토링..
                 .collect(Collectors.groupingBy(Matching::getUserItem));
