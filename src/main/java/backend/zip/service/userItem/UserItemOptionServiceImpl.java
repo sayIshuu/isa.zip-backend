@@ -1,4 +1,4 @@
-package backend.zip.service.useritem;
+package backend.zip.service.userItem;
 
 import backend.zip.domain.enums.ApproveDate;
 import backend.zip.domain.user.UserOption;
