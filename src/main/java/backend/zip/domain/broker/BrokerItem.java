@@ -9,7 +9,11 @@ import backend.zip.global.status.ErrorStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 //@Setter
 //@DynamicInsert
 //@DynamicUpdate
@@ -51,23 +56,30 @@ public class BrokerItem {
     @Column(name = "y")
     private Double y;
 
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
     @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
 
-    @OneToOne(mappedBy = "brokerItem",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "brokerItem", cascade = CascadeType.ALL)
     private ItemContent itemContent;
 
     @OneToMany(mappedBy = "brokerItem", cascade = CascadeType.ALL)
     @BatchSize(size = 20)
     private List<ItemImage> itemImages; // BrokerItem과 연결된 이미지들의 리스트
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "broker_option_id")
     private BrokerOption brokerOption;
 
     public void setItemStatus(ItemStatus itemStatus) {
         this.itemStatus = itemStatus;
     }
+
     public void setDetails(List<ItemImage> itemImages, ItemContent itemContent) {
         this.itemImages = itemImages;
         this.itemContent = itemContent;

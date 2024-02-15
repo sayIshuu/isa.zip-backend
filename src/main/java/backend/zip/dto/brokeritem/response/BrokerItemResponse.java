@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,18 +18,27 @@ import java.util.List;
 @Builder
 public class BrokerItemResponse {
     private Long brokerItemId;
+    private LocalDateTime createdAt;
     private String businessName;
+    private String phoneNumber;
+    private String messageNumber;
     private String brokerImage;
     private ItemStatus itemStatus;
     private BrokerItemAddressResponse addressResponse;
     private BrokerItemDetailResponse detailResponse;
     private BrokerItemOptionResponse optionResponse;
 
-    public BrokerItemResponse(Long brokerItemId,String businessName,String brokerImage,ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
+    public BrokerItemResponse(Long brokerItemId, LocalDateTime createdAt, String businessName, String phoneNumber,
+                              String messageNumber,
+                              String brokerImage, ItemStatus itemStatus, BrokerItemAddressResponse addressResponse,
                               BrokerItemDetailResponse detailResponse,
                               BrokerItemOptionResponse optionResponse) {
+
         this.brokerItemId = brokerItemId;
+        this.createdAt = createdAt;
         this.businessName = businessName;
+        this.phoneNumber = phoneNumber;
+        this.messageNumber = messageNumber;
         this.brokerImage = brokerImage;
         this.itemStatus = itemStatus;
         this.addressResponse = addressResponse;
@@ -45,7 +55,10 @@ public class BrokerItemResponse {
         BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(brokerOption);
 
         BrokerItemResponse itemResponse = new BrokerItemResponse(savedBrokerItem.getBrokerItemId(),
+                savedBrokerItem.getCreatedAt(),
                 savedBrokerItem.getUser().getBroker().getBusinessName(),
+                savedBrokerItem.getUser().getBroker().getPhoneNum(),
+                savedBrokerItem.getUser().getBroker().getPhoneNum(),
                 savedBrokerItem.getUser().getUserImg(),
                 savedBrokerItem.getItemStatus(),
                 addressResponse, detailResponse, optionResponse);
@@ -73,7 +86,10 @@ public class BrokerItemResponse {
         BrokerItemOptionResponse optionResponse = BrokerItemOptionResponse.of(brokerItem.getBrokerOption());
 
         return new BrokerItemResponse(brokerItem.getBrokerItemId(),
+                brokerItem.getCreatedAt(),
                 brokerItem.getUser().getBroker().getBusinessName(),
+                brokerItem.getUser().getBroker().getPhoneNum(),
+                brokerItem.getUser().getBroker().getPhoneNum(),
                 brokerItem.getUser().getUserImg(),
                 brokerItem.getItemStatus(), addressResponse,
                 detailResponse, optionResponse);
