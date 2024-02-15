@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Setter
 @Builder
 public class BrokerItemShowResponse {
+    private Integer count;
     private List<BrokerItemList> brokerItemListList;
 
     @Getter
@@ -49,6 +50,7 @@ public class BrokerItemShowResponse {
                         brokerItem.getItemImages())).collect(Collectors.toList());
 
         return BrokerItemShowResponse.builder()
+                .count(brokerItemLists.size())
                 .brokerItemListList(brokerItemLists)
                 .build();
     }
