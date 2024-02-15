@@ -76,7 +76,8 @@ public class BrokerItemServiceImpl implements BrokerItemService {
         } if (optionsRequest != null) {
             updateOptions(brokerItem, optionsRequest);
         }
-        return brokerItemRepository.save(brokerItem);
+//        return brokerItemRepository.save(brokerItem);
+        return brokerItem;
     }
 
 
