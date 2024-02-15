@@ -1,27 +1,23 @@
-package backend.zip.service;
+package backend.zip.service.home;
 
-import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
 import backend.zip.domain.schedule.Event;
 import backend.zip.domain.schedule.Schedule;
 import backend.zip.domain.user.UserItem;
 import backend.zip.dto.home.response.HomeResponse;
-import backend.zip.global.exception.schedule.ScheduleNotFoundException;
 import backend.zip.repository.MatchRepository;
 import backend.zip.repository.UserItemRepository;
 import backend.zip.repository.schedule.EventRepository;
 import backend.zip.repository.schedule.ScheduleRepository;
 import backend.zip.security.SecurityUtils;
+import backend.zip.service.home.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static backend.zip.dto.schedule.response.EventResponse.fromEntity;
-import static backend.zip.global.status.ErrorStatus.SCHEDULE_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -35,15 +31,19 @@ public class HomeServiceImpl implements HomeService {
         Long userId = Long.parseLong(SecurityUtils.getLoggedInUserId());
         LocalDate currentDate = LocalDate.now();
 
+        // 최신 유저 요청 조회
         UserItem recentUserItem = userItemRepository.findTopByIsMatchedOrderByCreateAtDesc(false);
 
+        // 유저 요청과 매칭된 매물들 조회
         List<Matching> matchingList = null;
         if(recentUserItem != null) {
             matchingList = matchRepository.findByUserItem(recentUserItem);
         }
 
+        // 현재 달 조회
         int currentMonthValue = currentDate.getMonthValue();
 
+        // 일정을 등록한 경우, 현재 날짜와 가장 가까운 상세 일정 조회
         Schedule schedule = scheduleRepository.findByUserId(userId).orElse(null);
 
         Event closestEvent = null;
@@ -52,7 +52,7 @@ public class HomeServiceImpl implements HomeService {
         }
 
         return HomeResponse.ShowHomeResponse.builder()
-                .recentMatching(recentUserItem == null ? null : HomeResponse.RecentMatchingResponse.builder()
+                .matchedItems(recentUserItem == null ? null : HomeResponse.MatchedItemsResponse.builder()
                         .userItem(recentUserItem)
                         .matchingList(matchingList)
                         .build())
