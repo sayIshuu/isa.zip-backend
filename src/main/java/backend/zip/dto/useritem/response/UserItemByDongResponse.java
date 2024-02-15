@@ -19,9 +19,9 @@ public class UserItemByDongResponse {
         this.userItemResponses = userItemResponses;
     }
 
-    public static UserItemByDongResponse from(List<UserItem> userItems) {
+    public static UserItemByDongResponse from(String dongName,List<UserItem> userItems) {
         return new UserItemByDongResponse(
-                userItems.get(0).getDong(),
+                dongName,
                 userItems.stream()
                         .map(UserItemResponse::from)
                         .collect(Collectors.toList())

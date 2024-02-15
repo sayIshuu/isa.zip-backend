@@ -34,7 +34,7 @@ public class UserItem {
     private String dong;
 
     @Column(name = "is_matched")
-    private Boolean isMatched = false;
+    private Boolean isMatched;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_option_id")
