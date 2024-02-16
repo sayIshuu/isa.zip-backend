@@ -50,7 +50,7 @@ public class BrokerItemController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공")
     })
     @PostMapping(value = "/items", consumes = "multipart/form-data")
-    public ApiResponse<BrokerItemResponse> registerBrokerItem(@RequestParam("address") String roadFullAddress,
+    public ApiResponse<String> registerBrokerItem(@RequestParam("address") String roadFullAddress,
                                                               @RequestPart(value = "detailsRequest",required = false) AddBrokerItemDetailsRequest detailsRequest,
                                                               @RequestPart(value = "optionsRequest",required = false) AddBrokerItemOptionsRequest optionsRequest,
                                                               @RequestPart(value = "multipartFiles",required = false) MultipartFile[] multipartFiles) {
@@ -62,7 +62,8 @@ public class BrokerItemController {
         BrokerItem brokerItem = brokerItemService.saveBrokerItem(userId, savedBrokerItem, addressResponse, detailsRequest, multipartFiles, optionsRequest);
         BrokerItemResponse brokerItemResponse = getBrokerItemResponse(brokerItem, addressResponse);
 
-        return ApiResponse.onSuccess(brokerItemResponse);
+//        return ApiResponse.onSuccess(brokerItemResponse);
+        return ApiResponse.onSuccess("성공적으로 매물이 저장되었습니다.");
     }
 
     @Operation(summary = "매물을 삭제할 수 있습니다.", description = "공인중개사가 매물을 삭제 할 수 있습니다.")
