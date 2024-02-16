@@ -39,20 +39,28 @@ public class BrokerItemServiceImpl implements BrokerItemService {
                                      AddBrokerItemDetailsRequest detailsRequest,
                                      MultipartFile[] brokerItemImg,
                                      AddBrokerItemOptionsRequest optionsRequest) {
+        try {
+            brokerItem.setItemStatus(ItemStatus.ITEM_SELLING);
 
-//        brokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddressName(), addressResponse.getRoadName(),
-//                addressResponse.getDong(), addressResponse.getRoadDong(), addressResponse.getPostNumber(), addressResponse.getX(), addressResponse.getY());
+            ItemContent itemContent = brokerItemDetailService.saveBrokerItemContentDetails(detailsRequest, brokerItem);
+            List<ItemImage> itemImages = brokerItemDetailService.saveBrokerItemImageDetails(brokerItemImg, brokerItem);
 
-        brokerItem.setItemStatus(ItemStatus.ITEM_SELLING);
-        ItemContent itemContent = brokerItemDetailService.saveBrokerItemContentDetails(detailsRequest, brokerItem);
-        List<ItemImage> itemImages = brokerItemDetailService.saveBrokerItemImageDetails(brokerItemImg, brokerItem);
-        brokerItem.setDetails(itemImages, itemContent);
+            BrokerOption brokerOption = brokerItemOptionService.saveBrokerItemOptions(optionsRequest);
 
-        BrokerOption brokerOption = brokerItemOptionService.saveBrokerItemOptions(optionsRequest);
-        brokerItem.setBrokerOption(brokerOption);
+            return finalizeBrokerItem(brokerItem, itemContent, itemImages, brokerOption);
 
-        return brokerItemRepository.save(brokerItem);
+        } catch (Exception e) {
+            throw new BrokerItemException(ErrorStatus.BROKER_ITEM_NOT_SAVE);
+        }
     }
+    private BrokerItem finalizeBrokerItem(BrokerItem brokerItem, ItemContent itemContent,
+                                          List<ItemImage> itemImages, BrokerOption brokerOption) {
+        brokerItem.setDetails(itemImages, itemContent);
+        brokerItem.setBrokerOption(brokerOption);
+        return brokerItemRepository.save(brokerItem);
+//        return brokerItem;
+    }
+
 
     @Override
     public void deleteBrokerItem(Long brokerItemId) {
