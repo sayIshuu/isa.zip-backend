@@ -43,6 +43,7 @@ public enum ErrorStatus implements BaseErrorCode {
 
     //BrokerItem 관련 에러
     BROKER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND,"BROKER_ITEM_001","해당 매물을 찾을 수 없습니다"),
+    BROKER_ITEM_NOT_SAVE(HttpStatus.NOT_FOUND,"BROKER_ITEM_002","해당 매물을 저장하지 못했습니다."),
 
     //Matching 관련 에러
     MATCH_NOT_FOUND(HttpStatus.NOT_FOUND,"MATCH_001","해당 매치를 찾을 수 없습니다"),
