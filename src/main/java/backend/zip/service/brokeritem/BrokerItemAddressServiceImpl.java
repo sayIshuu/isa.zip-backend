@@ -3,6 +3,7 @@ package backend.zip.service.brokeritem;
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.user.User;
 import backend.zip.dto.brokeritem.request.AddBrokerItemAddressRequest;
+import backend.zip.dto.brokeritem.response.BrokerItemAddressResponse;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.broker.BrokerItemRepository;
@@ -18,11 +19,13 @@ public class BrokerItemAddressServiceImpl implements BrokerItemAddressService {
     private final UserRepository userRepository;
 
     @Override
-    public BrokerItem saveBrokerItemAddress(Long userId, String address, String roadAddress, String dong, String roadDong, String postNumber, Double x, Double y) {
+    public BrokerItem saveBrokerItemAddress(Long userId, BrokerItemAddressResponse brokerItemAddressResponse) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BrokerItemException(ErrorStatus.USER_NOT_FOUND)); // 여기서 수정
-        BrokerItem brokerItem = new AddBrokerItemAddressRequest().toEntity(user, address, roadAddress, dong, roadDong, postNumber, x, y);
-//        BrokerItem savedBrokerItemByAddress = brokerItemRepository.save(brokerItem);
+                .orElseThrow(() -> new BrokerItemException(ErrorStatus.USER_NOT_FOUND));
+
+        BrokerItem brokerItem = new AddBrokerItemAddressRequest().toEntity(user,brokerItemAddressResponse.getAddressName(), brokerItemAddressResponse.getRoadName()
+                , brokerItemAddressResponse.getDong(), brokerItemAddressResponse.getRoadDong(), brokerItemAddressResponse.getPostNumber(), brokerItemAddressResponse.getX(), brokerItemAddressResponse.getY());
+
         return brokerItem;
     }
 

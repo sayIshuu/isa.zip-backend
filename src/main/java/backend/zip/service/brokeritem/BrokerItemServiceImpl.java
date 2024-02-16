@@ -40,8 +40,9 @@ public class BrokerItemServiceImpl implements BrokerItemService {
                                      MultipartFile[] brokerItemImg,
                                      AddBrokerItemOptionsRequest optionsRequest) {
 
-        brokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddressName(), addressResponse.getRoadName(),
-                addressResponse.getDong(), addressResponse.getRoadDong(), addressResponse.getPostNumber(), addressResponse.getX(), addressResponse.getY());
+//        brokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddressName(), addressResponse.getRoadName(),
+//                addressResponse.getDong(), addressResponse.getRoadDong(), addressResponse.getPostNumber(), addressResponse.getX(), addressResponse.getY());
+
         brokerItem.setItemStatus(ItemStatus.ITEM_SELLING);
         ItemContent itemContent = brokerItemDetailService.saveBrokerItemContentDetails(detailsRequest, brokerItem);
         List<ItemImage> itemImages = brokerItemDetailService.saveBrokerItemImageDetails(brokerItemImg, brokerItem);

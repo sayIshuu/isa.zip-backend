@@ -58,9 +58,7 @@ public class BrokerItemController {
         Long userId = brokerItemShowService.checkBroker();
         String kaKaoApiFromInputAddress = addressService.getKaKaoApiFromInputAddress(roadFullAddress);
         BrokerItemAddressResponse addressResponse = addressService.returnAddressInfo(kaKaoApiFromInputAddress);
-        BrokerItem savedBrokerItem = brokerItemAddressService.saveBrokerItemAddress(userId, addressResponse.getAddressName(), addressResponse.getRoadName()
-                , addressResponse.getDong(), addressResponse.getRoadDong(), addressResponse.getPostNumber(), addressResponse.getX(), addressResponse.getY());
-
+        BrokerItem savedBrokerItem = brokerItemAddressService.saveBrokerItemAddress(brokerItemShowService.checkBroker(), addressResponse);
         BrokerItem brokerItem = brokerItemService.saveBrokerItem(userId, savedBrokerItem, addressResponse, detailsRequest, multipartFiles, optionsRequest);
         BrokerItemResponse brokerItemResponse = getBrokerItemResponse(brokerItem, addressResponse);
 
