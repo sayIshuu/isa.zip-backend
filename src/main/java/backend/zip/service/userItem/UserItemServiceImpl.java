@@ -94,6 +94,6 @@ public class UserItemServiceImpl implements UserItemService{
         userItems = userItems.stream()
                 .filter(userItem -> !userItem.getIsMatched())
                 .collect(Collectors.toList());
-        return UserItemByDongResponse.from(userItems);
+        return UserItemByDongResponse.from(dongName, userItems);
     }
 }
