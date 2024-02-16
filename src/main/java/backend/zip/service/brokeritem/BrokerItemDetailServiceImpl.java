@@ -52,9 +52,11 @@ public class BrokerItemDetailServiceImpl implements BrokerItemDetailService {
                 itemImages.add(itemImage);
             }}
 
-        for (ItemImage itemImage : itemImages) {
-            brokerItemImageRepository.save(itemImage);
-        }
+//        for (ItemImage itemImage : itemImages) {
+//            brokerItemImageRepository.save(itemImage);
+//        }
+
+        brokerItemImageRepository.saveAll(itemImages);
         return itemImages;
     }
 
