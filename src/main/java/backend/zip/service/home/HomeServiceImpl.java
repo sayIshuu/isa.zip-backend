@@ -32,7 +32,7 @@ public class HomeServiceImpl implements HomeService {
         LocalDate currentDate = LocalDate.now();
 
         // 최신 유저 요청 조회
-        UserItem recentUserItem = userItemRepository.findTopByIsMatchedOrderByCreateAtDesc(false);
+        UserItem recentUserItem = userItemRepository.findTopByUserIdAndIsMatchedOrderByCreateAtDesc(userId, false);
 
         // 유저 요청과 매칭된 매물들 조회
         List<Matching> matchingList = null;
