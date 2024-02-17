@@ -4,6 +4,7 @@ import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
 import backend.zip.dto.match.request.BrokerItemIdRequest;
+import backend.zip.dto.match.request.UpdateMatchingStatusRequest;
 import backend.zip.dto.match.response.MatchItemAllByUserResponse;
 import backend.zip.dto.match.response.MatchItemListResponse;
 import backend.zip.dto.match.response.MatchItemResponse;
@@ -47,10 +48,9 @@ public class MatchController {
                                                     "일반유저가 자기 매칭요청상태에서 +버튼 눌러서 찜하기 : MATCH_LIKE" +
                                                     "일반유저가 최종적으로 매칭완료시키기 : MATCH_COMPLETE")
     @PatchMapping("/brokers/{matchingId}") // 엔드포인트 변경필요 비직관적임.
-    public ApiResponse<String> matchCompleteBrokerItems(@RequestBody List<Long> matchingIds,
-                                                                     @RequestParam MatchStatus matchStatus) {
-        for (Long matchingId : matchingIds) {
-            matchService.updateMatchStatus(matchingId, matchStatus);
+    public ApiResponse<String> matchCompleteBrokerItems(@RequestBody UpdateMatchingStatusRequest updateMatchingStatusRequest) {
+        for (Long matchingId : updateMatchingStatusRequest.getMatchingIds()) {
+            matchService.updateMatchStatus(matchingId, updateMatchingStatusRequest.getMatchStatus());
         }
         return ApiResponse.onSuccess("매칭상태변경완료");
     }
