@@ -33,6 +33,8 @@ public class Matching {
 //    @Column(name = "match_dong")
     private String matchDong;
 
+    //private boolean isLiked;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "match_status")
     private MatchStatus matchStatus;
@@ -43,6 +45,7 @@ public class Matching {
                 .brokerItem(brokerItem)
                 .matchStatus(WAITING)
                 .matchDong(userItem.getDong())
+                //.isLiked(false)
                 .build();
     }
 
@@ -50,4 +53,5 @@ public class Matching {
         this.matchStatus = matchStatus;
     }
 
+    //public void updateLiked(boolean b) {this.isLiked = b;}
 }

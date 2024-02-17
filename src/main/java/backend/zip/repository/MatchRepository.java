@@ -4,6 +4,7 @@ import backend.zip.domain.enums.MatchStatus;
 import backend.zip.domain.match.Matching;
 import backend.zip.domain.user.UserItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,8 @@ public interface MatchRepository extends JpaRepository<Matching, Long> {
 
   List<Matching> findByUserItem(UserItem userItem);
 
+  @Modifying
   @Query("delete from Matching m where m.userItem = :userItem and m.matchStatus = :matchStatus")
-  void deleteByUserItemAndMatchStatus(UserItem userItem, MatchStatus matchStatus);
+  void deleteByUserItemAndMatchStatus(@Param("userItem") UserItem userItem, @Param("matchStatus") MatchStatus matchStatus);
+
 }
