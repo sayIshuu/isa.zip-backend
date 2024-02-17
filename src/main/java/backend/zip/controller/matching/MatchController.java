@@ -47,10 +47,12 @@ public class MatchController {
                                                     "일반유저가 자기 매칭요청상태에서 +버튼 눌러서 찜하기 : MATCH_LIKE" +
                                                     "일반유저가 최종적으로 매칭완료시키기 : MATCH_COMPLETE")
     @PatchMapping("/brokers/{matchingId}") // 엔드포인트 변경필요 비직관적임.
-    public ApiResponse<MatchStatusResponse> matchCompleteBrokerItems(@PathVariable Long matchingId,
+    public ApiResponse<String> matchCompleteBrokerItems(@RequestBody List<Long> matchingIds,
                                                                      @RequestParam MatchStatus matchStatus) {
-        Matching matching = matchService.updateMatchStatus(matchingId, matchStatus);
-        return ApiResponse.onSuccess(MatchStatusResponse.of(matching));
+        for (Long matchingId : matchingIds) {
+            matchService.updateMatchStatus(matchingId, matchStatus);
+        }
+        return ApiResponse.onSuccess("매칭상태변경완료");
     }
 
     
