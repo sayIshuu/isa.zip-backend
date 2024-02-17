@@ -10,9 +10,7 @@ import backend.zip.dto.brokeritem.request.AddBrokerItemOptionsRequest;
 import backend.zip.dto.brokeritem.response.BrokerItemAddressResponse;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.status.ErrorStatus;
-import backend.zip.repository.UserRepository;
 import backend.zip.repository.broker.BrokerItemRepository;
-import backend.zip.repository.broker.BrokerOptionRepository;
 import backend.zip.service.map.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,8 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BrokerItemServiceImpl implements BrokerItemService {
     private final BrokerItemRepository brokerItemRepository;
-    private final BrokerOptionRepository brokerOptionRepository;
-    private final UserRepository userRepository;
     private final BrokerItemAddressService brokerItemAddressService;
     private final BrokerItemDetailService brokerItemDetailService;
     private final BrokerItemOptionService brokerItemOptionService;

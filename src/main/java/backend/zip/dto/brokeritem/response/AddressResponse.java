@@ -1,10 +1,8 @@
 package backend.zip.dto.brokeritem.response;
 
-import io.swagger.v3.core.util.Json;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 @Getter

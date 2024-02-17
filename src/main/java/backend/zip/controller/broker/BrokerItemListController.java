@@ -2,10 +2,7 @@ package backend.zip.controller.broker;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.dto.brokeritem.response.BrokerItemResponse;
-
-import backend.zip.dto.brokeritem.response.BrokerItemShowResponse;
 import backend.zip.global.apipayload.ApiResponse;
-import backend.zip.security.SecurityUtils;
 import backend.zip.service.brokeritem.BrokerItemShowService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -14,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static backend.zip.dto.brokeritem.response.BrokerItemResponse.getBrokerItemResponse;
 
 @RestController
 @RequiredArgsConstructor

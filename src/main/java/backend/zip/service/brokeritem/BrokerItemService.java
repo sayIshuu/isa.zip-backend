@@ -13,10 +13,6 @@ public interface BrokerItemService {
 
     void deleteBrokerItem(Long brokerItemId);
 
-//    public BrokerItem findBrokerItem(Long brokerItemId);
-
-//    public List<BrokerItem> findAllBrokerItem(Long userId);
-
     @Transactional
     BrokerItem updateBrokerItem(Long brokerItemId, String roadFullAddress,
                                 AddBrokerItemDetailsRequest detailsRequest,

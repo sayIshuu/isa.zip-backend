@@ -1,9 +1,5 @@
 package backend.zip.dto.brokeritem.request;
 
-import backend.zip.domain.broker.BrokerItem;
-import backend.zip.domain.broker.BrokerOption;
-import backend.zip.domain.broker.options.BrokerDealType;
-import backend.zip.domain.broker.options.BrokerFloor;
 import backend.zip.domain.enums.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddBrokerItemOptionsRequest {
-//    private Long brokerItemId;
     private RoomType roomType;
     private Set<DealType> dealTypes;
     private Map<DealType, DealInfo> dealInfoMap;

@@ -7,7 +7,6 @@ import backend.zip.dto.brokeritem.request.AddBrokerItemOptionsRequest;
 import backend.zip.dto.brokeritem.response.*;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.global.status.SuccessStatus;
-import backend.zip.security.SecurityUtils;
 import backend.zip.service.brokeritem.BrokerItemAddressService;
 import backend.zip.service.brokeritem.BrokerItemService;
 import backend.zip.service.brokeritem.BrokerItemShowService;

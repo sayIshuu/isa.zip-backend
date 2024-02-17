@@ -22,9 +22,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-//@Setter
-//@DynamicInsert
-//@DynamicUpdate
 public class BrokerItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

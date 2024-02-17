@@ -11,8 +11,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-//@DynamicInsert
-//@DynamicUpdate
 public class BrokerExtraFilter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

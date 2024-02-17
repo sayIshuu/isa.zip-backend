@@ -11,8 +11,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-//@DynamicInsert
-//@DynamicUpdate
 public class BrokerFloor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

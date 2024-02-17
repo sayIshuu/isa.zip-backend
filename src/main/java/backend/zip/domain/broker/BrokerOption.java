@@ -14,8 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Setter
-//@DynamicInsert
-//@DynamicUpdate
 public class BrokerOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

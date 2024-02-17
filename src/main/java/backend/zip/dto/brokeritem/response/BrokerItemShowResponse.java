@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +53,4 @@ public class BrokerItemShowResponse {
                 .brokerItemListList(brokerItemLists)
                 .build();
     }
-
-
-
 }
