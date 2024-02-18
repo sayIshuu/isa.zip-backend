@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,14 +16,16 @@ import java.time.LocalDate;
 @Setter
 public class AddScheduleRequest {
     private Period period;
-
-    private LocalDate moveDate;
+    private String moveDate;
 
     public Schedule toEntity(User user) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        LocalDate parsedDate = LocalDate.parse(moveDate, formatter);
+
         return Schedule.builder()
                 .user(user)
                 .period(period)
-                .moveDate(moveDate)
+                .moveDate(parsedDate)
                 .build();
     }
 }
