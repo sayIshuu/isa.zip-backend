@@ -8,24 +8,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class EventResponse {
-
     private Long eventId;
     private Long scheduleId;
     private String eventTitle;
-    private LocalDate eventDate;
+    private String eventDate;
 
     public static EventResponse fromEntity(Event event) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        String formattedDate = event.getEventDate().format(formatter);
+
         return EventResponse.builder()
                 .eventId(event.getEventId())
                 .scheduleId(event.getSchedule() != null ? event.getSchedule().getScheduleId() : null)
                 .eventTitle(event.getEventTitle())
-                .eventDate(event.getEventDate())
+                .eventDate(formattedDate)  // 포맷된 날짜를 사용
                 .build();
     }
 }
