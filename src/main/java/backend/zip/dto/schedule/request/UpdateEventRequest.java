@@ -13,5 +13,5 @@ import java.time.LocalDate;
 public class UpdateEventRequest {
     private Long eventId;
     private String eventTitle;
-    private LocalDate eventDate;
+    private String eventDate;
 }

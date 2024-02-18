@@ -52,9 +52,11 @@ public enum ErrorStatus implements BaseErrorCode {
     SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND,"SCHEDULE_001","해당 일정을 찾을 수 없습니다"),
     DUPLICATED_SCHEDULE(HttpStatus.BAD_REQUEST,"SCHEDULE_002","이미 일정이 존재합니다."),
     SCHEDULE_NOT_REGISTERED(HttpStatus.BAD_REQUEST,"SCHEDULE_003","해당 사용자는 일정을 등록할 수 없습니다."),
+    DATE_NOT_FOUND(HttpStatus.NOT_FOUND,"SCHEDULE_004","해당 날짜의 형태가 올바르지 않습니다."),
 
     //Event 관련 에러
     EVENT_NOT_FOUND(HttpStatus.NOT_FOUND,"EVENT_001","해당 상세 일정을 찾을 수 없습니다");
+
 
 
     private final HttpStatus httpStatus;

@@ -5,6 +5,7 @@ import backend.zip.domain.schedule.Schedule;
 import backend.zip.domain.user.User;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
+import backend.zip.global.exception.schedule.DateNotFoundException;
 import backend.zip.global.exception.schedule.DuplicatedScheduleException;
 import backend.zip.global.exception.schedule.ScheduleNotFoundException;
 import backend.zip.global.exception.user.UserException;
@@ -18,12 +19,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 import static backend.zip.domain.enums.Role.ROLE_USER;
 import static backend.zip.global.status.ErrorStatus.USER_NOT_FOUND;
 import static backend.zip.global.status.ErrorStatus.SCHEDULE_NOT_FOUND;
 import static backend.zip.global.status.ErrorStatus.DUPLICATED_SCHEDULE;
+import static backend.zip.global.status.ErrorStatus.DATE_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -55,9 +59,16 @@ public class ScheduleServiceImpl implements ScheduleService {
             getScheduleByUserId(userId);
             throw new DuplicatedScheduleException(DUPLICATED_SCHEDULE);
         } catch (ScheduleNotFoundException ex) {
-            Schedule newSchedule = new Schedule(null, user, request.getPeriod(), request.getMoveDate());
-            generateEventsForSchedule(newSchedule, request);
-            return scheduleRepository.save(newSchedule);
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+                LocalDate moveDate = LocalDate.parse(request.getMoveDate(), formatter);
+
+                Schedule newSchedule = new Schedule(null, user, request.getPeriod(), moveDate);
+                generateEventsForSchedule(newSchedule, request);
+                return scheduleRepository.save(newSchedule);
+            } catch (DateTimeParseException exInner) {
+                throw new DateNotFoundException(DATE_NOT_FOUND);
+            }
         }
     }
 
@@ -69,14 +80,23 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = getScheduleByUserId(userId);
         if (schedule != null) {
             eventService.deleteEvents(schedule.getScheduleId());
-            schedule.setMoveDate(request.getMoveDate());
-            schedule.setPeriod(request.getPeriod());
-            UpdateEventsForSchedule(schedule, request.getMoveDate(), request.getPeriod());
-            return Optional.of(scheduleRepository.save(schedule));
+
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+                LocalDate moveDate = LocalDate.parse(request.getMoveDate(), formatter);
+
+                schedule.setMoveDate(moveDate);
+                schedule.setPeriod(request.getPeriod());
+                UpdateEventsForSchedule(schedule, moveDate, request.getPeriod());
+                return Optional.of(scheduleRepository.save(schedule));
+            } catch (DateTimeParseException ex) {
+                throw new DateNotFoundException(DATE_NOT_FOUND);
+            }
         } else {
             throw new ScheduleNotFoundException(SCHEDULE_NOT_FOUND);
         }
     }
+
 
 
 
@@ -95,7 +115,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
     private void generateEventsForSchedule(Schedule schedule, AddScheduleRequest request) {
-        LocalDate moveDate = request.getMoveDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        LocalDate moveDate = LocalDate.parse(request.getMoveDate(), formatter);
         Period movePeriod = schedule.getPeriod();
         switch (movePeriod) {
             case THREE_MONTHS:

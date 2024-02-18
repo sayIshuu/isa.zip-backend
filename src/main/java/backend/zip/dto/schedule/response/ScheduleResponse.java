@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -16,15 +17,17 @@ public class ScheduleResponse {
     private Long scheduleId;
     private Long userId;
     private Period period;
-    private LocalDate moveDate;
-
+    private String moveDate;
 
     public static ScheduleResponse fromEntity(Schedule schedule) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+        String formattedDate = schedule.getMoveDate().format(formatter);
+
         return ScheduleResponse.builder()
                 .scheduleId(schedule.getScheduleId())
                 .userId(schedule.getUser() != null ? schedule.getUser().getId() : null)
                 .period(schedule.getPeriod())
-                .moveDate(schedule.getMoveDate())
+                .moveDate(formattedDate)
                 .build();
     }
 }

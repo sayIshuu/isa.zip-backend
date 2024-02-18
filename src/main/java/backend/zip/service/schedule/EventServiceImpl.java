@@ -1,5 +1,6 @@
 package backend.zip.service.schedule;
 
+import backend.zip.global.exception.schedule.DateNotFoundException;
 import backend.zip.global.exception.schedule.EventNotFoundException;
 import backend.zip.global.exception.schedule.ScheduleNotFoundException;
 import backend.zip.global.exception.user.UserNotFoundException;
@@ -15,6 +16,8 @@ import org.springframework.security.config.core.userdetails.UserDetailsResourceF
 import org.springframework.stereotype.Service;
 import backend.zip.domain.schedule.Event;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -60,14 +63,21 @@ public class EventServiceImpl implements EventService {
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
             // 엔티티의 변경 사항 설정
-            event.setEventDate(request.getEventDate());
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+                LocalDate eventDate = LocalDate.parse(request.getEventDate(), formatter);
+                event.setEventDate(eventDate);
+            } catch (DateTimeParseException ex) {
+                throw new DateNotFoundException(DATE_NOT_FOUND);
+            }
             event.setEventTitle(request.getEventTitle());
             // 변경된 엔티티 저장
             event = eventRepository.save(event);
             return Optional.of(event);
-        }
-        else
+        } else {
+            // 이벤트를 찾을 수 없음 예외 던지기
             throw new EventNotFoundException(EVENT_NOT_FOUND);
+        }
     }
 
 
