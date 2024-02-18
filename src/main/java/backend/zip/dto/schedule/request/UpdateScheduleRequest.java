@@ -17,5 +17,5 @@ public class UpdateScheduleRequest {
 
     private Period period;
 
-    private LocalDate moveDate;
+    private String moveDate;
 }
