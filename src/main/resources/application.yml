@@ -6,9 +6,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_URL}:3306/isa-zip?serverTimezone\=Asia/Seoul&characterEncoding\=UTF-8
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${DATABASE_URL}:3306/isa-zip?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DATABASE_HOST}
+    password: ${DATABASE_PW}
 
   #  datasource:
   #    url: jdbc:mysql://localhost:3306/
@@ -84,3 +84,4 @@ cloud:
     credentials:
       accessKey: ${AWS_ACCESS_KEY_ID}
       secretKey: ${AWS_SECRET_ACCESS_KEY}
+
