@@ -17,5 +17,6 @@ public interface BrokerItemShowService {
 
     List<BrokerItem> findBrokerItemSortedByDong(String dong);
 
-    List<BrokerItem> findBrokerItemByCurrentLocation(CurrentLocationRequest currentLocationRequest);
+    List<BrokerItem> findBrokerItemByCurrentLocation(Double x,Double y);
+
 }

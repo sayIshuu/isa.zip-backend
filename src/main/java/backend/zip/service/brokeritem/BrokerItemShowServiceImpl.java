@@ -75,9 +75,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
     }
 
     @Override
-    public List<BrokerItem> findBrokerItemByCurrentLocation(CurrentLocationRequest currentLocationRequest) {
-        return brokerItemByCurrentLocationRepository.findBrokerItemsWithinRadius(currentLocationRequest.getX(),
-                currentLocationRequest.getY()
-        );
+    public List<BrokerItem> findBrokerItemByCurrentLocation(Double x, Double y) {
+        return brokerItemByCurrentLocationRepository.findBrokerItemsWithinRadius(x, y);
     }
 }
