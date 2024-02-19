@@ -3,11 +3,8 @@ package backend.zip.service.brokeritem;
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.enums.*;
 import backend.zip.domain.user.User;
-<<<<<<< HEAD
-=======
 import backend.zip.dto.main.request.CurrentLocationRequest;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
->>>>>>> feat/filter
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.exception.user.UserException;
 import backend.zip.global.status.ErrorStatus;
