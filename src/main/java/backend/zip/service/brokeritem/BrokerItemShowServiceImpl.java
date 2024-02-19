@@ -207,4 +207,9 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
         }
         return showBrokerItems;
     }
+
+    @Override
+    public List<BrokerItem> findBrokerItemByCurrentLocationNoFilter(Double x, Double y) {
+        return brokerItemByCurrentLocationRepository.findBrokerItemsWithinRadius(x, y);
+    }
 }

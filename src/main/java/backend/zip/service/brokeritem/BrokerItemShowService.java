@@ -20,4 +20,5 @@ public interface BrokerItemShowService {
 
     List<BrokerItem> findBrokerItemByCurrentLocation(Double x, Double y, AddUserItemOptionsRequest addUserItemOptionsRequest);
 
+    List<BrokerItem> findBrokerItemByCurrentLocationNoFilter(Double x, Double y);
 }
