@@ -1,19 +1,16 @@
 package backend.zip.controller.schedule;
 
-import backend.zip.domain.schedule.Schedule;
-import backend.zip.domain.schedule.Event;
+import backend.zip.domain.enums.schedule.Schedule;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
 import backend.zip.dto.schedule.response.ScheduleResponse;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.security.SecurityUtils;
 import backend.zip.service.schedule.ScheduleService;
-import backend.zip.service.schedule.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 

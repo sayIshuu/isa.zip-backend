@@ -1,4 +1,4 @@
-package backend.zip.repository;
+package backend.zip.repository.user;
 
 import backend.zip.domain.user.UserOption;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package backend.zip.domain.schedule;
+package backend.zip.domain.enums.schedule;
 
 import jakarta.persistence.*;
 import lombok.*;

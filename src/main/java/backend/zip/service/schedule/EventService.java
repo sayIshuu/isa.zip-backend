@@ -1,10 +1,8 @@
 package backend.zip.service.schedule;
 
-import backend.zip.domain.schedule.Event;
-import backend.zip.repository.schedule.EventRepository;
-import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.enums.schedule.Event;
+import backend.zip.domain.enums.schedule.Schedule;
 import backend.zip.dto.schedule.request.UpdateEventRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

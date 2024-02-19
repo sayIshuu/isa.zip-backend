@@ -1,13 +1,11 @@
 package backend.zip.dto.schedule.response;
 
-import backend.zip.domain.schedule.Event;
-import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.enums.schedule.Event;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Data

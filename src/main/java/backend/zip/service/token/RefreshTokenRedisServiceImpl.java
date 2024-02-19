@@ -1,7 +1,7 @@
-package backend.zip.service;
+package backend.zip.service.token;
 
 import backend.zip.domain.auth.RefreshToken;
-import backend.zip.repository.RefreshTokenRedisRepository;
+import backend.zip.repository.token.RefreshTokenRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

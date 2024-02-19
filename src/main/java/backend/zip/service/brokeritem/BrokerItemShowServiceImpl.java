@@ -2,11 +2,10 @@ package backend.zip.service.brokeritem;
 
 import backend.zip.domain.broker.BrokerItem;
 import backend.zip.domain.user.User;
-import backend.zip.dto.main.request.CurrentLocationRequest;
 import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.exception.user.UserException;
 import backend.zip.global.status.ErrorStatus;
-import backend.zip.repository.UserRepository;
+import backend.zip.repository.user.UserRepository;
 import backend.zip.repository.broker.BrokerItemByCurrentLocationRepository;
 import backend.zip.repository.broker.BrokerItemRepository;
 import backend.zip.security.SecurityUtils;

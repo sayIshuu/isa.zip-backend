@@ -2,7 +2,7 @@ package backend.zip.config;
 
 import backend.zip.security.JwtAuthenticationFilter;
 import backend.zip.security.JwtTokenProvider;
-import backend.zip.service.RefreshTokenRedisService;
+import backend.zip.service.token.RefreshTokenRedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +23,9 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final ObjectMapper objectMapper;
     private final String[] securityAllowArray = {
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/auth/**",
             "/**"
     };
 

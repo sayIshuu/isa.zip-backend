@@ -1,16 +1,15 @@
 package backend.zip.service.home;
 
 import backend.zip.domain.match.Matching;
-import backend.zip.domain.schedule.Event;
-import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.enums.schedule.Event;
+import backend.zip.domain.enums.schedule.Schedule;
 import backend.zip.domain.user.UserItem;
 import backend.zip.dto.home.response.HomeResponse;
 import backend.zip.repository.MatchRepository;
-import backend.zip.repository.UserItemRepository;
+import backend.zip.repository.user.UserItemRepository;
 import backend.zip.repository.schedule.EventRepository;
 import backend.zip.repository.schedule.ScheduleRepository;
 import backend.zip.security.SecurityUtils;
-import backend.zip.service.home.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

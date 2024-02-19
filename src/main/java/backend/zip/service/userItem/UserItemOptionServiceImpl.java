@@ -1,17 +1,13 @@
 package backend.zip.service.userItem;
 
-import backend.zip.domain.enums.ApproveDate;
 import backend.zip.domain.user.UserOption;
 import backend.zip.domain.user.options.*;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
-import backend.zip.repository.UserOptionRepository;
-import backend.zip.service.userItem.UserItemOptionService;
+import backend.zip.repository.user.UserOptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

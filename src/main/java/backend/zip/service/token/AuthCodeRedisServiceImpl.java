@@ -1,7 +1,7 @@
-package backend.zip.service;
+package backend.zip.service.token;
 
 import backend.zip.domain.auth.AuthCode;
-import backend.zip.repository.Auth.AuthCodeRedisRepository;
+import backend.zip.repository.auth.AuthCodeRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

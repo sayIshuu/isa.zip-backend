@@ -8,14 +8,13 @@ import backend.zip.global.exception.token.CustomMalformedJwtException;
 import backend.zip.global.exception.token.NotMatchedTokenException;
 import backend.zip.global.exception.token.TokenException;
 import backend.zip.global.exception.token.TokenNotFoundException;
-import backend.zip.service.RefreshTokenRedisService;
+import backend.zip.service.token.RefreshTokenRedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -25,8 +24,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static backend.zip.domain.auth.TokenType.ACCESS;
-import static backend.zip.domain.auth.TokenType.REFRESH;
+import static backend.zip.domain.enums.TokenType.ACCESS;
+import static backend.zip.domain.enums.TokenType.REFRESH;
 import static backend.zip.global.status.ErrorStatus.*;
 
 @RequiredArgsConstructor
