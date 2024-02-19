@@ -143,7 +143,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     continue;
                 }
             }
-
+/*
             // approveDate 입력변환 어떻게 됐는지 보고 작성할예정
             if (addUserItemOptionsRequest.getApproveDate() != null) {
                 String brokerItemApproveDate = brokerItem.getBrokerOption().getApprovedDate();
@@ -184,6 +184,8 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                         break;
                 }
             }
+            
+ */
 
             if (addUserItemOptionsRequest.getExtraFilter() != null) {
                 boolean isContain = false;
