@@ -24,7 +24,7 @@ public class AddBrokerItemOptionsRequest {
     private List<ManagementOption> managementOptions;
     private String managementPrice;
     private List<InternalFacility> internalFacilities;
-    private ApproveDate approveDate;
+    private String approveDate;
     private List<ExtraFilter> extraFilters;
 
     @Getter
