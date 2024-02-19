@@ -21,7 +21,7 @@ public class BrokerItemOptionResponse {
     private List<BrokerManagementOption> managementOptions;
     private List<BrokerInternalFacility> internalFacilities;
     private List<BrokerExtraFilter> extraFilters;
-    private ApproveDate approvedDate;
+    private String approvedDate;
 
     public static BrokerItemOptionResponse of(BrokerOption brokerOption) {
         return BrokerItemOptionResponse.builder()

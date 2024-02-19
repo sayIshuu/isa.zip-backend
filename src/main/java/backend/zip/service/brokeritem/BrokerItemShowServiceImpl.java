@@ -1,10 +1,7 @@
 package backend.zip.service.brokeritem;
 
 import backend.zip.domain.broker.BrokerItem;
-import backend.zip.domain.enums.ExtraFilter;
-import backend.zip.domain.enums.Floor;
-import backend.zip.domain.enums.InternalFacility;
-import backend.zip.domain.enums.ManagementOption;
+import backend.zip.domain.enums.*;
 import backend.zip.domain.user.User;
 import backend.zip.dto.main.request.CurrentLocationRequest;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
@@ -148,11 +145,46 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
             }
 
             // approveDate 입력변환 어떻게 됐는지 보고 작성할예정
-            /*if (addUserItemOptionsRequest.getApproveDate() != null) {
-                if (!addUserItemOptionsRequest.getApproveDate().equals(brokerItem.getApproveDate())) {
-                    showBrokerItems.remove(brokerItem);
+            if (addUserItemOptionsRequest.getApproveDate() != null) {
+                String brokerItemApproveDate = brokerItem.getBrokerOption().getApprovedDate();
+                ApproveDate userApproveDate = addUserItemOptionsRequest.getApproveDate();
+                //brokerItemApproveDate 앞에서부터 4자리만 잘라서 저장
+                Long brokerItemApproveYear = Long.parseLong(brokerItemApproveDate.substring(0, 4));
+                //switch문으로 ApproveDate에 따라서 필터링
+                switch (userApproveDate) {
+                    case UNDER_ONE_YEAR:
+                        if (!(brokerItemApproveYear > 2023)) {
+                            showBrokerItems.remove(brokerItem);
+                            continue;
+                        }
+                        break;
+                    case UNDER_FIVE_YEARS:
+                        if (!(brokerItemApproveYear > 2019)) {
+                            showBrokerItems.remove(brokerItem);
+                            continue;
+                        }
+                        break;
+                    case UNDER_TEN_YEARS:
+                        if (!(brokerItemApproveYear > 2014)) {
+                            showBrokerItems.remove(brokerItem);
+                            continue;
+                        }
+                        break;
+                    case UNDER_FIFTEEN_YEARS:
+                        if (!(brokerItemApproveYear > 2009)) {
+                            showBrokerItems.remove(brokerItem);
+                            continue;
+                        }
+                        break;
+                    case OVER_FIFTEEN_YEARS:
+                        if (!(brokerItemApproveYear < 2009)) {
+                            showBrokerItems.remove(brokerItem);
+                            continue;
+                        }
+                        break;
                 }
-            }*/
+            }
+
             if (addUserItemOptionsRequest.getExtraFilter() != null) {
                 boolean isContain = false;
                 for (ExtraFilter extraFilter : addUserItemOptionsRequest.getExtraFilter()) {
