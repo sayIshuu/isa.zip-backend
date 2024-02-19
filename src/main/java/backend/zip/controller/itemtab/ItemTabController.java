@@ -4,6 +4,7 @@ import backend.zip.domain.broker.BrokerItem;
 import backend.zip.dto.brokeritem.response.BrokerItemResponse;
 import backend.zip.dto.brokeritem.response.BrokerItemShowResponse;
 import backend.zip.dto.main.request.CurrentLocationRequest;
+import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
 import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.service.brokeritem.BrokerItemShowService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +23,10 @@ public class ItemTabController {
     @Operation(summary = "매물 탭 메인 화면", description = "매물 탭 메인화면에서 현재 위치 주변의 매물 아이템 조회")
     @GetMapping("/item")
     public ApiResponse<BrokerItemShowResponse> getBrokerItems(@RequestParam(value = "x") Double x,
-                                                              @RequestParam(value = "y") Double y) {
+                                                              @RequestParam(value = "y") Double y,
+                                                              @RequestBody AddUserItemOptionsRequest addUserItemOptionsRequest) {
 
-        List<BrokerItem> brokerItemByCurrentLocation = brokerItemShowService.findBrokerItemByCurrentLocation(x, y);
+        List<BrokerItem> brokerItemByCurrentLocation = brokerItemShowService.findBrokerItemByCurrentLocation(x, y, addUserItemOptionsRequest);
         BrokerItemShowResponse brokerItemShowResponse = BrokerItemShowResponse.of(brokerItemByCurrentLocation);
 
         return ApiResponse.onSuccess(brokerItemShowResponse);
