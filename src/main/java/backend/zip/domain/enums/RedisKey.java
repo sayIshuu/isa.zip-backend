@@ -1,4 +1,4 @@
-package backend.zip.domain.auth;
+package backend.zip.domain.enums;
 
 import lombok.Getter;
 

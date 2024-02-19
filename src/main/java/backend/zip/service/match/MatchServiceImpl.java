@@ -9,7 +9,7 @@ import backend.zip.global.exception.brokeritem.BrokerItemException;
 import backend.zip.global.exception.match.MatchingException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.MatchRepository;
-import backend.zip.repository.UserItemRepository;
+import backend.zip.repository.user.UserItemRepository;
 import backend.zip.repository.broker.BrokerItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package backend.zip.service.Auth;
+package backend.zip.service.auth;
 
 import backend.zip.global.exception.auth.UnableToSendEmailException;
 import backend.zip.global.status.ErrorStatus;

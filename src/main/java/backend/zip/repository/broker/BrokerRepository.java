@@ -1,4 +1,4 @@
-package backend.zip.repository;
+package backend.zip.repository.broker;
 
 import backend.zip.domain.broker.Broker;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package backend.zip.service;
+package backend.zip.service.token;
 
 import backend.zip.domain.auth.RefreshToken;
 

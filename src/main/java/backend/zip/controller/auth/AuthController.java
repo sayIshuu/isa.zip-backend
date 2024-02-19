@@ -1,13 +1,12 @@
-package backend.zip.controller;
+package backend.zip.controller.auth;
 
 import backend.zip.dto.auth.request.AuthRequest;
 import backend.zip.dto.auth.response.AuthResponse;
 import backend.zip.global.apipayload.ApiResponse;
-import backend.zip.service.Auth.AuthService;
+import backend.zip.service.auth.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

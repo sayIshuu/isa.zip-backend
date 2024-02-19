@@ -1,4 +1,4 @@
-package backend.zip.repository.Auth;
+package backend.zip.repository.auth;
 
 import backend.zip.domain.auth.AuthCode;
 import org.springframework.data.repository.CrudRepository;

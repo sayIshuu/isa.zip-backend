@@ -1,4 +1,4 @@
-package backend.zip.domain.schedule;
+package backend.zip.domain.enums.schedule;
 
 import backend.zip.domain.enums.Period;
 import backend.zip.domain.user.User;

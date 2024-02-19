@@ -1,25 +1,19 @@
-package backend.zip.service.Auth;
+package backend.zip.service.auth;
 
 import backend.zip.domain.auth.TokenInfo;
 import backend.zip.domain.auth.AuthCode;
-import backend.zip.domain.broker.Broker;
-import backend.zip.domain.enums.Role;
 import backend.zip.domain.user.User;
 import backend.zip.dto.auth.request.AuthRequest;
 import backend.zip.dto.auth.response.AuthResponse;
-import backend.zip.global.apipayload.ApiResponse;
-import backend.zip.global.exception.CustomNoSuchAlgorithmException;
+import backend.zip.global.exception.auth.CustomNoSuchAlgorithmException;
 import backend.zip.global.exception.auth.AuthcodeException;
-import backend.zip.global.exception.auth.BrokerNotFoundException;
 import backend.zip.global.exception.auth.DuplicatedEmailException;
 import backend.zip.global.exception.user.UserNotFoundException;
 import backend.zip.global.status.ErrorStatus;
-import backend.zip.repository.BrokerRepository;
-import backend.zip.repository.UserRepository;
+import backend.zip.repository.user.UserRepository;
 import backend.zip.security.JwtTokenProvider;
-import backend.zip.security.SecurityUtils;
-import backend.zip.service.AuthCodeRedisService;
-import backend.zip.service.RefreshTokenRedisService;
+import backend.zip.service.token.AuthCodeRedisService;
+import backend.zip.service.token.RefreshTokenRedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,8 +27,7 @@ import java.security.SecureRandom;
 import java.util.Optional;
 import java.util.Random;
 
-import static backend.zip.domain.auth.RedisKey.EAUTH;
-import static backend.zip.global.status.ErrorStatus.USER_NOT_FOUND;
+import static backend.zip.domain.enums.RedisKey.EAUTH;
 
 @Service
 @Transactional(readOnly = true)

@@ -1,4 +1,4 @@
-package backend.zip.repository;
+package backend.zip.repository.token;
 
 import backend.zip.domain.auth.RefreshToken;
 import org.springframework.data.repository.CrudRepository;

@@ -1,7 +1,7 @@
 package backend.zip.service.schedule;
 
 import backend.zip.domain.enums.Period;
-import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.enums.schedule.Schedule;
 import backend.zip.domain.user.User;
 import backend.zip.dto.schedule.request.AddScheduleRequest;
 import backend.zip.dto.schedule.request.UpdateScheduleRequest;
@@ -12,7 +12,7 @@ import backend.zip.global.exception.user.UserException;
 import backend.zip.global.exception.user.UserNotFoundException;
 import backend.zip.global.status.ErrorStatus;
 import backend.zip.repository.schedule.ScheduleRepository;
-import backend.zip.repository.UserRepository;
+import backend.zip.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,12 @@
 package backend.zip.service.userItem;
 
-import backend.zip.domain.user.User;
 import backend.zip.domain.user.UserItem;
 import backend.zip.domain.user.UserOption;
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
 import backend.zip.dto.useritem.response.UserItemByDongResponse;
 import backend.zip.dto.useritem.response.UserItemDongCountResponse;
-import backend.zip.repository.UserItemRepository;
-import backend.zip.repository.UserRepository;
+import backend.zip.repository.user.UserItemRepository;
+import backend.zip.repository.user.UserRepository;
 import backend.zip.service.brokeritem.BrokerItemShowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

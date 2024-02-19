@@ -2,7 +2,7 @@ package backend.zip.security;
 
 import backend.zip.domain.user.User;
 import backend.zip.global.exception.token.CustomUsernameNotFoundException;
-import backend.zip.repository.UserRepository;
+import backend.zip.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

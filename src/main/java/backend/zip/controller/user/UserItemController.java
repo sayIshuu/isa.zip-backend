@@ -1,4 +1,4 @@
-package backend.zip.controller;
+package backend.zip.controller.user;
 
 import backend.zip.dto.useritem.request.AddUserItemOptionsRequest;
 import backend.zip.dto.useritem.response.UserItemByDongResponse;

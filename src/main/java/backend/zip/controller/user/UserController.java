@@ -1,10 +1,9 @@
-package backend.zip.controller;
+package backend.zip.controller.user;
 
-import backend.zip.dto.auth.request.AuthRequest;
 import backend.zip.dto.user.request.UserRequest;
 import backend.zip.dto.user.response.UserResponse;
 import backend.zip.global.apipayload.ApiResponse;
-import backend.zip.service.UserService;
+import backend.zip.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;

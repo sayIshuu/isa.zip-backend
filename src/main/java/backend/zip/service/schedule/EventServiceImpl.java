@@ -5,23 +5,20 @@ import backend.zip.global.exception.schedule.EventNotFoundException;
 import backend.zip.global.exception.schedule.ScheduleNotFoundException;
 import backend.zip.global.exception.user.UserNotFoundException;
 import backend.zip.repository.schedule.EventRepository;
-import backend.zip.repository.UserRepository;
+import backend.zip.repository.user.UserRepository;
 import backend.zip.repository.schedule.ScheduleRepository;
-import backend.zip.domain.schedule.Schedule;
+import backend.zip.domain.enums.schedule.Schedule;
 import backend.zip.domain.user.User;
 import backend.zip.dto.schedule.request.UpdateEventRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.core.userdetails.UserDetailsResourceFactoryBean;
 import org.springframework.stereotype.Service;
-import backend.zip.domain.schedule.Event;
+import backend.zip.domain.enums.schedule.Event;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import backend.zip.global.exception.schedule.EventNotFoundException;
 
 import static backend.zip.global.status.ErrorStatus.*;
 

@@ -1,22 +1,20 @@
-package backend.zip.service;
+package backend.zip.service.user;
 
 import backend.zip.domain.broker.Broker;
 import backend.zip.domain.enums.Role;
 import backend.zip.domain.s3.Uuid;
 import backend.zip.domain.user.User;
-import backend.zip.dto.auth.request.AuthRequest;
-import backend.zip.dto.auth.response.AuthResponse;
 import backend.zip.dto.user.request.UserRequest;
 import backend.zip.dto.user.response.UserResponse;
-import backend.zip.global.apipayload.ApiResponse;
 import backend.zip.global.aws.s3.AmazonS3Manager;
 import backend.zip.global.exception.auth.BrokerNotFoundException;
 import backend.zip.global.exception.user.UserNotFoundException;
 import backend.zip.global.status.ErrorStatus;
-import backend.zip.repository.BrokerRepository;
-import backend.zip.repository.UserRepository;
+import backend.zip.repository.broker.BrokerRepository;
+import backend.zip.repository.user.UserRepository;
 import backend.zip.repository.UuidRepository;
 import backend.zip.security.SecurityUtils;
+import backend.zip.service.token.RefreshTokenRedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
