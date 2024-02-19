@@ -25,6 +25,8 @@ public class BrokerItemShowResponse {
     @AllArgsConstructor
     public static class BrokerItemList {
         private Long brokerItemId;
+        private Double x;
+        private Double y;
         private ItemStatus itemStatus;
         private List<BrokerDealType> dealTypes;
         private String roomSize;
@@ -39,6 +41,8 @@ public class BrokerItemShowResponse {
     public static BrokerItemShowResponse of(List<BrokerItem> brokerItemList) {
         List<BrokerItemList> brokerItemLists = brokerItemList.stream()
                 .map(brokerItem -> new BrokerItemList(brokerItem.getBrokerItemId(),
+                        brokerItem.getX(),
+                        brokerItem.getY(),
                         brokerItem.getItemStatus(),
                         brokerItem.getBrokerOption().getBrokerDealTypes(),
                         brokerItem.getBrokerOption().getRoomSize(),
