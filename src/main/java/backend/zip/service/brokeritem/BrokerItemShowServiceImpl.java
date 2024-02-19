@@ -15,6 +15,7 @@ import backend.zip.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -80,11 +81,14 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
     public List<BrokerItem> findBrokerItemByCurrentLocation(Double x, Double y, AddUserItemOptionsRequest addUserItemOptionsRequest) {
         List<BrokerItem> showBrokerItems = brokerItemByCurrentLocationRepository.findBrokerItemsWithinRadius(x, y);
 
+        Iterator<BrokerItem> iterator = showBrokerItems.iterator();
         // 필터링 아이템 하나하나 보며 유저가 설정한 필터에 걸러지면 제거
-        for (BrokerItem brokerItem : showBrokerItems) {
+        while (iterator.hasNext()) {
+            BrokerItem brokerItem = iterator.next();
+
             if (addUserItemOptionsRequest.getRoomType() != null) {
                 if (!addUserItemOptionsRequest.getRoomType().contains(brokerItem.getBrokerOption().getRoomType())) {
-                    showBrokerItems.remove(brokerItem);
+                    iterator.remove();
                     continue;
                 }
             }
@@ -111,7 +115,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     }
                 }
                 if (!isContain) {
-                    showBrokerItems.remove(brokerItem);
+                    iterator.remove();
                     continue;
                 }
             }
@@ -125,7 +129,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     }
                 }
                 if (!isContain) {
-                    showBrokerItems.remove(brokerItem);
+                    iterator.remove();
                     continue;
                 }
             }
@@ -139,7 +143,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     }
                 }
                 if (!isContain) {
-                    showBrokerItems.remove(brokerItem);
+                    iterator.remove();
                     continue;
                 }
             }
@@ -184,8 +188,8 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                         break;
                 }
             }
-            
- */
+*/
+
 
             if (addUserItemOptionsRequest.getExtraFilter() != null) {
                 boolean isContain = false;
@@ -196,7 +200,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     }
                 }
                 if (!isContain) {
-                    showBrokerItems.remove(brokerItem);
+                    iterator.remove();
                     continue;
                 }
             }
