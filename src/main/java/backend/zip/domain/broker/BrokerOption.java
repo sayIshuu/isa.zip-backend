@@ -28,8 +28,8 @@ public class BrokerOption {
     private String roomSize;
 
     @Column(name = "broker_approved_date")
-    @Enumerated(EnumType.STRING)
-    private ApproveDate approvedDate;
+//    @Enumerated(EnumType.STRING)
+    private String approvedDate;
 
     @OneToOne(mappedBy = "brokerOption", cascade = CascadeType.ALL)
     private BrokerItem brokerItem;
