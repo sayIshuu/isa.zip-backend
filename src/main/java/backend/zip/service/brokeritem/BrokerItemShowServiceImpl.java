@@ -104,7 +104,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     showBrokerItems.remove(brokerItem);
                 }
             }*/
-
+/*
             // request의 floor 리스트 요소 중 하나라도 brokerItem의 floor 리스트에 포함되지 않으면 제거
             if (addUserItemOptionsRequest.getFloor() != null) {
                 boolean isContain = false;
@@ -119,7 +119,8 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     continue;
                 }
             }
-
+ */
+/*
             if (addUserItemOptionsRequest.getManagementOption() != null) {
                 boolean isContain = false;
                 for (ManagementOption managementOption : addUserItemOptionsRequest.getManagementOption()) {
@@ -133,7 +134,8 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     continue;
                 }
             }
-
+ */
+/*
             if (addUserItemOptionsRequest.getInternalFacility() != null) {
                 boolean isContain = false;
                 for (InternalFacility internalFacility : addUserItemOptionsRequest.getInternalFacility()) {
@@ -147,6 +149,8 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     continue;
                 }
             }
+
+ */
 /*
             // approveDate 입력변환 어떻게 됐는지 보고 작성할예정
             if (addUserItemOptionsRequest.getApproveDate() != null) {
@@ -190,7 +194,7 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
             }
 */
 
-
+/*
             if (addUserItemOptionsRequest.getExtraFilter() != null) {
                 boolean isContain = false;
                 for (ExtraFilter extraFilter : addUserItemOptionsRequest.getExtraFilter()) {
@@ -204,6 +208,8 @@ public class BrokerItemShowServiceImpl implements BrokerItemShowService {
                     continue;
                 }
             }
+
+ */
         }
         return showBrokerItems;
     }
