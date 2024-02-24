@@ -61,4 +61,4 @@ jobs:
         script: |
           sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
 
-          sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} --env-file ./zip.env ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          sudo docker run -it -p ${{ secrets.PORT }}:${{ secrets.PORT }} --env-file ./.env ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
