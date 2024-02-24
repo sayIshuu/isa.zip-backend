@@ -13,13 +13,6 @@ public class AddressResponse {
     private String road_address_name;
     private String postNumber;
 
-//    private String region_1depth_name;
-//    private String region_2depth_name;
-//    private String region_3depth_name;
-//    private String region_3depth_h_name;
-//    private String x;
-//    private String y;
-
     public static AddressResponse of(JSONObject document) {
         JSONObject roadAddressObj = document.optJSONObject("road_address");
         if (roadAddressObj != null) {
