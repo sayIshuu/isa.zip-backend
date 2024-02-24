@@ -40,7 +40,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
-          password: ${{ secrets.EC2_KEY }}
+          key: ${{ secrets.EC2_KEY }}
           script: |
             docker stop $(docker ps -a -f "name=isa-zip" -q) 
             docker rm $(docker ps -a -f "name=isa-zip" -q)  
