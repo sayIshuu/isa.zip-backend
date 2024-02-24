@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            docker stop $(docker ps -a -f "name=isa-zip" -q) 
-            docker rm $(docker ps -a -f "name=isa-zip" -q)  
+            docker stop $(docker ps -a -q) 
+            docker rm $(docker ps -a -q)  
             docker pull 326eunjin/isa-zip
             docker run -d -p 8080:8080 326eunjin/isa-zip --env-file ./.env
