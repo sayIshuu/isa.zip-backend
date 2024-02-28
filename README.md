@@ -17,7 +17,7 @@
 
 ### CI/CD
 
-![Slide 16_9 - 1 (3)](https://github.com/isa-zip/isa.zip-backend/assets/50578785/a19779ad-66e7-4cda-ae54-3a52a5ac84bb)
+![Slide 16_9 - 1 (4)](https://github.com/isa-zip/isa.zip-backend/assets/50578785/1c039ed8-7742-4798-bfd4-1157d446a391)
 <br>
 
 ## 기술 스택
