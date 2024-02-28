@@ -22,9 +22,9 @@
 
 ## 기술 스택
 
-| Spring Data JPA | Java | MySQL | AWS | Heroku | Discord |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/a7ef9c41-9a29-468b-8fae-7dfa58e6ab83" width="100" height="100">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/0b521660-9c65-4d04-a6c3-55d79eb4f5db" width="100" height="100">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/013ad61c-3dfe-4416-9c6e-bd8108315305" width="100" height="100">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/bb5358a3-92df-4f9e-aee3-90ae9835425d" width="100" height="100">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/e5af90e7-00d8-4263-963c-1069f878c3d5" width="100" height="100">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/8ddb830a-7398-4772-9fed-a0a8e52cfe29" width="100" height="100">|
+| Spring Data JPA | Spring | Spring Security | Java | MySQL | AWS | Heroku | Discord |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/a7ef9c41-9a29-468b-8fae-7dfa58e6ab83" width="70" height="70">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/f1063f2c-1cbc-46c6-b5ab-6f65e17a1d2d" width="70" height="70">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/4fc51831-2280-48e1-9fc6-a00a1f1abf8b" width="70" height="70">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/0b521660-9c65-4d04-a6c3-55d79eb4f5db" width="70" height="70">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/013ad61c-3dfe-4416-9c6e-bd8108315305" width="70" height="70">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/bb5358a3-92df-4f9e-aee3-90ae9835425d" width="70" height="70">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/e5af90e7-00d8-4263-963c-1069f878c3d5" width="70" height="70">|<img src="https://github.com/isa-zip/isa.zip-backend/assets/50578785/8ddb830a-7398-4772-9fed-a0a8e52cfe29" width="70" height="70">|
 
 
 <br>
