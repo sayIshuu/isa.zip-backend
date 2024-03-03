@@ -14,6 +14,7 @@
 
 ### 데이터베이스 설계도
 
+![KakaoTalk_Photo_2024-03-03-16-41-52](https://github.com/isa-zip/isa.zip-backend/assets/50578785/cff7f6af-6d6b-4108-a89e-8cbff613f72e)
 
 ### CI/CD
 
